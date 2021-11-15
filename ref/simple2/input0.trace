@@ -1,0 +1,20 @@
+
+**Step 1: hidden_layer = matmul(m0, input)**
+-9 162 74 
+33 126 22 
+-35 -258 -74 
+-2 -294 -118 
+
+**Step 2: NONLINEAR LAYER: ReLU(hidden_layer)** 
+0 162 74 
+33 126 22 
+0 0 0 
+0 0 0 
+
+**Step 3: Linear layer = matmul(m1, relu)** 
+-462 3744 2208 
+-165 1314 778 
+1188 6804 1828 
+
+**Step 4: Argmax ** 
+7

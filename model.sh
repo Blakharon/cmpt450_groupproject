@@ -68,7 +68,7 @@ CACHE_OPTS="--caches --l2cache"
 # Script to start up full system simulation
 # --debug-flags=$FLAGS
 
-OUTDIR=BM_DMA/$BENCH
+OUTDIR=BM_MODEL/$BENCH
 
 RUN_SCRIPT="$BINARY --debug-flags=$FLAGS --outdir=$OUTDIR \
 			gem5-config/run_mnist.py $SYS_OPTS \

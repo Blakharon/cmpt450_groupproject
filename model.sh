@@ -6,7 +6,6 @@ BENCH=""
 DEBUG="false"
 PRINT_TO_FILE="false"
 TYPE="cache"
-CACHESIZE="1KB"
 
 # Input file paths relative to the base repo.
 INPUT="inputs/mnist/bin/inputs/mnist_input0.bin"
@@ -34,7 +33,7 @@ while getopts "t:b:f:dp" opt
 				;;
 			* )
 				echo "Invalid argument: ${OPTARG}"
-				echo "Usage: $0 -t [cache/dma] -b BENCHMARK (-f DEBUGFLAG) (-p) (-d)"
+				echo "Usage: $0 -t [model] -b BENCHMARK [flow] (-f DEBUGFLAG) (-p) (-d)"
 				exit 1
 				;;
 		esac
@@ -79,7 +78,7 @@ RUN_SCRIPT="$BINARY --debug-flags=$FLAGS --outdir=$OUTDIR \
 
 if [ "${PRINT_TO_FILE}" == "true" ]; then
 	mkdir -p $OUTDIR
-	$RUN_SCRIPT > ${OUTDIR}/${CACHESIZE}debug-trace.txt
+	$RUN_SCRIPT > ${OUTDIR}/debug-trace.txt
 else
 	$RUN_SCRIPT
 fi

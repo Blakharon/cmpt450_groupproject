@@ -10,7 +10,7 @@ using namespace std;
 #define MAX_NODES 10
 
 int capacities[MAX_NODES][MAX_NODES]; // Capacities of each edge [from][to]
-int flowPassed[MAX_NODES][MAX_NODES]; //
+int flowPassed[MAX_NODES][MAX_NODES];
 vector<int> graph[MAX_NODES]; // Holds a vector of what edges each node is connected to
 int parentsList[MAX_NODES];
 int currentPathCapacity[MAX_NODES];
@@ -25,7 +25,7 @@ int breadthFirstSearch(int startNode, int endNode)
     q.push(startNode);
     parentsList[startNode] = -2;
 
-    currentPathCapacity[startNode] = 999; // a filler number
+    currentPathCapacity[startNode] = 1000; // a filler number
 
     while(!q.empty())
     {
@@ -86,7 +86,6 @@ int edmondsKarp(int startNode, int endNode)
     }
 
     return maxFlow;
-
 }
 
 int main()

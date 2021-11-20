@@ -12,10 +12,10 @@
 #define NUM_ROWS 5
 #define NUM_COLS 5
 
-#define North 0
-#define East 1
-#define South 2
-#define West 3
-#define Sink 4
+#define NORTH 0
+#define EAST 1
+#define SOUTH 2
+#define WEST 3
+#define SINK 4
 
 #endif

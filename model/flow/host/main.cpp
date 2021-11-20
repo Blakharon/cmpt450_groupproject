@@ -27,8 +27,8 @@ struct terminal { // Source/Sink
 
 int main(void) {
     node nodes[NUM_NODES];
-    terminal source; // Source has no bi-directional (startpoint)
-    terminal sink; // Sink has no bi-directional (endpoint)
+    terminal source; // Source has no bi-directional (startpoint) // ai = 1 if white, 2 if black
+    terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
 
     //============= Graph Creation =====================
 

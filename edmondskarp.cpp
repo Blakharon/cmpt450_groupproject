@@ -18,7 +18,7 @@ int currentPathCapacity[MAX_NODES];
 int breadthFirstSearch(int startNode, int endNode)
 {
     memset(parentsList, -1, sizeof(parentsList)); // set unvisited 
-    memset(currentPathCapacity, 0, sizeof(currentPathCapacity)); // set current capacities to 0
+    memset(currentPathCapacity, 0, sizeof(currentPathCapacity)); // set current edge capacities to 0
 
     queue<int> q;
 

@@ -14,61 +14,73 @@ volatile uint32_t *arg6 = (uint32_t *)0x2f000029;
 volatile uint32_t *arg7 = (uint32_t *)0x2f000031;
 volatile uint32_t *arg8 = (uint32_t *)0x2f000039;
 
+struct node { // Pixel
+    int32_t pixel_value;
+    int32_t curr_capacities[NUM_NEIGHBOURS + 1] = {-1}; // NESW edge current capacities: -1 == no edge
+    int32_t capacities[NUM_NEIGHBOURS + 1] = {-1}; // NESW edge max capacities: -1 == no edge
+};
+
+struct terminal { // Source/Sink
+    int32_t curr_capacities[NUM_NODES] = {-1};
+    int32_t capacities[NUM_NODES] = {-1}; // max capacities to each node: -1 == no edge
+};
+
 int main(void) {
-  printf("Hello World \n");
+    node nodes[NUM_NODES];
+    terminal source; // Source has no bi-directional (startpoint) // ai = 1 if white, 2 if black
+    terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
 
-  m5_reset_stats();
-  // bool fail = false;
-  // // stage = 0;
-  TYPE array[9] = {3, -42, 432, 7, -5, 6, 5, -114, 2};
+    //============= Graph Creation =====================
 
-  TYPE base = 0x80100000;
+    // Create a clear division between pixels
+    // Set half of pixels to white
+    for (int i = 0; i < 13; i++) {
+        nodes[i].pixel_value = 255; // 255 = white
+    }
+    
+    // Set other half to black
+    for (int i = 13; i < NUM_NODES; i++) { 
+        nodes[i].pixel_value = 0; // 0 = black
+    }
+    
+    // Set max capacities of each pixel's neighbours: 255 - |neighbour.pixel_value - curr.pixel_value|
+    for (int row = 0; row < NUM_ROWS; row++) {
+        for (int col = 0; col < NUM_COLS; col++) {
+            node curr_node = nodes[col + row*NUM_COLS];
+            
+            // Check W neighbour
+            if (col != 0) {
+                node w_neighbour = nodes[(col - 1) + row*NUM_COLS];
+                curr_node.costs[West] = abs(curr_node.pixel_value - w_neighbour.pixel_value);
+            }
+            
+            // Check N neighbour
+            if (row != 0) {
+                node n_neighbour = nodes[col + (row + 1)*NUM_COLS];
+                curr_node.costs[North] = abs(curr_node.pixel_value - n_neighbour.pixel_value);
+            }
+            
+            // Check E neighbour
+            if (col != NUM_COLS - 1) {
+                node e_neighbour = nodes[(col + 1) + (row - 1)*NUM_COLS];
+                curr_node.costs[East] = abs(curr_node.pixel_value - w_neighbour.pixel_value);
+            }
+            
+            // Check S neighbour
+            if (row != NUM_ROWS - 1) {
+                node w_neighbour = nodes[(col - 1) + row*NUM_COLS];
+                curr_node.costs[West] = abs(curr_node.pixel_value - w_neighbour.pixel_value);
+            }
+        }
+    }
 
-  // Move local stack to global array
-  for (int i = 0; i < 9; i++) {
-    *((TYPE *)base + i) = array[i];
-  }
+    m5_reset_stats();
 
-  TYPE *m1 = (TYPE *)base;
-  TYPE *m2 = (TYPE *)(base + sizeof(TYPE) * 16);
-  TYPE *m3 = (TYPE *)(base + 2 * sizeof(TYPE) * 16);
-
-  for (int i = 0; i < N; i++) {
-    m2[i] = 0;
-    printf("%d   \n", m1[i]);
-  }
-
-  // Set arguments e.g.,
-  *top = 0x0;
-  *arg1 = (uint32_t)(void *)m1;
-  *arg2 = (uint32_t)(void *)m2;
-  *arg3 = N;
-  // // // Dummy to check if they are being written
-  // *arg3 = (uint32_t)(void *)m2;
-  // *arg4 = (uint32_t)(void *)m2;
-  // *arg5 = (uint32_t)(void *)m2;
-  // *arg6 = (uint32_t)(void *)m2;
-  // *arg7 = (uint32_t)(void *)m2;
-  // *arg8 = (uint32_t)(void *)m2;
-
-  // TODO: Start top
-
-  *top = 1;
-  while (*top != 0)
+    // Starts top
+    *top = 1;
+    while (*top != 0)
     ;
 
-  printf("%d   \n", *m2);           
-
-  //   // TODO: Check if top is done.
-
-  //   // TODO: Check result
-
-  //  #ifdef CHECK
-  //   if (fail)
-  //     printf("Check Failed\n");
-  //   else
-  //     printf("Check Passed\n");
-  // #endif
-  m5_dump_stats();
-  m5_exit();
+    m5_dump_stats();
+    m5_exit();
 }

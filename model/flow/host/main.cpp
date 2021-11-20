@@ -26,7 +26,7 @@ struct terminal { // Source/Sink
 };
 
 int main(void) {
-    node nodes[25];
+    node nodes[NUM_NODES];
     terminal source;
     terminal sink;
 
@@ -37,18 +37,18 @@ int main(void) {
     }
     
     // Set other half to black
-    for (int i = 13; i < 25; i++) { 
+    for (int i = 13; i < NUM_NODES; i++) { 
         nodes[i].pixel_value = 0; // 0 = black
     }
     
     // Set costs of each pixel's neighbours: |neighbour.pixel_value - curr.pixel_value|
-    for (int row = 0; row < 5; row++) {
-        for (int col = 0; col < 5; col++) {
-            node curr_node = nodes[col + row*5];
+    for (int row = 0; row < NUM_ROWS; row++) {
+        for (int col = 0; col < NUM_COLS; col++) {
+            node curr_node = nodes[col + row*NUM_COLS];
             
             // Check W neighbour
             if (col != 0) {
-                
+                node w_neighbour = nodes[(col - 1) + row*NUM_COLS)];
             }
             
             // Check N neighbour
@@ -57,12 +57,12 @@ int main(void) {
             }
             
             // Check E neighbour
-            if (col != 4) {
+            if (col != NUM_COLS - 1) {
             
             }
             
             // Check S neighbour
-            if (row != 4) {
+            if (row != NUM_ROWS - 1) {
             
             }
         }

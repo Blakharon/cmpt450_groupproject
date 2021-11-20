@@ -7,7 +7,10 @@
 #define TYPE_PTR int32_t*
 
 #define NUM_NEIGHBOURS 4
+
 #define NUM_NODES 25
+#define NUM_ROWS 5
+#define NUM_COLS 5
 
 #define North 0
 #define East 1

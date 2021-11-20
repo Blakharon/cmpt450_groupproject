@@ -48,7 +48,7 @@ int main(void) {
             
             // Check W neighbour
             if (col != 0) {
-                node w_neighbour = nodes[(col - 1) + row*NUM_COLS)];
+                node w_neighbour = nodes[(col - 1) + (row*NUM_COLS)];
             }
             
             // Check N neighbour

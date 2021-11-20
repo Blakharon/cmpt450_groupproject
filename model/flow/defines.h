@@ -16,5 +16,6 @@
 #define East 1
 #define South 2
 #define West 3
+#define Sink 4
 
 #endif

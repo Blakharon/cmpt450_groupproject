@@ -16,19 +16,21 @@ volatile uint32_t *arg8 = (uint32_t *)0x2f000039;
 
 struct node { // Pixel
     int32_t pixel_value;
-    int32_t curr_capacities[NUM_NEIGHBOURS] = {-1}; // NESW edge current capacities: -1 == no edge
-    int32_t capacities[NUM_NEIGHBOURS] = {-1}; // NESW edge max capacities: -1 == no edge
-    int32_t costs[NUM_NEIGHBOURS] = {-1}; // NESW edge costs: -1 == no edge
+    int32_t curr_capacities[NUM_NEIGHBOURS + 1] = {-1}; // NESW edge current capacities: -1 == no edge
+    int32_t capacities[NUM_NEIGHBOURS + 1] = {-1}; // NESW edge max capacities: -1 == no edge
 };
 
 struct terminal { // Source/Sink
-    int32_t costs[NUM_NODES] = {-1}; // costs to each node: -1 == no edge
+    int32_t curr_capacities[NUM_NODES] = {-1};
+    int32_t capacities[NUM_NODES] = {-1}; // max capacities to each node: -1 == no edge
 };
 
 int main(void) {
     node nodes[NUM_NODES];
-    terminal source;
-    terminal sink;
+    terminal source; // Source has no bi-directional (startpoint)
+    terminal sink; // Sink has no bi-directional (endpoint)
+
+    //============= Graph Creation =====================
 
     // Create a clear division between pixels
     // Set half of pixels to white
@@ -41,29 +43,33 @@ int main(void) {
         nodes[i].pixel_value = 0; // 0 = black
     }
     
-    // Set costs of each pixel's neighbours: |neighbour.pixel_value - curr.pixel_value|
+    // Set max capacities of each pixel's neighbours: 255 - |neighbour.pixel_value - curr.pixel_value|
     for (int row = 0; row < NUM_ROWS; row++) {
         for (int col = 0; col < NUM_COLS; col++) {
             node curr_node = nodes[col + row*NUM_COLS];
             
             // Check W neighbour
             if (col != 0) {
-                node w_neighbour = nodes[(col - 1) + (row*NUM_COLS)];
+                node w_neighbour = nodes[(col - 1) + row*NUM_COLS];
+                curr_node.costs[West] = abs(curr_node.pixel_value - w_neighbour.pixel_value);
             }
             
             // Check N neighbour
             if (row != 0) {
-            
+                node n_neighbour = nodes[col + (row + 1)*NUM_COLS];
+                curr_node.costs[North] = abs(curr_node.pixel_value - n_neighbour.pixel_value);
             }
             
             // Check E neighbour
             if (col != NUM_COLS - 1) {
-            
+                node e_neighbour = nodes[(col + 1) + (row - 1)*NUM_COLS];
+                curr_node.costs[East] = abs(curr_node.pixel_value - w_neighbour.pixel_value);
             }
             
             // Check S neighbour
             if (row != NUM_ROWS - 1) {
-            
+                node w_neighbour = nodes[(col - 1) + row*NUM_COLS];
+                curr_node.costs[West] = abs(curr_node.pixel_value - w_neighbour.pixel_value);
             }
         }
     }

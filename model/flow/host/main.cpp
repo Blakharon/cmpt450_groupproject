@@ -16,6 +16,7 @@ volatile uint32_t *arg8 = (uint32_t *)0x2f000039;
 
 struct node { // Pixel
     uint32_t height = 0;
+    uint32_t excess_flow = 0;
     uint32_t pixel_value;
     int32_t curr_capacities[NUM_NEIGHBOURS + 1] = {-1}; // NESW edge current capacities: -1 == no edge
     int32_t capacities[NUM_NEIGHBOURS + 1] = {-1}; // NESW edge max capacities: -1 == no edge
@@ -23,6 +24,7 @@ struct node { // Pixel
 
 struct terminal { // Source/Sink
     uint32_t height = 0;
+    uint32_t excess_flow = 0;
     int32_t curr_capacities[NUM_NODES] = {-1};
     int32_t capacities[NUM_NODES] = {-1}; // max capacities to each node: -1 == no edge
 };

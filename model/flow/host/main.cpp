@@ -16,7 +16,7 @@ volatile uint32_t *arg8 = (uint32_t *)0x2f000039;
 
 struct node { // Pixel
     int32_t pixel_value;
-    int32_t curr_capacities[NUM_NEIGHBOURS] = {-1} // NESW edge current capacities: -1 == no edge
+    int32_t curr_capacities[NUM_NEIGHBOURS] = {-1}; // NESW edge current capacities: -1 == no edge
     int32_t capacities[NUM_NEIGHBOURS] = {-1}; // NESW edge max capacities: -1 == no edge
     int32_t costs[NUM_NEIGHBOURS] = {-1}; // NESW edge costs: -1 == no edge
 };

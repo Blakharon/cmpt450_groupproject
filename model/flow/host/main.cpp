@@ -38,8 +38,12 @@ terminal source; // Source has no bi-directional (startpoint) // ai
 terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
 
 // Returns what node is overflowing
-int overFlowNode() {
-    for (int i = 0; i < NUM_NODES; i++) {
+int overFlowNode(int prev_node) {
+    if (prev_node == -1) {
+        prev_node = 0;
+    }
+    
+    for (int i = (prev_node + 1) % NUM_NODES; i < NUM_NODES; i++) {
         if (nodes[i].excess_flow > 0) {
             return i;
         }
@@ -227,12 +231,12 @@ int main(void) {
 
     // Create a clear division between pixels
     // Set half of pixels to white
-    for (int i = 0; i < 13; i++) {
+    for (int i = 0; i < 5; i++) {
         nodes[i].pixel_value = 255; // 255 = white
     }
     
     // Set other half to black
-    for (int i = 13; i < NUM_NODES; i++) { 
+    for (int i = 5; i < NUM_NODES; i++) { 
         nodes[i].pixel_value = 0; // 0 = black
     }
     
@@ -291,11 +295,14 @@ int main(void) {
     preflow();
     
     // Loop until no pixel has overflowed
-    while (overFlowNode() != -1) {
-        int node = overFlowNode();
+    int prev_node = -1;
+    while (overFlowNode(prev_node) != -1) {
+        int node = overFlowNode(prev_node);
         if (!push(node)) {
             relabel(node);
         }
+        
+        prev_node = node;
     }
     
     std::cout << "Maxflow: " << std::to_string(sink.excess_flow) << std::endl;

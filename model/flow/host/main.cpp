@@ -309,10 +309,12 @@ int main(void) {
 
     m5_reset_stats();
 
+/*
     // Starts top
     *top = 1;
     while (*top != 0)
     ;
+    */
 
     m5_dump_stats();
     m5_exit();

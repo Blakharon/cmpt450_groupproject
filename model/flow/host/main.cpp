@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <limits>
+#include <limits.h>
 
 volatile uint8_t *top = (uint8_t *)0x2f000000;
 volatile uint32_t *arg1 = (uint32_t *)0x2f000001;

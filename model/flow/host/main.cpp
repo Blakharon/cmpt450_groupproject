@@ -3,8 +3,6 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <string>
-#include <iostream>
 #include <limits.h>
 
 volatile uint8_t *top = (uint8_t *)0x2f000000;
@@ -308,7 +306,7 @@ int main(void) {
         prev_node = node;
     }
     
-    std::cout << "Maxflow: " << std::to_string(sink.excess_flow) << std::endl;
+    printf("Max flow: %d\n", sink.excess_flow);
 
     m5_reset_stats();
 

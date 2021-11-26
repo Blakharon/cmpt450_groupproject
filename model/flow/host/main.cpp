@@ -263,28 +263,28 @@ int main(void) {
             // Check W neighbour
             if (col != 0) {
                 pixel w_neighbour = nodes[(col - 1) + row*NUM_COLS];
-                nodes[curr_node_i].capacities[WEST] = 255 - std::abs(nodes[curr_node_i].pixel_value - w_neighbour.pixel_value);
+                nodes[curr_node_i].capacities[WEST] = 255 - std::abs(int(nodes[curr_node_i].pixel_value - w_neighbour.pixel_value));
                 nodes[curr_node_i].curr_capacities[WEST] = 0;
             }
             
             // Check N neighbour
             if (row != 0) {
                 pixel n_neighbour = nodes[col + (row + 1)*NUM_COLS];
-                nodes[curr_node_i].capacities[NORTH] = 255 - std::abs(nodes[curr_node_i].pixel_value - n_neighbour.pixel_value);
+                nodes[curr_node_i].capacities[NORTH] = 255 - std::abs(int(nodes[curr_node_i].pixel_value - n_neighbour.pixel_value));
                 nodes[curr_node_i].curr_capacities[NORTH] = 0;
             }
             
             // Check E neighbour
             if (col != NUM_COLS - 1) {
                 pixel e_neighbour = nodes[(col + 1) + row*NUM_COLS];
-                nodes[curr_node_i].capacities[EAST] = 255 - std::abs(nodes[curr_node_i].pixel_value - e_neighbour.pixel_value);
+                nodes[curr_node_i].capacities[EAST] = 255 - std::abs(int(nodes[curr_node_i].pixel_value - e_neighbour.pixel_value));
                 nodes[curr_node_i].curr_capacities[EAST] = 0;
             }
             
             // Check S neighbour
             if (row != NUM_ROWS - 1) {
                 pixel s_neighbour = nodes[col + (row - 1)*NUM_COLS];
-                nodes[curr_node_i].capacities[SOUTH] = 255 - std::abs(nodes[curr_node_i].pixel_value - s_neighbour.pixel_value);
+                nodes[curr_node_i].capacities[SOUTH] = 255 - std::abs(int(nodes[curr_node_i].pixel_value - s_neighbour.pixel_value));
                 nodes[curr_node_i].curr_capacities[SOUTH] = 0;
             }
             

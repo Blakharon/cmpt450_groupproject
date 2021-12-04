@@ -20,19 +20,28 @@ ff_ba = bytearray([int(ff_byte, 16)])
 toprint = ""
 line = []
 all_lines = []
-print(ff_ba)
 
+t = 0
+# test = infile.read()
+# print("# pixels", len(test))
+# print("full input ", test)
+
+count = 0
 while index < 25:
+    if(count != 0):
+        if(count%15 == 0):
+            infile.read(1)
+    count += 3
     r = infile.read(1)
     b = infile.read(1)
     g = infile.read(1)
+    
     if (r == ff_ba and b == ff_ba and g == ff_ba):
         line.append(" ")
         print("RGB",r,b,g)
     else: 
         line.append("*")
-        print("RGB",r,b,g)
-        print("black")
+        print("RGB",r,b,g, "Black Pixel")
     index = index + 1
     if (index % 5 == 0):
         all_lines.append(line)

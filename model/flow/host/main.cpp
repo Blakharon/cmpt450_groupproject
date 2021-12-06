@@ -198,7 +198,6 @@ bool push(int node) {
 void preflow() {
     // Sets height of source vertex == number of pixels + 2 (source&sink)
     source.height = NUM_NODES + 2;
-    sink.height = -1;
     
     for (int i = 0; i < NUM_NODES; i++) {
         // Set flow == capacity for edges from source

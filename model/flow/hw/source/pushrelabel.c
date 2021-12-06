@@ -1,6 +1,6 @@
 #include "../hw_defines.h"
 
-int hello() {
+inline int hello() {
     return 42;
 }
 

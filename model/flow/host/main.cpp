@@ -306,6 +306,9 @@ int main(void) {
         prev_node = node;
     }
     
+    for (int i = 0; i < NUM_NODES; i++) {
+        printf("excess flow %d: %d\n", i, nodes[i].excess_flow);
+    }
     printf("Max flow: %d\n", sink.excess_flow);
 
     m5_reset_stats();

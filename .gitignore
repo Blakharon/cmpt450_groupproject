@@ -1,2 +1,6 @@
 BM_MODEL
 *.pyc
+*.o
+*~
+*.elf
+*.ll

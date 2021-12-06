@@ -2,6 +2,8 @@
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
+@DIFF = constant [4 x i32] [i32 -5, i32 1, i32 5, i32 -1], align 16
+
 ; Function Attrs: norecurse nounwind uwtable
 define void @top(i64 %m1_addr, i64 %m2_addr, i64 %SIZE) #0 {
 entry:

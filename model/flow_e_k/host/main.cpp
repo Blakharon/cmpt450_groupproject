@@ -141,7 +141,7 @@ int edmondsKarp(node* nodeList, terminal* source)
 int main(void) {
     TYPE* base = (TYPE*) 0x80100000;
 
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < 50; i++) {
         printf("%d   \n", base[i]);
     }
 
@@ -164,7 +164,7 @@ int main(void) {
 
     // Set pixels to input values
     for (int i = 0; i < 25; i++) {
-        nodes[i].pixel_value = base[i];
+        nodes[i].pixel_value = base[i] >> 2;
     }
     
     // Set source->node capacities (ai) 
@@ -176,7 +176,7 @@ int main(void) {
         // } else {
         //     source.capacities[i] = 2;
         // }
-        source.capacities[i] = nodes[i].pixel_value;
+        source.capacities[i] = base[i+25];
         
         source.curr_capacities[i] = 0;
     }
@@ -192,28 +192,28 @@ int main(void) {
             // Check W neighbour
             if (col != 0) {
                 node w_neighbour = nodes[(col - 1) + row*NUM_COLS];
-                curr_node.capacities[WEST] = 255 - abs(curr_node.pixel_value - w_neighbour.pixel_value);
+                curr_node.capacities[WEST] = 63 - abs(curr_node.pixel_value - w_neighbour.pixel_value);
                 curr_node.curr_capacities[WEST] = 0;
             }
             
             // Check N neighbour
             if (row != 0) {
                 node n_neighbour = nodes[col + (row - 1)*NUM_COLS];
-                curr_node.capacities[NORTH] = 255 - abs(curr_node.pixel_value - n_neighbour.pixel_value);
+                curr_node.capacities[NORTH] = 63 - abs(curr_node.pixel_value - n_neighbour.pixel_value);
                 curr_node.curr_capacities[NORTH] = 0;
             }
             
             // Check E neighbour
             if (col != NUM_COLS - 1) {
                 node e_neighbour = nodes[(col + 1) + row*NUM_COLS];
-                curr_node.capacities[EAST] = 255 - abs(curr_node.pixel_value - e_neighbour.pixel_value);
+                curr_node.capacities[EAST] = 63 - abs(curr_node.pixel_value - e_neighbour.pixel_value);
                 curr_node.curr_capacities[WEST] = 0;
             }
             
             // Check S neighbour
             if (row != NUM_ROWS - 1) {
                 node s_neighbour = nodes[col + (row + 1)*NUM_COLS];
-                curr_node.capacities[SOUTH] = 255 - abs(curr_node.pixel_value - s_neighbour.pixel_value);
+                curr_node.capacities[SOUTH] = 63 - abs(curr_node.pixel_value - s_neighbour.pixel_value);
             }
             
             // Set capacity to sink (bi): 255 - ai

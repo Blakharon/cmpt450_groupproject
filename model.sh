@@ -11,7 +11,7 @@ TYPE="cache"
 INPUT="inputs/mnist/bin/circle.bin"
 M0="inputs/mnist/bin/m0.bin"
 M1="inputs/mnist/bin/m1.bin"
-
+MASK="inputs/mnist/bin/mask.bin"
 
 while getopts "t:b:f:dp" opt
 	do
@@ -74,7 +74,7 @@ RUN_SCRIPT="$BINARY --debug-flags=$FLAGS --outdir=$OUTDIR \
 			gem5-config/run_mnist.py $SYS_OPTS \
 			--accpath=$LAB_PATH/$TYPE \
 			--accbench=$BENCH $CACHE_OPTS \
-			--input $INPUT "
+			--input $INPUT --mask $MASK"
 
 if [ "${PRINT_TO_FILE}" == "true" ]; then
 	mkdir -p $OUTDIR

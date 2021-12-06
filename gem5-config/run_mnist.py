@@ -134,14 +134,14 @@ def build_test_system(np):
         #test_sys.kernel_extras = [os.environ["LAB_PATH"]+ "/" + options.input ,os.environ["LAB_PATH"]+ "/" + options.m0, os.environ["LAB_PATH"]+ "/" + options.m1]
         
         #Just load in our binary, forget M0 and M1
-        test_sys.kernel_extras = [os.environ["LAB_PATH"]+ "/" + options.input]
+        test_sys.kernel_extras = [os.environ["LAB_PATH"]+ "/" + options.input, os.environ["LAB_PATH"]+ "/" + options.mask]
 
         # Size of each file
             # input_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.input)
             # m0_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m0)
             # m1_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m1)
         input_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.input)
-
+        
         # Base address to load each file
         # 0x80100000
         # ┌────────────────────────┬──────────────────────┬───────────────────┐
@@ -154,7 +154,7 @@ def build_test_system(np):
         # print("Loading file m0 at" + str(hex(0x80100000+input_size)))
         # print("Loading file m1 at" + str(hex(0x80100000+input_size+m0_size)))
         
-        test_sys.kernel_extras_addrs = [0x80100000]
+        test_sys.kernel_extras_addrs = [0x80100000, 0x80100000+input_size]
         print("Loading file input at" + str(hex(0x80100000)))
 
     else:
@@ -353,6 +353,7 @@ if '--ruby' in sys.argv:
 parser.add_option("--input", action="store", type="string")
 parser.add_option("--m0", action="store", type="string")
 parser.add_option("--m1", action="store", type="string")
+parser.add_option("--mask", action="store", type="string")
 
 (options, args) = parser.parse_args()
 

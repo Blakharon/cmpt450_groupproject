@@ -309,13 +309,20 @@ int main(void) {
     printf("Max flow: %d\n", sink.excess_flow);
 
     m5_reset_stats();
+    //================================ Start accelerator ==========================
 
-/*
-    // Starts top
+    TYPE base = 0x80100000;
+    TYPE *pl = (TYPE *)base;
+
+    // Set arguments e.g.,
+    *top = 0x0;
+    *arg1 = (uint32_t)(void *)pl;
+    
     *top = 1;
     while (*top != 0)
     ;
-    */
+
+    printf("%d   \n", *pl); 
 
     m5_dump_stats();
     m5_exit();

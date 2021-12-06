@@ -152,14 +152,19 @@ int main(void) {
     //============= Graph Creation =====================
 
     // Create a clear division between pixels
-    // Set half of pixels to white
-    for (int i = 0; i < 13; i++) {
-        nodes[i].pixel_value = 200; // 255 = white
-    }
+    // // Set half of pixels to white
+    // for (int i = 0; i < 13; i++) {
+    //     nodes[i].pixel_value = 200; // 255 = white
+    // }
     
-    // Set other half to black
-    for (int i = 13; i < NUM_NODES; i++) { 
-        nodes[i].pixel_value = 50; // 0 = black
+    // // Set other half to black
+    // for (int i = 13; i < NUM_NODES; i++) { 
+    //     nodes[i].pixel_value = 50; // 0 = black
+    // }
+
+    // Set pixels to input values
+    for (int i = 0; i < 25; i++) {
+        nodes[i].pixel_value = base[i];
     }
     
     // Set source->node capacities (ai) 

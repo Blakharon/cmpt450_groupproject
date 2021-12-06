@@ -210,46 +210,44 @@ void preflow() {
 }
 
 int main(void) {
+    TYPE* base = (TYPE*) 0x80100000;
+
+    for (int i = 0; i < 50; i++) {
+        printf("%d   \n", base[i]);
+    }
+
+    pixel nodes[NUM_NODES];
+    terminal source; // Source has no bi-directional (startpoint) // ai
+    // terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
 
     //============= Graph Creation =====================
-    
-    // Initialize edges
-    for (int i = 0; i < NUM_NODES; i++) { 
-        source.curr_capacities[i] = -1;
-        source.capacities[i] = -1;
-        sink.curr_capacities[i] = -1;
-        sink.capacities[i] = -1;
-        for (int j = 0; j < NUM_NEIGHBOURS + 1; j++) {
-            nodes[i].curr_capacities[j] = -1;
-            nodes[i].capacities[j] = -1;
-        }
-    }
-    
-    // Initialize residuals
-    for (int i = 0; i < (NUM_NODES + 2)*(NUM_NODES + 2); i++) {
-        residual_flows[i] = -1;
-    }
 
     // Create a clear division between pixels
-    // Set half of pixels to white
-    for (int i = 0; i < 5; i++) {
-        nodes[i].pixel_value = 255; // 255 = white
-    }
+    // // Set half of pixels to white
+    // for (int i = 0; i < 13; i++) {
+    //     nodes[i].pixel_value = 200; // 255 = white
+    // }
     
-    // Set other half to black
-    for (int i = 5; i < NUM_NODES; i++) { 
-        nodes[i].pixel_value = 0; // 0 = black
+    // // Set other half to black
+    // for (int i = 13; i < NUM_NODES; i++) { 
+    //     nodes[i].pixel_value = 50; // 0 = black
+    // }
+
+    // Set pixels to input values
+    for (int i = 0; i < 25; i++) {
+        nodes[i].pixel_value = base[i] >> 2;
     }
     
     // Set source->node capacities (ai) 
     for (int i = 0; i < NUM_NODES; i++) {
-        if (nodes[i].pixel_value == 255) { // white
-            source.capacities[i] = 3;
-        } else if (nodes[i].pixel_value == 0) { // black
-            source.capacities[i] = 1;
-        } else {
-            source.capacities[i] = 2;
-        }
+        // if (nodes[i].pixel_value == 255) { // white
+        //     source.capacities[i] = 255;
+        // } else if (nodes[i].pixel_value == 0) { // black
+        //     source.capacities[i] = 0;
+        // } else {
+        //     source.capacities[i] = 2;
+        // }
+        source.capacities[i] = base[i+25];
         
         source.curr_capacities[i] = 0;
     }
@@ -258,37 +256,39 @@ int main(void) {
     for (int row = 0; row < NUM_ROWS; row++) {
         for (int col = 0; col < NUM_COLS; col++) {
             int curr_node_i = col + row*NUM_COLS;
+            node& curr_node = nodes[curr_node_i];
             
+            #define abs(a) ((a)<0?(-a):(a))
+
             // Check W neighbour
             if (col != 0) {
                 pixel w_neighbour = nodes[(col - 1) + row*NUM_COLS];
-                nodes[curr_node_i].capacities[WEST] = 255 - abs(int(nodes[curr_node_i].pixel_value - w_neighbour.pixel_value));
-                nodes[curr_node_i].curr_capacities[WEST] = 0;
+                curr_node.capacities[WEST] = 63 - abs(curr_node.pixel_value - w_neighbour.pixel_value);
+                curr_node.curr_capacities[WEST] = 0;
             }
             
             // Check N neighbour
             if (row != 0) {
                 pixel n_neighbour = nodes[col + (row - 1)*NUM_COLS];
-                nodes[curr_node_i].capacities[NORTH] = 255 - abs(int(nodes[curr_node_i].pixel_value - n_neighbour.pixel_value));
-                nodes[curr_node_i].curr_capacities[NORTH] = 0;
+                curr_node.capacities[NORTH] = 63 - abs(curr_node.pixel_value - n_neighbour.pixel_value);
+                curr_node.curr_capacities[NORTH] = 0;
             }
             
             // Check E neighbour
             if (col != NUM_COLS - 1) {
                 pixel e_neighbour = nodes[(col + 1) + row*NUM_COLS];
-                nodes[curr_node_i].capacities[EAST] = 255 - abs(int(nodes[curr_node_i].pixel_value - e_neighbour.pixel_value));
-                nodes[curr_node_i].curr_capacities[EAST] = 0;
+                curr_node.capacities[EAST] = 63 - abs(curr_node.pixel_value - e_neighbour.pixel_value);
+                curr_node.curr_capacities[WEST] = 0;
             }
             
             // Check S neighbour
             if (row != NUM_ROWS - 1) {
                 pixel s_neighbour = nodes[col + (row + 1)*NUM_COLS];
-                nodes[curr_node_i].capacities[SOUTH] = 255 - abs(int(nodes[curr_node_i].pixel_value - s_neighbour.pixel_value));
-                nodes[curr_node_i].curr_capacities[SOUTH] = 0;
+                curr_node.capacities[SOUTH] = 63 - abs(curr_node.pixel_value - s_neighbour.pixel_value);
             }
             
             // Set capacity to sink (bi): 255 - ai
-            nodes[curr_node_i].capacities[SINK] = 255 - source.capacities[curr_node_i];
+            curr_node.capacities[SINK] = 255 - source.capacities[curr_node_i];
         }
     }
     

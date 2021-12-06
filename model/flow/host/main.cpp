@@ -256,7 +256,7 @@ int main(void) {
     for (int row = 0; row < NUM_ROWS; row++) {
         for (int col = 0; col < NUM_COLS; col++) {
             int curr_node_i = col + row*NUM_COLS;
-            node& curr_node = nodes[curr_node_i];
+            pixel& curr_node = nodes[curr_node_i];
             
             #define abs(a) ((a)<0?(-a):(a))
 
@@ -311,8 +311,7 @@ int main(void) {
     m5_reset_stats();
     //================================ Start accelerator ==========================
 
-    TYPE base = 0x80100000;
-    TYPE *pl = (TYPE *)base;
+    TYPE *pl = base;
 
     // Set arguments e.g.,
     *top = 0x0;

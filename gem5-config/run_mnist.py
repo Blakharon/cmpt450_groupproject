@@ -131,12 +131,16 @@ def build_test_system(np):
         test_sys.kernel = binary(options.kernel)
         
         # Files to be loaded in host space
-        test_sys.kernel_extras = [os.environ["LAB_PATH"]+ "/" + options.input ,os.environ["LAB_PATH"]+ "/" + options.m0, os.environ["LAB_PATH"]+ "/" + options.m1]
+        #test_sys.kernel_extras = [os.environ["LAB_PATH"]+ "/" + options.input ,os.environ["LAB_PATH"]+ "/" + options.m0, os.environ["LAB_PATH"]+ "/" + options.m1]
         
+        #Just load in our binary, forget M0 and M1
+        test_sys.kernel_extras = [os.environ["LAB_PATH"]+ "/" + options.input]
+
         # Size of each file
+            # input_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.input)
+            # m0_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m0)
+            # m1_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m1)
         input_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.input)
-        m0_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m0)
-        m1_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m1)
 
         # Base address to load each file
         # 0x80100000
@@ -145,10 +149,14 @@ def build_test_system(np):
         # │   MNIST input (784 * 1)│   M0  (128 * 784)    │   M1 (10 * 128)   │
         # │                        │                      │                   │
         # └────────────────────────┴──────────────────────┴───────────────────┘
-        test_sys.kernel_extras_addrs = [0x80100000,0x80100000+input_size,0x80100000+input_size+m0_size]
+        # test_sys.kernel_extras_addrs = [0x80100000,0x80100000+input_size,0x80100000+input_size+m0_size]
+        # print("Loading file input at" + str(hex(0x80100000)))
+        # print("Loading file m0 at" + str(hex(0x80100000+input_size)))
+        # print("Loading file m1 at" + str(hex(0x80100000+input_size+m0_size)))
+        
+        test_sys.kernel_extras_addrs = [0x80100000]
         print("Loading file input at" + str(hex(0x80100000)))
-        print("Loading file m0 at" + str(hex(0x80100000+input_size)))
-        print("Loading file m1 at" + str(hex(0x80100000+input_size+m0_size)))
+
     else:
         print("Error: a kernel must be provided to run in full system mode")
         sys.exit(1)

@@ -29,12 +29,14 @@ int main(void) {
   //   *((TYPE *)base + i) = array[i];
   // }
 
+ 
+
   TYPE *m1 = (TYPE *)base;
   TYPE *m2 = (TYPE *)(base + sizeof(TYPE) * 16);
   TYPE *m3 = (TYPE *)(base + 2 * sizeof(TYPE) * 16);
 
-  for (int i = 0; i < N; i++) {
-    m2[i] = 0;
+  for (int i = 0; i < 25; i++) {
+    // m2[i] = 0;
     printf("%d   \n", m1[i]);
   }
 

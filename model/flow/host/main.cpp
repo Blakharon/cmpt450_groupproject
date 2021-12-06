@@ -199,12 +199,9 @@ void preflow() {
     // Sets height of source vertex == number of pixels + 2 (source&sink)
     source.height = NUM_NODES + 2;
     
-    printf("Preflow: \n");
     for (int i = 0; i < NUM_NODES; i++) {
         // Set flow == capacity for edges from source
         source.curr_capacities[i] = source.capacities[i];
-        printf("max capacity from source %d: %d\n", i, source.capacities[i]);
-        printf("curr capacity from source %d: %d\n", i, source.curr_capacities[i]);
         // Set excess flow for node == capacity
         nodes[i].excess_flow = source.capacities[i];
         // Initialize residual for edge from node->source
@@ -294,12 +291,6 @@ int main(void) {
     //========== Push-relabel algorithm ====================
     preflow();
     
-    printf("\n\nAfter Preflow: \n");
-    for (int i = 0; i < NUM_NODES; i++) {
-        printf("max capacity from source %d: %d\n", i, source.capacities[i]);
-        printf("curr capacity from source %d: %d\n", i, source.curr_capacities[i]);
-    }
-    
     // Loop until no pixel has overflowed
     int prev_node = -1;
     while (overFlowNode(prev_node) != -1) {
@@ -312,8 +303,10 @@ int main(void) {
     }
     
     for (int i = 0; i < NUM_NODES; i++) {
-        //printf("max capacity to sink %d: %d\n", i, nodes[i].capacities[SINK]);
-        //printf("pixel value %d: %d\n", i, nodes[i].pixel_value);
+        printf("\nmax capacity from source %d: %d\n", i, source.capacities[i]);
+        printf("curr capacity from source %d: %d\n", i, source.curr_capacities[i]);
+        printf("max capacity to sink %d: %d\n", i, nodes[i].capacities[SINK]);
+        printf("pixel value %d: %d\n\n", i, nodes[i].pixel_value);
     }
     printf("Max flow: %d\n", sink.excess_flow);
 

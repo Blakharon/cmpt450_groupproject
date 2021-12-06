@@ -36,13 +36,14 @@ struct terminal { // Source/Sink
 int residual_flows[(NUM_NODES+2) * (NUM_NODES+2)];
 
 pixel nodes[NUM_NODES]; // Pixels
+int flagged_nodes[NUM_NODES];
 terminal source; // Source has no bi-directional (startpoint) // ai
 terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
 
 // Returns what node is overflowing
 int overFlowNode(int node) { 
     for (int i = 0; i < NUM_NODES; i++) {
-        if (nodes[i].excess_flow > 0) {
+        if (nodes[i].excess_flow > 0 && flagged_nodes[i] != 1) {
             return i;
         }
     }
@@ -72,7 +73,7 @@ bool relabel(int node) {
     bool relabelled = true;
     int continue_count = 0;
     
-    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+    for (int i = NUM_NEIGHBOURS; i >= 0; i--) {
         int neighbour_idx; // -1 == sink
         if (i == 0) { // North neighbour
             neighbour_idx = node - NUM_COLS;
@@ -119,7 +120,7 @@ bool relabel(int node) {
 
 bool push(int node) {
     // Go through all neighbours
-    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+    for (int i = NUM_NEIGHBOURS; i >= 0; i--) {
         // No neighbour
         if (nodes[node].capacities[i] == -1) {
             continue;
@@ -234,7 +235,7 @@ int main(void) {
     // }
 
     // Set pixels to input values
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < NUM_NODES; i++) {
         nodes[i].pixel_value = base[i] >> 2;
     }
     
@@ -247,7 +248,7 @@ int main(void) {
         // } else {
         //     source.capacities[i] = 2;
         // }
-        source.capacities[i] = base[i+25];
+        source.capacities[i] = base[i+NUM_NODES];
         
         source.curr_capacities[i] = 0;
     }
@@ -301,9 +302,15 @@ int main(void) {
         int node = overFlowNode(node);
         if (!push(node)) {
             if(!relabel(node)) {
-                break;
+                flagged_nodes[node] = 1;
             }
         }
+    }
+    
+    for (int i = 0; i < NUM_NODES; i++) {
+        printf("\ncurr capacity from source %d: %d\n", i, source.curr_capacities[i]);
+        printf("curr capacity to sink %d: %d\n", i, nodes[i].curr_capacities[SINK]);
+        printf("max capacity to sink %d: %d\n", i, nodes[i].capacities[SINK]);
     }
     
     printf("Max flow: %d\n", sink.excess_flow);

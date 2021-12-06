@@ -35,6 +35,7 @@ struct terminal { // Source/Sink
 int residual_flows[(NUM_NODES+2) * (NUM_NODES+2)];
 
 pixel nodes[NUM_NODES]; // Pixels
+int flagged_nodes[NUM_NODES];
 terminal source; // Source has no bi-directional (startpoint) // ai
 terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
 
@@ -302,7 +303,7 @@ int main(void) {
         int node = overFlowNode(node);
         if (!push(node)) {
             if(!relabel(node)) {
-                break;
+                flagged_nodes[node] = 1;
             }
         }
     }
@@ -312,6 +313,7 @@ int main(void) {
         printf("curr capacity to sink %d: %d\n", i, nodes[i].curr_capacities[SINK]);
         printf("max capacity to sink %d: %d\n", i, nodes[i].capacities[SINK]);
     }
+    
     printf("Max flow: %d\n", sink.excess_flow);
 
     m5_reset_stats();

@@ -66,8 +66,10 @@ void updateResidualFlow(int node, int neighbour_idx, int flow) {
     residual_flows[residual_idx] -= flow;
 }
 
-void relabel(int node) {
+bool relabel(int node) {
     int min_height = INT_MAX;
+    bool relabelled = true;
+    int continue_count = 0;
     
     for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
         int neighbour_idx; // -1 == sink
@@ -85,6 +87,7 @@ void relabel(int node) {
         
         // If flow is == to capacity then skip relabelling
         if (nodes[node].curr_capacities[i] == nodes[node].capacities[i]) {
+            continue_count++;
             continue;
         }
         
@@ -104,6 +107,12 @@ void relabel(int node) {
             }
         }
     }
+    
+    if (continue_count == NUM_NEIGHBOURS+1) {
+        relabelled = false;
+    }
+    
+    return relabelled;
 }
 
 bool push(int node) {
@@ -292,9 +301,10 @@ int main(void) {
     while (overFlowNode(node) != -1) {
         int node = overFlowNode(node);
         if (!push(node)) {
-            relabel(node);
+            if(!relabel(node)) {
+                break;
+            }
         }
-        printf("node %d: \n", node);
     }
     
     for (int i = 0; i < NUM_NODES; i++) {

@@ -202,13 +202,12 @@ void preflow() {
     for (int i = 0; i < NUM_NODES; i++) {
         // Set flow == capacity for edges from source
         source.curr_capacities[i] = source.capacities[i];
+        printf("max capacity from source %d: %d\n", i, source.capacities[i]);
+        printf("curr capacity from source %d: %d\n", i, source.curr_capacities[i]);
         // Set excess flow for node == capacity
         nodes[i].excess_flow = source.capacities[i];
         // Initialize residual for edge from node->source
         residual_flows[i*(NUM_NODES+2) + NUM_NODES] = 0;
-        
-        printf("curr capacity from source %d: %d\n", i, source.curr_capacities[i]);
-        printf("max capacity from source %d: %d\n", i, source.capacities[i]);
     }
 }
 
@@ -310,8 +309,8 @@ int main(void) {
     }
     
     for (int i = 0; i < NUM_NODES; i++) {
-        printf("max capacity to sink %d: %d\n", i, nodes[i].capacities[SINK]);
-        printf("pixel value %d: %d\n", i, nodes[i].pixel_value);
+        //printf("max capacity to sink %d: %d\n", i, nodes[i].capacities[SINK]);
+        //printf("pixel value %d: %d\n", i, nodes[i].pixel_value);
     }
     printf("Max flow: %d\n", sink.excess_flow);
 

@@ -308,6 +308,8 @@ int main(void) {
     
     for (int i = 0; i < NUM_NODES; i++) {
         printf("excess flow %d: %d\n", i, nodes[i].excess_flow);
+        printf("max capacity to sink %d: %d\n", i, nodes[i].capacities[SINK]);
+        printf("pixel value %d: %d\n", i, nodes[i].pixel_value);
     }
     printf("Max flow: %d\n", sink.excess_flow);
 

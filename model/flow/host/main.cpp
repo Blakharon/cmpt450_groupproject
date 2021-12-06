@@ -303,10 +303,9 @@ int main(void) {
     }
     
     for (int i = 0; i < NUM_NODES; i++) {
-        printf("\nmax capacity from source %d: %d\n", i, source.capacities[i]);
-        printf("curr capacity from source %d: %d\n", i, source.curr_capacities[i]);
+        printf("\ncurr capacity from source %d: %d\n", i, source.curr_capacities[i]);
+        printf("curr capacity to sink %d: %d\n", i, nodes[i].curr_capacities[SINK]);
         printf("max capacity to sink %d: %d\n", i, nodes[i].capacities[SINK]);
-        printf("pixel value %d: %d\n\n", i, nodes[i].pixel_value);
     }
     printf("Max flow: %d\n", sink.excess_flow);
 

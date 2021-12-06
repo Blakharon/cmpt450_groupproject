@@ -139,6 +139,12 @@ int edmondsKarp(node* nodeList, terminal* source)
 }
 
 int main(void) {
+    TYPE base = 0x80100000;
+
+    for (int i = 0; i < 25; i++) {
+        printf("%d   \n", m1[i]);
+    }
+
     node nodes[NUM_NODES];
     terminal source; // Source has no bi-directional (startpoint) // ai
     // terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai

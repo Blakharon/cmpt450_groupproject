@@ -134,13 +134,13 @@ def build_test_system(np):
         #test_sys.kernel_extras = [os.environ["LAB_PATH"]+ "/" + options.input ,os.environ["LAB_PATH"]+ "/" + options.m0, os.environ["LAB_PATH"]+ "/" + options.m1]
         
         #Just load in our binary, forget M0 and M1
-        test_sys.kernel_extras = [os.environ["LAB_PATH"]+ "/" + options.input]
+        test_sys.kernel_extras = [os.environ["LAB_PATH"]+ "/" + options.circle]
 
         # Size of each file
             # input_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.input)
             # m0_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m0)
             # m1_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m1)
-        input_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.input)
+        input_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.circle)
 
         # Base address to load each file
         # 0x80100000

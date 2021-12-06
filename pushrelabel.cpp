@@ -6,9 +6,9 @@
 
 #define NUM_NEIGHBOURS 4
 
-#define NUM_NODES 9
-#define NUM_ROWS 3
-#define NUM_COLS 3
+#define NUM_NODES 25
+#define NUM_ROWS 5
+#define NUM_COLS 5
 
 #define NORTH 0
 #define EAST 1
@@ -269,7 +269,7 @@ int main(void) {
             
             // Check N neighbour
             if (row != 0) {
-                pixel n_neighbour = nodes[col + (row + 1)*NUM_COLS];
+                pixel n_neighbour = nodes[col + (row - 1)*NUM_COLS];
                 nodes[curr_node_i].capacities[NORTH] = 255 - abs(nodes[curr_node_i].pixel_value - n_neighbour.pixel_value);
                 nodes[curr_node_i].curr_capacities[NORTH] = 0;
             }
@@ -283,7 +283,7 @@ int main(void) {
             
             // Check S neighbour
             if (row != NUM_ROWS - 1) {
-                pixel s_neighbour = nodes[col + (row - 1)*NUM_COLS];
+                pixel s_neighbour = nodes[col + (row + 1)*NUM_COLS];
                 nodes[curr_node_i].capacities[SOUTH] = 255 - abs(nodes[curr_node_i].pixel_value - s_neighbour.pixel_value);
                 nodes[curr_node_i].curr_capacities[SOUTH] = 0;
             }

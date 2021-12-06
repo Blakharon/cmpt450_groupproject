@@ -219,10 +219,6 @@ int main(void) {
         printf("%d   \n", base[i]);
     }
 
-    pixel nodes[NUM_NODES];
-    terminal source; // Source has no bi-directional (startpoint) // ai
-    // terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
-
     //============= Graph Creation =====================
 
     // Create a clear division between pixels

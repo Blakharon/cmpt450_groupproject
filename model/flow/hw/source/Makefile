@@ -1,4 +1,4 @@
-TARGET=argmax.ll top.ll
+TARGET=pushrelabel.ll top.ll
 %.o : %.c
 	clang -emit-llvm -c -o $@ $<
 %.bc : %.o

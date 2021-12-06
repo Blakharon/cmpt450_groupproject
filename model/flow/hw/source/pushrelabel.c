@@ -5,5 +5,6 @@ int hello() {
 }
 
 void pushrelabel(TYPE_PTR SIZE) {
-    &size = hello();
+    int hello2 = hello();
+    *SIZE = hello2;
 }

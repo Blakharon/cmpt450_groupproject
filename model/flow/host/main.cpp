@@ -42,7 +42,7 @@ terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
 // Returns what node is overflowing
 int overFlowNode(int node) { 
     for (int i = 0; i < NUM_NODES; i++) {
-        if (nodes[i].excess_flow > 0) {
+        if (nodes[i].excess_flow > 0 && flagged_nodes[i] != 1) {
             return i;
         }
     }

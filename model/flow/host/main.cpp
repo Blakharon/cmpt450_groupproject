@@ -298,6 +298,7 @@ int main(void) {
         if (!push(node)) {
             relabel(node);
         }
+        printf("node %d: \n", node);
         
         prev_node = node;
     }

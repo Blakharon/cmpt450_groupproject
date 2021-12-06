@@ -8,7 +8,7 @@ PRINT_TO_FILE="false"
 TYPE="cache"
 
 # Input file paths relative to the base repo.
-INPUT="inputs/mnist/bin/inputs/mnist_input0.bin"
+INPUT="inputs/mnist/bin/circle.bin"
 M0="inputs/mnist/bin/m0.bin"
 M1="inputs/mnist/bin/m1.bin"
 
@@ -74,7 +74,7 @@ RUN_SCRIPT="$BINARY --debug-flags=$FLAGS --outdir=$OUTDIR \
 			gem5-config/run_mnist.py $SYS_OPTS \
 			--accpath=$LAB_PATH/$TYPE \
 			--accbench=$BENCH $CACHE_OPTS \
-			--input $INPUT --m0 $M0 --m1 $M1"
+			--input $INPUT "
 
 if [ "${PRINT_TO_FILE}" == "true" ]; then
 	mkdir -p $OUTDIR

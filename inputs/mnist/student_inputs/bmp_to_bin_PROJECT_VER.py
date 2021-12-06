@@ -10,9 +10,9 @@ infile.seek(54) ## Header is 54 bits long
 ## Write appropriate header (25 1) to binary file
 index = 0
 outfile = open(sys.argv[1] + ".bin", "wb+")
-header_arr = [16, 3, 0, 0, 1, 0, 0, 0]
-byte_header = bytearray(header_arr)
-outfile.write(byte_header)
+# header_arr = [16, 3, 0, 0, 1, 0, 0, 0]
+# byte_header = bytearray(header_arr)
+# outfile.write(byte_header)
 
 ## Read in BMP file, differentiating between white pixels (r = g = b = 0xff) and non-white pixels
 ff_byte = '0xFF'

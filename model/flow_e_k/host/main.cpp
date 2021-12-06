@@ -139,10 +139,10 @@ int edmondsKarp(node* nodeList, terminal* source)
 }
 
 int main(void) {
-    TYPE base = 0x80100000;
+    TYPE* base = (TYPE*) 0x80100000;
 
     for (int i = 0; i < 25; i++) {
-        printf("%d   \n", m1[i]);
+        printf("%d   \n", base[i]);
     }
 
     node nodes[NUM_NODES];

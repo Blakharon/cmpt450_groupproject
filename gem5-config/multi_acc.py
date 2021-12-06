@@ -44,7 +44,8 @@ def makeHWAcc(options, system):
     ############################# Adding Accelerators to Cluster ##################################
 
     # Find all .ll files
-    LLFILES = options.accpath + "/" + options.accbench + "/" + "hw/ir/" + "[!_top]*.ll"
+    LLFILES = options.accpath + "/" + options.accbench + "/" + "hw/ir/" + "[!_t]*.ll"
+    print(LLFILES)
     ACCNAMES = [os.path.splitext(os.path.basename(x))[0] for x in glob.glob(LLFILES)]
     print(ACCNAMES)
     for acc_name in ACCNAMES:

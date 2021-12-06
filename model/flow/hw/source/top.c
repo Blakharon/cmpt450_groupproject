@@ -1,25 +1,21 @@
 #include "../hw_defines.h"
 
-void top(uint64_t m1_addr, uint64_t m2_addr, uint64_t SIZE) {
+void top(uint64_t pl_arg1) {
   // Define Device MMRs
-  volatile uint8_t *ArgmaxFlag = (uint8_t *)Argmax;
-  volatile uint64_t *ArgmaxArg1 = (uint64_t *)(Argmax_ARG1);
-  volatile uint64_t *ArgmaxArg2 = (uint64_t *)(Argmax_ARG2);
-  volatile uint64_t *ArgmaxArg3 = (uint64_t *)(Argmax_ARG3);
+  volatile uint8_t *PushrelabelFlag = (uint8_t *)Pushrelabel;
+  volatile uint64_t *PushrelabelArg1 = (uint64_t *)(Pushrelabel_ARG1);
 
-  *ArgmaxFlag = 0x0;
-  // // Set up arguments for accelerator.
+  *PushrelabelFlag = 0x0;
+  // Set up arguments for accelerator.
 
-  *ArgmaxArg1 = m1_addr;
-  *ArgmaxArg2 = m2_addr;
-  *ArgmaxArg3 = SIZE;
-  // // Start the accelerated function
-  *ArgmaxFlag = DEV_INIT;
+  *PushrelabelArg1 = pl_arg1;
+  // Start the accelerated function
+  *PushrelabelFlag = DEV_INIT;
 
-  // // Poll function for finish
-  while ((*ArgmaxFlag & DEV_INTR) != DEV_INTR)
+  // Poll function for finish
+  while ((*PushrelabelFlag & DEV_INTR) != DEV_INTR)
     ;
-  *ArgmaxFlag = 0x0;
+  *PushrelabelFlag = 0x0;
 
   return;
 }

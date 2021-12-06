@@ -39,12 +39,8 @@ terminal source; // Source has no bi-directional (startpoint) // ai
 terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
 
 // Returns what node is overflowing
-int overFlowNode(int prev_node) {
-    if (prev_node == -1) {
-        prev_node = 0;
-    }
-    
-    for (int i = (prev_node + 1) % NUM_NODES; i < NUM_NODES; i++) {
+int overFlowNode(int node) { 
+    for (int i = 0; i < NUM_NODES; i++) {
         if (nodes[i].excess_flow > 0) {
             return i;
         }
@@ -292,15 +288,13 @@ int main(void) {
     preflow();
     
     // Loop until no pixel has overflowed
-    int prev_node = -1;
-    while (overFlowNode(prev_node) != -1) {
-        int node = overFlowNode(prev_node);
+    int node = 0;
+    while (overFlowNode(node) != -1) {
+        int node = overFlowNode(node);
         if (!push(node)) {
             relabel(node);
         }
         printf("node %d: \n", node);
-        
-        prev_node = node;
     }
     
     for (int i = 0; i < NUM_NODES; i++) {

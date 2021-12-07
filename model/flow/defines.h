@@ -18,7 +18,7 @@
 #define WEST 3
 #define SINK 4
 
-struct __attribute__((__packed__)) pixel {
+struct pixel {
     uint32_t height;
     uint32_t excess_flow;
     uint32_t pixel_value;
@@ -26,14 +26,14 @@ struct __attribute__((__packed__)) pixel {
     int32_t capacities[NUM_NEIGHBOURS + 1]; // NESW edge max capacities: -1 == no edge
 };
 
-struct __attribute__((__packed__)) terminal { // Source/Sink
+struct terminal { // Source/Sink
     uint32_t height;
     uint32_t excess_flow;
     int32_t curr_capacities[NUM_NODES];
     int32_t capacities[NUM_NODES]; // max capacities to each node: -1 == no edge
 };
 
-struct __attribute__((__packed__)) teststruct {
+struct teststruct {
     uint64_t a;
     uint64_t b;
 };

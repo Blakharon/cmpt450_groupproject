@@ -419,7 +419,7 @@ int main(void) {
 
     // Set arguments e.g.,
     *top = 0x0;
-    *arg1 = &(struct teststruct *)pl;
+    *arg1 = &pl;
     
     *top = 1;
     while (*top != 0)

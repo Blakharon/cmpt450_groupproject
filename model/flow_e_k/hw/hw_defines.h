@@ -22,16 +22,16 @@
 #define TOP_ARG7 0x2f000031
 #define TOP_ARG8 0x2f000039
 
-#define Argmax       0x2f000200
-#define Argmax_ARG1  0x2f000201
-#define Argmax_ARG2  0x2f000209
+#define EdmondsKarp       0x2f000200
+#define EdmondsKarp_ARG1  0x2f000201
+#define EdmondsKarp_ARG2  0x2f000209
 // Not required leaving it in here for future extensions
-#define Argmax_ARG3  0x2f000211
-#define Argmax_ARG4  0x2f000219
-#define Argmax_ARG5  0x2f000221
-#define Argmax_ARG6  0x2f000229
-#define Argmax_ARG7  0x2f000231
-#define Argmax_ARG8  0x2f000239
+#define EdmondsKarp_ARG3  0x2f000211
+#define EdmondsKarp_ARG4  0x2f000219
+#define EdmondsKarp_ARG5  0x2f000221
+#define EdmondsKarp_ARG6  0x2f000229
+#define EdmondsKarp_ARG7  0x2f000231
+#define EdmondsKarp_ARG8  0x2f000239
 
 
 // TODO: CHECK THE ADDRESSES HERE ARE WHERE YOU WANT THEM TO BE FOR PERFORMING

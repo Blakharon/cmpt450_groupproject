@@ -22,4 +22,17 @@
 
 const int DIFF[] = {-NUM_COLS, 1, NUM_COLS, -1};
 
+struct node { // Pixel
+    uint32_t height;
+    uint32_t pixel_value;
+    int32_t curr_capacities[NUM_NEIGHBOURS + 1]; // NESW edge current capacities: -1 == no edge
+    int32_t capacities[NUM_NEIGHBOURS + 1]; // NESW edge max capacities: -1 == no edge
+};
+
+struct terminal { // Source/Sink
+    uint32_t height;
+    int32_t curr_capacities[NUM_NODES];
+    int32_t capacities[NUM_NODES]; // max capacities to each node: -1 == no edge
+};
+
 #endif

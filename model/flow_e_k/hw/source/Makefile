@@ -1,4 +1,4 @@
-TARGET=argmax.ll top.ll
+TARGET=edmondskarp.ll top.ll
 %.o : %.c
 	clang -emit-llvm -c -o $@ $<
 %.bc : %.o

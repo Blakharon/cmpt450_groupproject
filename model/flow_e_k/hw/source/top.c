@@ -1,56 +1,27 @@
 #include "../hw_defines.h"
 
-void top(uint64_t m1_addr, uint64_t m2_addr, uint64_t SIZE) {
+void top(uint64_t nodes, uint64_t source, uint64_t flow, uint64_t cut) {
   // Define Device MMRs
-  volatile uint8_t *ArgmaxFlag = (uint8_t *)Argmax;
-  volatile uint64_t *ArgmaxArg1 = (uint64_t *)(Argmax + 1);
-  volatile uint64_t *ArgmaxArg2 = (uint64_t *)(Argmax + 9);
-  volatile uint64_t *ArgmaxArg3 = (uint64_t *)(Argmax + 17);
+  volatile uint8_t *EdmondsKarpFlag = (uint8_t *)EdmondsKarp;
+  volatile uint64_t *EdmondsKarpArg1 = (uint64_t *)(EdmondsKarp_ARG1);
+  volatile uint64_t *EdmondsKarpArg2 = (uint64_t *)(EdmondsKarp_ARG2);
+  volatile uint64_t *EdmondsKarpArg3 = (uint64_t *)(EdmondsKarp_ARG3);
+  volatile uint64_t *EdmondsKarpArg4 = (uint64_t *)(EdmondsKarp_ARG4);
 
-  *ArgmaxFlag = 0x0;
-
-  //   // DMA Data into accelerator
-  volatile uint8_t *DmaFlags = (uint8_t *)(DMA);
-  volatile uint64_t *DmaRdAddr = (uint64_t *)(DMA + 1);
-  volatile uint64_t *DmaWrAddr = (uint64_t *)(DMA + 9);
-  volatile uint32_t *DmaCopyLen = (uint32_t *)(DMA + 17);
-
-  // Defining range of address in scratchpad for input and output.
-  uint64_t SCRATCHPAD_INPUT = ArgmaxSPM;
-  uint64_t SCRATCHPAD_OUTPUT = ArgmaxSPM + 0x24;
-
-  // DRAM to SCRATCHPAD
-  *DmaRdAddr = m1_addr;
-  *DmaWrAddr = ArgmaxSPM;
-  // Bytes to be copied into bytes
-  *DmaCopyLen = 0x24;
-  *DmaFlags = DEV_INIT;
-  //   // Poll DMA for finish
-  while ((*DmaFlags & DEV_INTR) != DEV_INTR)
-    ;
-
+  *EdmondsKarpFlag = 0x0;
   // Set up arguments for accelerator.
-  *ArgmaxArg1 = SCRATCHPAD_INPUT;
-  *ArgmaxArg2 = SCRATCHPAD_OUTPUT;
-  *ArgmaxArg3 = SIZE;
 
-
-  while (*ArgmaxFlag != 0x0)
-    ;
+  *EdmondsKarpArg1 = nodes;
+  *EdmondsKarpArg2 = source;
+  *EdmondsKarpArg3 = flow;
+  *EdmondsKarpArg2 = cut;
   // Start the accelerated function
-  *ArgmaxFlag = DEV_INIT;
-  //  Poll function for finish
-  while ((*ArgmaxFlag & DEV_INTR) != DEV_INTR)
-    ;
-  *ArgmaxFlag = 0x0;
+  *EdmondsKarpFlag = DEV_INIT;
 
-  *DmaRdAddr = SCRATCHPAD_OUTPUT;
-  *DmaWrAddr = m2_addr;
-  *DmaCopyLen = sizeof(TYPE); // Number of bytes to copy back.
-  *DmaFlags = DEV_INIT;
-  // Poll DMA for finish
-  while ((*DmaFlags & DEV_INTR) != DEV_INTR)
+  // Poll function for finish
+  while ((*EdmondsKarpFlag & DEV_INTR) != DEV_INTR)
     ;
+  *EdmondsKarpFlag = 0x0;
 
   return;
 }

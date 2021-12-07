@@ -14,95 +14,204 @@ volatile uint32_t *arg6 = (uint32_t *)0x2f000029;
 volatile uint32_t *arg7 = (uint32_t *)0x2f000031;
 volatile uint32_t *arg8 = (uint32_t *)0x2f000039;
 
-struct node { // Pixel
-    uint32_t height = 0;
-    uint32_t pixel_value;
-    int32_t curr_capacities[NUM_NEIGHBOURS + 1] = {0}; // NESW edge current capacities: -1 == no edge
-    int32_t capacities[NUM_NEIGHBOURS + 1] = {0}; // NESW edge max capacities: -1 == no edge
-};
+// struct node { // Pixel
+//     uint32_t height = 0;
+//     uint32_t pixel_value;
+//     int32_t curr_capacities[NUM_NEIGHBOURS + 1] = {0}; // NESW edge current capacities: -1 == no edge
+//     int32_t capacities[NUM_NEIGHBOURS + 1] = {0}; // NESW edge max capacities: -1 == no edge
+// };
 
-struct terminal { // Source/Sink
-    uint32_t height = 0;
-    int32_t curr_capacities[NUM_NODES] = {0};
-    int32_t capacities[NUM_NODES] = {0}; // max capacities to each node: -1 == no edge
-};
+// struct terminal { // Source/Sink
+//     uint32_t height = 0;
+//     int32_t curr_capacities[NUM_NODES] = {0};
+//     int32_t capacities[NUM_NODES] = {0}; // max capacities to each node: -1 == no edge
+// };
 
 // startNode = NUM_NODES+1
 // endNode = NUM_NODES
-int breadthFirstSearch(node* nodeList, int* parentsList, terminal* source)
-{
-    int currentPathCapacity[NUM_NODES] = {0};
+// int breadthFirstSearch(node* nodeList, int* parentsList, terminal* source)
+// {
+//     int currentPathCapacity[NUM_NODES] = {0};
     
-    for(int i=0; i<NUM_NODES+1; i++){
-      parentsList[i] = -1;
-    }
+//     for(int i=0; i<NUM_NODES+1; i++){
+//       parentsList[i] = -1;
+//     }
 
-    // queue<int> q;
-    int q[NUM_NODES+3];
-    int qs=0, qe=0;
+//     // queue<int> q;
+//     int q[NUM_NODES+3];
+//     int qs=0, qe=0;
 
-    // Perform manual first push of BFS
-    for(int i=0; i<NUM_NODES; ++i){
-      if (source->capacities[i]>0) {
-        currentPathCapacity[i] = source->capacities[i];
-        parentsList[i] = NUM_NODES+1;
-        q[qe++] = i;
-      }
-    }
+//     // Perform manual first push of BFS
+//     for(int i=0; i<NUM_NODES; ++i){
+//       if (source->capacities[i]>0) {
+//         currentPathCapacity[i] = source->capacities[i];
+//         parentsList[i] = NUM_NODES+1;
+//         q[qe++] = i;
+//       }
+//     }
 
 
-    // while(!q.empty())
-    while(qs<qe)
-    {
-        #define min(a,b) ((a)<(b)?(a):(b))
+//     // while(!q.empty())
+//     while(qs<qe)
+//     {
+//         #define min(a,b) ((a)<(b)?(a):(b))
 
-        int currentNode = q[qs++];
+//         int currentNode = q[qs++];
 
-        // Check if it can see sink
-        if (nodeList[currentNode].capacities[SINK]>0) {
-            parentsList[NUM_NODES] = currentNode;
-            return min(currentPathCapacity[currentNode], nodeList[currentNode].capacities[SINK]);
-        }
+//         // Check if it can see sink
+//         if (nodeList[currentNode].capacities[SINK]>0) {
+//             parentsList[NUM_NODES] = currentNode;
+//             return min(currentPathCapacity[currentNode], nodeList[currentNode].capacities[SINK]);
+//         }
 
-        // Otherwise, try other edges
-        for (int i=0; i<NUM_NEIGHBOURS; ++i) {
-            int to = currentNode+DIFF[i];
-            if (nodeList[currentNode].capacities[i] > 0 && parentsList[to] == -1)
-            {
-                parentsList[to] = currentNode;
-                currentPathCapacity[to] = min(currentPathCapacity[currentNode], nodeList[currentNode].capacities[i]);
-                q[qe++] = to;
-            }
-        }
+//         // Otherwise, try other edges
+//         for (int i=0; i<NUM_NEIGHBOURS; ++i) {
+//             int to = currentNode+DIFF[i];
+//             if (nodeList[currentNode].capacities[i] > 0 && parentsList[to] == -1)
+//             {
+//                 parentsList[to] = currentNode;
+//                 currentPathCapacity[to] = min(currentPathCapacity[currentNode], nodeList[currentNode].capacities[i]);
+//                 q[qe++] = to;
+//             }
+//         }
 
-    }
+//     }
     
-    return 0;
-}
+//     return 0;
+// }
 
-int edmondsKarp(node* nodeList, terminal* source)
-{
+// void edmondsKarp(node* nodeList, terminal* source, int32_t* flow, int8_t* cut)
+// {
+//     int maxFlow = 0;
+
+//     int parentsList[NUM_NODES+2];
+
+//     // Keep filling up all paths until maximum flow is reached
+//     while(true)
+//     {
+//         int f = breadthFirstSearch(nodeList, parentsList, source);
+
+//         // printf("flow: %d\n", flow);
+
+//         if (f == 0)
+//         {
+//             break;
+//         }
+
+//         maxFlow += f;
+
+//         // Perform sink stuff manually
+//         int prev = parentsList[NUM_NODES]; // Parent of sink
+//         nodeList[prev].capacities[SINK] -= f;
+
+//         int curr = prev;
+//         prev = parentsList[curr];
+        
+//         // Backtrack regularly
+//         while(prev != NUM_NODES+1)
+//         {
+//             for (int i = 0; i < NUM_NEIGHBOURS; ++i) 
+//             {
+//                 if (curr - prev == DIFF[i])
+//                 {
+//                     nodeList[prev].capacities[i] -= f;
+//                     nodeList[curr].capacities[i^0x2] += f;
+//                 }
+//             }
+            
+//             curr = prev;
+//             prev = parentsList[curr];
+//         }
+
+//         // Perform source stuff manually
+//         source->capacities[curr] -= f;
+//     }
+
+//     // printf("Foreground:\n");
+//     for(int i=0; i<NUM_NODES; ++i)
+//     {
+//         cut[i] = parentsList[i] != -1;
+//         // if (parentsList[i] != -1) {
+//         //     // printf("%d\n", i);
+//         //     cut[i] = 1;
+//         // }
+//     }
+
+//     *flow = maxFlow;
+
+// }
+
+void edmondskarp(struct node* nodes, struct terminal* source, int32_t* flow, int32_t* cut) {
     int maxFlow = 0;
 
     int parentsList[NUM_NODES+2];
 
     // Keep filling up all paths until maximum flow is reached
-    while(true)
+    while(1)
     {
-        int flow = breadthFirstSearch(nodeList, parentsList, source);
+        // Perform Breadth-First Search
+        int f = 0;
+        {
+            int currentPathCapacity[NUM_NODES];
+    
+            #pragma clang loop unroll_count(NUM_NODES+1)
+            for(int i=0; i<NUM_NODES+1; i++){
+                parentsList[i] = -1;
+            }
 
+            int q[NUM_NODES+3];
+            int qs=0, qe=0;
+
+            // Perform manual first push of BFS
+            // #pragma clang loop unroll_count(NUM_NODES)
+            for(int i=0; i<NUM_NODES; ++i){
+                if (source->capacities[i]>0) {
+                    currentPathCapacity[i] = source->capacities[i];
+                    parentsList[i] = NUM_NODES+1;
+                    q[qe++] = i;
+                }
+            }
+
+            // while(!q.empty())
+            while(qs<qe)
+            {
+                #define min(a,b) ((a)<(b)?(a):(b))
+
+                int currentNode = q[qs++];
+
+                // Check if it can see sink
+                if (nodes[currentNode].capacities[SINK]>0) {
+                    parentsList[NUM_NODES] = currentNode;
+                    f = min(currentPathCapacity[currentNode], nodes[currentNode].capacities[SINK]);
+                    break;
+                }
+
+                // Otherwise, try other edges
+                // #pragma clang loop unroll_count(NUM_NEIGHBOURS)
+                for (int i=0; i<NUM_NEIGHBOURS; ++i) {
+                    int to = currentNode+DIFF[i];
+                    if (nodes[currentNode].capacities[i] > 0 && parentsList[to] == -1)
+                    {
+                        parentsList[to] = currentNode;
+                        currentPathCapacity[to] = min(currentPathCapacity[currentNode], nodes[currentNode].capacities[i]);
+                        q[qe++] = to;
+                    }
+                }
+            }
+        }
+        
         // printf("flow: %d\n", flow);
 
-        if (flow == 0)
+        if (f == 0)
         {
             break;
         }
 
-        maxFlow += flow;
+        maxFlow += f;
 
         // Perform sink stuff manually
         int prev = parentsList[NUM_NODES]; // Parent of sink
-        nodeList[prev].capacities[SINK] -= flow;
+        nodes[prev].capacities[SINK] -= f;
 
         int curr = prev;
         prev = parentsList[curr];
@@ -114,8 +223,8 @@ int edmondsKarp(node* nodeList, terminal* source)
             {
                 if (curr - prev == DIFF[i])
                 {
-                    nodeList[prev].capacities[i] -= flow;
-                    nodeList[curr].capacities[i^0x2] += flow;
+                    nodes[prev].capacities[i] -= f;
+                    nodes[curr].capacities[i^0x2] += f;
                 }
             }
             
@@ -124,29 +233,44 @@ int edmondsKarp(node* nodeList, terminal* source)
         }
 
         // Perform source stuff manually
-        source->capacities[curr] -= flow;
+        source->capacities[curr] -= f;
     }
 
-    printf("Foreground:\n");
+    // printf("Foreground:\n");
     for(int i=0; i<NUM_NODES; ++i)
     {
-        if (parentsList[i] != -1) {
-            printf("%d\n", i);
-        }
+        // cut[i] = (parentsList[i] != -1);
+        cut[i] = 1;
+
+        // if (parentsList[i] != -1) {
+        //     // printf("%d\n", i);
+        //     cut[i] = 1;
+        // }
     }
 
-    return maxFlow;
+    *flow = maxFlow;
 }
 
 int main(void) {
     TYPE* base = (TYPE*) 0x80100000;
+    int64_t base2 = 0x80200000;
+    
+    // Input
+    node* nodes = (node*) base2;
+    uint64_t nodes_size = sizeof(node) * NUM_NODES;
 
-    for (int i = 0; i < 50; i++) {
-        printf("%d   \n", base[i]);
+    terminal* source = (terminal*) base2 + nodes_size;
+    
+    // Output
+    int32_t* flow = (int32_t*) 0x80500000;
+    int32_t* cut = (int32_t*) 0x80500000 + sizeof(int32_t);
+
+    for (int i = 0; i < 2*NUM_NODES; i++) {
+        printf("%03d\n", base[i]);
     }
 
-    node nodes[NUM_NODES];
-    terminal source; // Source has no bi-directional (startpoint) // ai
+    // node nodes[NUM_NODES];
+    // terminal source; // Source has no bi-directional (startpoint) // ai
     // terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
 
     //============= Graph Creation =====================
@@ -163,7 +287,7 @@ int main(void) {
     // }
 
     // Set pixels to input values
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < NUM_NODES; i++) {
         nodes[i].pixel_value = base[i] >> 2;
     }
     
@@ -176,9 +300,9 @@ int main(void) {
         // } else {
         //     source.capacities[i] = 2;
         // }
-        source.capacities[i] = base[i+25];
+        source->capacities[i] = base[i+25];
         
-        source.curr_capacities[i] = 0;
+        source->curr_capacities[i] = 0;
     }
     
     // Set max capacities of each pixel's neighbours: 255 - |neighbour.pixel_value - curr.pixel_value|
@@ -217,7 +341,7 @@ int main(void) {
             }
             
             // Set capacity to sink (bi): 255 - ai
-            curr_node.capacities[SINK] = 255 - source.capacities[curr_node_i];
+            curr_node.capacities[SINK] = 255 - source->capacities[curr_node_i];
         }
     }
 
@@ -229,8 +353,29 @@ int main(void) {
     // ;
 
     // Run Edmonds
-    int f = edmondsKarp(nodes, &source);
-    printf("Flow: %d\n", f);
+    // edmondskarp(nodes, source, flow, cut);
+    // printf("f:%d\n", *flow);
+
+    /* Run Accelerator */
+
+    // Set arguments e.g.,
+    *top = 0x0;
+    *arg1 = (uint32_t)(void *) nodes;
+    *arg2 = (uint32_t)(void *) source;
+    *arg3 = (uint32_t)(void *) flow;
+    *arg4 = (uint32_t)(void *) cut;
+        
+    *top = 0x01;
+    int count = 0;
+    while (*top != 0)
+        count++;
+    printf("c:%d\n", count);
+    // printf("%d   \n", *pl); 
+
+    for(int i=0; i<NUM_NODES; ++i) {
+        printf("%d %d\n", cut[i], i);
+    }
+    printf("Flow: %d\n", *flow);
 
     m5_dump_stats();
     m5_exit();

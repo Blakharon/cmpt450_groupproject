@@ -311,7 +311,7 @@ int main(void) {
     m5_reset_stats();
     //================================ Start accelerator ==========================
 
-    TYPE base = 0x80100000;
+    int64_t base = 0x80200000;
     TYPE *pl = (TYPE *)base;
 
     // Set arguments e.g.,

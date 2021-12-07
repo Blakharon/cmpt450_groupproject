@@ -418,7 +418,8 @@ int main(void) {
     pl->b = 70;
 
     volatile uint8_t *top = (uint8_t *)0x2f000000;
-    volatile struct teststruct *arg1 = (struct teststruct *)0x2f000001 = pl;
+    volatile struct teststruct *arg1 = (struct teststruct *)0x2f000001;
+    arg1 = pl;
 
     // Set arguments e.g.,
     *top = 0x0;

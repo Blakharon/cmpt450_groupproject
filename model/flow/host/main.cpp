@@ -413,12 +413,14 @@ int main(void) {
     //================================ Start accelerator ==========================
 
     TYPE base2 = 0x80200000;
-    struct teststruct *pl = (struct teststruct *)base;
-    pl->a = 69;
-    pl->b = 70;
+    //struct teststruct *pl = (struct teststruct *)base;
+    //pl->a = 69;
+    //pl->b = 70;
+    uint32_t *pl = (uint32_t *)base;
+    *pl = 69;
     
     printf("%d   \n", pl->a); 
-    printf("%d   \n", pl->b);
+    //printf("%d   \n", pl->b);
 
     // Set arguments e.g.,
     *top = 0x0;
@@ -429,7 +431,7 @@ int main(void) {
     ;
 
     printf("%d   \n", pl->a); 
-    printf("%d   \n", pl->b); 
+    //printf("%d   \n", pl->b); 
 
     m5_dump_stats();
     m5_exit();

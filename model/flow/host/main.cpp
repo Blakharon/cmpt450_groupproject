@@ -470,7 +470,8 @@ int main(void) {
     while (*top != 0)
     ;
 
-    printf("%d   \n", *pl); 
+    printf("%d   \n", pl->a); 
+    printf("%d   \n", pl->b); 
 
     m5_dump_stats();
     m5_exit();

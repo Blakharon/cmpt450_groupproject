@@ -16,33 +16,33 @@ volatile uint32_t *arg7 = (uint32_t *)0x2f000031;
 volatile uint32_t *arg8 = (uint32_t *)0x2f000039;
 
 struct pixel {
-    uint32_t height = 0;
-    uint32_t excess_flow = 0;
+    uint32_t height;
+    uint32_t excess_flow;
     uint32_t pixel_value;
     int32_t curr_capacities[NUM_NEIGHBOURS + 1]; // NESW edge current capacities: -1 == no edge
     int32_t capacities[NUM_NEIGHBOURS + 1]; // NESW edge max capacities: -1 == no edge
 };
 
 struct terminal { // Source/Sink
-    uint32_t height = 0;
-    uint32_t excess_flow = 0;
+    uint32_t height;
+    uint32_t excess_flow;
     int32_t curr_capacities[NUM_NODES];
     int32_t capacities[NUM_NODES]; // max capacities to each node: -1 == no edge
 };
 
 // residual flow for each edge: [FROM][TO]
 // Source_idx = NUM_NODES, Sink_idx = NUM_NODES + 1
-int residual_flows[(NUM_NODES+2) * (NUM_NODES+2)];
 
 pixel nodes[NUM_NODES]; // Pixels
-int flagged_nodes[NUM_NODES];
+pixel res_nodes[NUM_NODES]; // Residual graph
 terminal source; // Source has no bi-directional (startpoint) // ai
 terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
+terminal res_source; // Nodes->source residual flow
 
 // Returns what node is overflowing
 int overFlowNode(int node) { 
     for (int i = 0; i < NUM_NODES; i++) {
-        if (nodes[i].excess_flow > 0 && flagged_nodes[i] != 1) {
+        if (nodes[i].excess_flow > 0) {
             return i;
         }
     }
@@ -51,39 +51,36 @@ int overFlowNode(int node) {
     return -1;
 }
 
-void updateResidualFlow(int node, int neighbour_idx, int flow) {
-
-    if (neighbour_idx == -1) {    
-        neighbour_idx = NUM_NODES + 1;
-    }
-    
-    int residual_idx = (neighbour_idx * (NUM_NODES + 2)) + node;
-    
-    // Initialize residual edge
-    if (residual_flows[residual_idx] == -1) {
-        residual_flows[residual_idx] = 0;
-    }
-    
-    residual_flows[residual_idx] -= flow;
-}
-
-bool relabel(int node) {
+void relabel(int node) {
     int min_height = INT_MAX;
-    bool relabelled = true;
     int continue_count = 0;
     
-    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
-        int neighbour_idx; // -1 == sink
+    if (nodes[node].curr_capacities[SINK] != nodes[node].capacities[SINK]) {
+        // Update height of node
+        nodes[node].height = sink.height + 1;
+        
+        return; //Relabelled the node to 1 higher than sink since there's space to push there
+    }
+    
+    min_height = INT_MAX;
+    
+    // Check for capacities to neighbours and relabel them if there is space
+    for (int i = 0; i < NUM_NEIGHBOURS; i++) {
+        int neighbour_idx;
         if (i == 0) { // North neighbour
             neighbour_idx = node - NUM_COLS;
         } else if (i == 1) { // East neighbour
             neighbour_idx = node + 1;
         } else if (i == 2) { // South neighbour
             neighbour_idx = node + NUM_COLS;
-        } else if (i == 3) { // West neighbour
+        } else { // West neighbour
             neighbour_idx = node - 1;
-        } else { // Sink
-            neighbour_idx = -1;
+        }
+        
+        // No neighbour
+        if (nodes[node].capacities[i] == -1) {
+            continue_count++;
+            continue;
         }
         
         // If flow is == to capacity then skip relabelling
@@ -92,88 +89,211 @@ bool relabel(int node) {
             continue;
         }
         
-        if (neighbour_idx != -1) {
+        if (nodes[neighbour_idx].height < min_height) {
+            min_height = nodes[neighbour_idx].height;
+            
+            // Update height of node
+            nodes[node].height = min_height + 1;
+        }
+    }
+    
+    // Capacites for all neighbours full, try residual graph
+    if (continue_count == NUM_NEIGHBOURS) {
+        continue_count = 0;
+    
+        for (int i = 0; i < NUM_NEIGHBOURS; i++) {
+            int neighbour_idx;
+            if (i == 0) { // North neighbour
+                neighbour_idx = node - NUM_COLS;
+            } else if (i == 1) { // East neighbour
+                neighbour_idx = node + 1;
+            } else if (i == 2) { // South neighbour
+                neighbour_idx = node + NUM_COLS;
+            } else { // West neighbour
+                neighbour_idx = node - 1;
+            }
+            
+            // No neighbour
+            if (nodes[node].capacities[i] == -1) {
+                continue_count++;
+                continue;
+            }
+            
+            // If residual flows <= 0, either there is no residual edge or it is maxed out
+            if (res_nodes[node].curr_capacities[i] <= 0) {
+                continue_count++;
+                continue;
+            }
+            
             if (nodes[neighbour_idx].height < min_height) {
                 min_height = nodes[neighbour_idx].height;
                 
                 // Update height of node
                 nodes[node].height = min_height + 1;
             }
-        } else {
-            if (sink.height < min_height) {
-                min_height = sink.height;
-                
-                // Update height of node
-                nodes[node].height = min_height + 1;
-            }
         }
     }
     
-    if (continue_count == NUM_NEIGHBOURS+1) {
-        relabelled = false;
+    // Residuals all full so change height to 1 higher than source
+    if (continue_count == NUM_NEIGHBOURS) {
+        nodes[node].height = source.height + 1;
     }
-    
-    return relabelled;
+}
+
+void updateResidualFlow(int node, int neighbour, int flow) {
+    //initialize residual edge
+    if (res_nodes[node].curr_capacities[neighbour] == -1) {
+        res_nodes[node].curr_capacities[neighbour] = 0;
+    }
+
+    res_nodes[node].curr_capacities[neighbour] += flow;
+    //printf("Updated residual edge: %d\n", res_nodes[node].curr_capacities[neighbour]);
 }
 
 bool push(int node) {
-    // Go through all neighbours
-    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+    int continue_count = 0;
+
+    // Try pushing to sink first
+    if (nodes[node].curr_capacities[SINK] < nodes[node].capacities[SINK]) {
+        int flow;
+        int edge_flow_left = nodes[node].capacities[SINK] - nodes[node].curr_capacities[SINK];
+        
+        if (nodes[node].excess_flow > edge_flow_left) {
+            flow = edge_flow_left;
+        } else {
+            flow = nodes[node].excess_flow;
+        }
+        
+        // Reduce excess flow from node since we're moving it to neighbour
+        nodes[node].excess_flow -= flow;
+        
+        // Increase excess flow for sink
+        sink.excess_flow += flow;
+        
+        // Add flow to sink edge
+        nodes[node].curr_capacities[SINK] += flow;
+        
+        //printf("Pushing to sink: %d\n", flow);
+        
+        // If we actually pushed to the sink, return true
+        if (flow > 0) {
+            return true;
+        }
+    }
+
+    // Go through all neighbours of node except sink
+    for (int i = 0; i < NUM_NEIGHBOURS; i++) {
         // No neighbour
+        
+        //printf("Neighbour %d curr/capacity: %d/%d\n", i, nodes[node].curr_capacities[i], nodes[node].capacities[i]);
         if (nodes[node].capacities[i] == -1) {
+            continue_count++;
             continue;
         }
     
-        // Flow is maxed out already, can't push
+        // Flow is maxed out already, can't push to this neighbour
         if (nodes[node].curr_capacities[i] == nodes[node].capacities[i]) {
+            continue_count++;
             continue;
         }
         
-        int neighbour_idx; // -1 == sink
+        int neighbour_idx;
         if (i == 0) { // North neighbour
             neighbour_idx = node - NUM_COLS;
         } else if (i == 1) { // East neighbour
             neighbour_idx = node + 1;
         } else if (i == 2) { // South neighbour
             neighbour_idx = node + NUM_COLS;
-        } else if (i == 3) { // West neighbour
+        } else { // West neighbour
             neighbour_idx = node - 1;
-        } else { // Sink
-            neighbour_idx = -1;
         }
         
-        // Check sink for height value
-        if (neighbour_idx == -1) {
-            // Push only if curr_height is bigger than sink
-            if (nodes[node].height > sink.height) {
-                int flow;
-                int edge_flow_left = nodes[node].capacities[i] - nodes[node].curr_capacities[i];
-                
-                if (nodes[node].excess_flow > edge_flow_left) {
-                    flow = edge_flow_left;
-                } else {
-                    flow = nodes[node].excess_flow;
-                }
-                
-                // Reduce excess flow from node since we're moving it to neighbour
-                nodes[node].excess_flow -= flow;
-                
-                // Increase excess flow for sink
-                sink.excess_flow += flow;
-                
-                // Add flow to neighbour edge
-                nodes[node].curr_capacities[i] += flow;
-                
-                // Update residual flow
-                updateResidualFlow(node, neighbour_idx, flow);
-                
-                return true;
+        //printf("Trying to push to neighbour: %d\n", i);
+        
+        int neighbour_height = nodes[neighbour_idx].height;
+        //printf("Neighbour height: %d\n", neighbour_height);
+        
+        // Check neighbours for height values
+        // Push only if curr_height is bigger than neighbour
+        if (nodes[node].height > neighbour_height) {
+            int flow;
+            int edge_flow_left = nodes[node].capacities[i] - nodes[node].curr_capacities[i];
+            
+            if (nodes[node].excess_flow > edge_flow_left) {
+                flow = edge_flow_left;
+            } else {
+                flow = nodes[node].excess_flow;
             }
-        } else { // Check neighbours for height values
+            
+            // Reduce excess flow from node since we're moving it to neighbour
+            nodes[node].excess_flow -= flow;
+            
+            // Increase excess flow for neighbour
+            nodes[neighbour_idx].excess_flow += flow;
+            
+            // Add flow to neighbour edge
+            nodes[node].curr_capacities[i] += flow;
+            
+            // Update residual flow
+            int residual_neighbour;
+            if (i == NORTH) {
+                residual_neighbour = SOUTH;
+            } else if (i == SOUTH) {
+                residual_neighbour = NORTH;
+            } else if (i == EAST) {
+                residual_neighbour = WEST;
+            } else {
+                residual_neighbour = EAST;
+            }
+            updateResidualFlow(neighbour_idx, residual_neighbour, flow);
+            
+            //printf("Pushing flow: %d\n", flow);
+            
+            return true;
+        }
+    }
+    
+    // Flow has been maxed out on all edges, so try pushing in the residual graph
+    //printf("Push continue count before residuals: %d\n", continue_count);
+    if (continue_count == NUM_NEIGHBOURS) {
+        continue_count = 0;
+        
+        for (int i = 0; i < NUM_NEIGHBOURS; i++) {
+            //printf("Neighbour %d residual curr/capacity: %d/%d\n", i, res_nodes[node].curr_capacities[i], res_nodes[node].capacities[i]);
+            // No neighbour
+            if (nodes[node].capacities[i] == -1) {
+                continue_count++;
+                continue;
+            }
+            
+            int neighbour_idx;
+            if (i == 0) { // North neighbour
+                neighbour_idx = node - NUM_COLS;
+            } else if (i == 1) { // East neighbour
+                neighbour_idx = node + 1;
+            } else if (i == 2) { // South neighbour
+                neighbour_idx = node + NUM_COLS;
+            } else { // West neighbour
+                neighbour_idx = node - 1;
+            }
+            
+            // Flow is maxed out already on residual or there is no residual, can't push to this neighbour
+            if (res_nodes[node].curr_capacities[i] <= 0) {
+                continue_count++;
+                continue;
+            }
+            
+            //printf("Trying to push to residual neighbour: %d\n", i);
+            //printf("Residual neighbour currcapacity: %d\n", res_nodes[node].curr_capacities[i]);
+            
+            int neighbour_height = nodes[neighbour_idx].height;
+            //printf("Residual Neighbour height: %d\n", neighbour_height);
+            
+            // Check neighbours for height values
             // Push only if curr_height is bigger than neighbour
-            if (nodes[node].height > nodes[neighbour_idx].height) {
+            if (nodes[node].height > neighbour_height) {
                 int flow;
-                int edge_flow_left = nodes[node].capacities[i] - nodes[node].curr_capacities[i];
+                int edge_flow_left = res_nodes[node].curr_capacities[i];
                 
                 if (nodes[node].excess_flow > edge_flow_left) {
                     flow = edge_flow_left;
@@ -188,14 +308,42 @@ bool push(int node) {
                 nodes[neighbour_idx].excess_flow += flow;
                 
                 // Add flow to neighbour edge
-                nodes[node].curr_capacities[i] += flow;
-                
-                // Update residual flow
-                updateResidualFlow(node, neighbour_idx, flow);
+                res_nodes[node].curr_capacities[i] -= flow;
+                //printf("Pushing residual flow: %d\n", flow);
                 
                 return true;
             }
         }
+    }
+    
+    // Residual flows maxed out, push back to source
+    if (continue_count == NUM_NEIGHBOURS) {
+        int flow;
+        int edge_flow_left = res_source.curr_capacities[node];
+        
+        if (nodes[node].excess_flow > edge_flow_left) {
+            flow = edge_flow_left;
+        } else {
+            flow = nodes[node].excess_flow;
+        }
+        
+        // Reduce excess flow from node since we're moving it to neighbour
+        nodes[node].excess_flow -= flow;
+        
+        // Increase excess flow for sink
+        source.excess_flow += flow;
+        
+        // Add flow to sink edge
+        res_source.curr_capacities[node] -= flow;
+        
+        //printf("Pushing back to source: %d\n", flow);
+        // If we actually pushed to the sink, return true
+        if (flow > 0) {
+            return true;
+        }
+        
+        //printf("Couldnt push back to source\n");
+        //printf("Excess flow left: %d\n", nodes[node].excess_flow);
     }
     
     return false;
@@ -208,50 +356,47 @@ void preflow() {
     for (int i = 0; i < NUM_NODES; i++) {
         // Set flow == capacity for edges from source
         source.curr_capacities[i] = source.capacities[i];
+        res_source.curr_capacities[i] = source.capacities[i];
         // Set excess flow for node == capacity
         nodes[i].excess_flow = source.capacities[i];
-        // Initialize residual for edge from node->source
-        residual_flows[i*(NUM_NODES+2) + NUM_NODES] = 0;
+        //printf("Starting excess flow %d: %d\n", i, nodes[i].excess_flow);
     }
 }
 
 int main(void) {
-    TYPE* base = (TYPE*) 0x80100000;
 
-    for (int i = 0; i < 50; i++) {
-        printf("%d   \n", base[i]);
-    }
+    int base[NUM_NODES*2] = {0,127,127,127,0,127,195,195,195,127,127,195,255,195,127,127,195,195,195,127,0,127,127,127,0,
+    0,0,119,0,0,0,119,255,119,0,119,255,255,255,119,0,119,255,119,0,0,0,119,0,0};
+    
+    //int base[8] = {4,255,255,255,
+    //    4,255,255,255};
 
     //============= Graph Creation =====================
-
-    // Create a clear division between pixels
-    // // Set half of pixels to white
-    // for (int i = 0; i < 13; i++) {
-    //     nodes[i].pixel_value = 200; // 255 = white
-    // }
     
-    // // Set other half to black
-    // for (int i = 13; i < NUM_NODES; i++) { 
-    //     nodes[i].pixel_value = 50; // 0 = black
-    // }
+    sink.height = -1;
+    // Initialize no edges to each node
+    for (int i = 0; i < NUM_NODES; i++) {
+        for (int j = 0; j < NUM_NEIGHBOURS + 1; j++) {
+            nodes[i].curr_capacities[j] = -1;
+            nodes[i].capacities[j] = -1;
+            res_nodes[i].curr_capacities[j] = -1;
+            res_nodes[i].capacities[j] = -1;
+        }
+    }
 
-    // Set pixels to input values
-    for (int i = 0; i < 25; i++) {
+    // Set pixels to input values and residuals
+    for (int i = 0; i < NUM_NODES; i++) {
         nodes[i].pixel_value = base[i] >> 2;
+        res_nodes[i].pixel_value = base[i] >> 2;
     }
     
-    // Set source->node capacities (ai) 
+    // Set source->node capacities (ai) and residuals node->source capacities
     for (int i = 0; i < NUM_NODES; i++) {
-        // if (nodes[i].pixel_value == 255) { // white
-        //     source.capacities[i] = 255;
-        // } else if (nodes[i].pixel_value == 0) { // black
-        //     source.capacities[i] = 0;
-        // } else {
-        //     source.capacities[i] = 2;
-        // }
-        source.capacities[i] = base[i+25];
+        source.capacities[i] = base[i+NUM_NODES];
+        res_source.capacities[i] = base[i+NUM_NODES];
         
         source.curr_capacities[i] = 0;
+        res_source.curr_capacities[i] = 0;
     }
     
     // Set max capacities of each pixel's neighbours: 255 - |neighbour.pixel_value - curr.pixel_value|
@@ -259,6 +404,7 @@ int main(void) {
         for (int col = 0; col < NUM_COLS; col++) {
             int curr_node_i = col + row*NUM_COLS;
             pixel& curr_node = nodes[curr_node_i];
+            pixel& curr_res_node = res_nodes[curr_node_i];
             
             #define abs(a) ((a)<0?(-a):(a))
 
@@ -274,23 +420,27 @@ int main(void) {
                 pixel n_neighbour = nodes[col + (row - 1)*NUM_COLS];
                 curr_node.capacities[NORTH] = 63 - abs(curr_node.pixel_value - n_neighbour.pixel_value);
                 curr_node.curr_capacities[NORTH] = 0;
+                
             }
             
             // Check E neighbour
             if (col != NUM_COLS - 1) {
                 pixel e_neighbour = nodes[(col + 1) + row*NUM_COLS];
                 curr_node.capacities[EAST] = 63 - abs(curr_node.pixel_value - e_neighbour.pixel_value);
-                curr_node.curr_capacities[WEST] = 0;
+                curr_node.curr_capacities[EAST] = 0;
             }
             
             // Check S neighbour
             if (row != NUM_ROWS - 1) {
                 pixel s_neighbour = nodes[col + (row + 1)*NUM_COLS];
                 curr_node.capacities[SOUTH] = 63 - abs(curr_node.pixel_value - s_neighbour.pixel_value);
+                curr_node.curr_capacities[SOUTH] = 0;
             }
             
             // Set capacity to sink (bi): 255 - ai
+            curr_node.curr_capacities[SINK] = 0;
             curr_node.capacities[SINK] = 255 - source.capacities[curr_node_i];
+            //printf("sink capacities: %d\n", 255 - source.capacities[curr_node_i]);
         }
     }
     
@@ -301,18 +451,13 @@ int main(void) {
     int node = 0;
     while (overFlowNode(node) != -1) {
         int node = overFlowNode(node);
+        //printf("\n\nnode: %d\n", node);
+        //printf("height: %d\n", nodes[node].height);
         if (!push(node)) {
-            if(!relabel(node)) {
-                flagged_nodes[node] = 1;
-            }
+            relabel(node);
         }
     }
     
-    for (int i = 0; i < NUM_NODES; i++) {
-        printf("\ncurr capacity from source %d: %d\n", i, source.curr_capacities[i]);
-        printf("curr capacity to sink %d: %d\n", i, nodes[i].curr_capacities[SINK]);
-        printf("max capacity to sink %d: %d\n", i, nodes[i].capacities[SINK]);
-    }
     
     printf("Max flow: %d\n", sink.excess_flow);
 

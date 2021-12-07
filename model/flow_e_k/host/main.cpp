@@ -207,13 +207,14 @@ int main(void) {
             if (col != NUM_COLS - 1) {
                 node e_neighbour = nodes[(col + 1) + row*NUM_COLS];
                 curr_node.capacities[EAST] = 63 - abs(curr_node.pixel_value - e_neighbour.pixel_value);
-                curr_node.curr_capacities[WEST] = 0;
+                curr_node.curr_capacities[EAST] = 0;
             }
             
             // Check S neighbour
             if (row != NUM_ROWS - 1) {
                 node s_neighbour = nodes[col + (row + 1)*NUM_COLS];
                 curr_node.capacities[SOUTH] = 63 - abs(curr_node.pixel_value - s_neighbour.pixel_value);
+                curr_node.curr_capacities[SOUTH] = 0;
             }
             
             // Set capacity to sink (bi): 255 - ai

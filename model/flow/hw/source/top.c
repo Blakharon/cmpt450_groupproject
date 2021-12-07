@@ -8,7 +8,7 @@ void top(uint64_t pl_arg1) {
   *PushrelabelFlag = 0x0;
   // Set up arguments for accelerator.
 
-  *PushrelabelArg1 = pl_arg1;
+  PushrelabelArg1 = (struct teststruct *)pl_arg1;
   // Start the accelerated function
   *PushrelabelFlag = DEV_INIT;
 

@@ -433,7 +433,7 @@ int main(void) {
             //printf("sink capacities: %d\n", 255 - source.capacities[curr_node_i]);
         }
     }
-    
+    m5_reset_stats();
     //========== Push-relabel algorithm ====================
     preflow();
     
@@ -451,7 +451,6 @@ int main(void) {
     
     printf("Max flow: %d\n", sink.excess_flow);
 
-    m5_reset_stats();
     //================================ Start accelerator ==========================
 
     TYPE base2 = 0x80200000;

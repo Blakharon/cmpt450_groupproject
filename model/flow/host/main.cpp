@@ -320,7 +320,7 @@ int main(void) {
     TYPE *base = (TYPE *)0x80100000;
 
     for (int i = 0; i < NUM_NODES*2; i++) {
-        printf("%d   \n", base[i]);
+        //printf("%d   \n", base[i]);
     }
 
     //============= Graph Creation =====================
@@ -408,7 +408,7 @@ int main(void) {
     }
     
     
-    printf("Max flow: %d\n", sink.excess_flow);
+    //printf("Max flow: %d\n", sink.excess_flow);
 
     //================================ Start accelerator ==========================
 

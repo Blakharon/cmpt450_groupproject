@@ -417,7 +417,7 @@ int main(void) {
     //pl->a = 69;
     //pl->b = 70;
     struct teststruct *pl = (struct teststruct *)base;
-    *pl->a = 69;
+    pl->a = 69;
     
     printf("%d   \n", pl->a); 
     //printf("%d   \n", pl->b);

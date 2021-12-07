@@ -349,7 +349,7 @@ void preflow() {
 }
 
 int main(void) {
-    TYPE base = 0x80100000;
+    TYPE *base = (TYPE *)0x80100000;
 
     for (int i = 0; i < NUM_NODES*2; i++) {
         printf("%d   \n", base[i]);

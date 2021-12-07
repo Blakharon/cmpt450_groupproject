@@ -6,14 +6,7 @@
 #include <limits.h>
 
 volatile uint8_t *top = (uint8_t *)0x2f000000;
-volatile uint32_t *arg1 = (uint32_t *)0x2f000001;
-volatile uint32_t *arg2 = (uint32_t *)0x2f000009;
-volatile uint32_t *arg3 = (uint32_t *)0x2f000011;
-volatile uint32_t *arg4 = (uint32_t *)0x2f000019;
-volatile uint32_t *arg5 = (uint32_t *)0x2f000021;
-volatile uint32_t *arg6 = (uint32_t *)0x2f000029;
-volatile uint32_t *arg7 = (uint32_t *)0x2f000031;
-volatile uint32_t *arg8 = (uint32_t *)0x2f000039;
+volatile struct teststruct *arg1 = (struct teststruct *)0x2f000001;
 
 pixel nodes[NUM_NODES]; // Pixels
 pixel res_nodes[NUM_NODES]; // Residual graph

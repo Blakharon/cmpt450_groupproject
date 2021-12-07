@@ -17,10 +17,6 @@ void top(uint64_t pl_arg1) {
   while ((*PushrelabelFlag & DEV_INTR) != DEV_INTR)
     ;
   *PushrelabelFlag = 0x0;
-  
-  struct teststruct *test = (struct teststruct *)PushrelabelArg1;
-  test->a = 45;
-  test->b = 46;
 
   return;
 }

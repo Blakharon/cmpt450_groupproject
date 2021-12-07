@@ -6,7 +6,7 @@
 #include <limits.h>
 
 volatile uint8_t *top = (uint8_t *)0x2f000000;
-volatile uint64_t *arg1 = (uint64_t *)0x2f000001;
+volatile uint32_t *arg1 = (uint32_t *)0x2f000001;
 
 pixel nodes[NUM_NODES]; // Pixels
 pixel res_nodes[NUM_NODES]; // Residual graph
@@ -424,7 +424,7 @@ int main(void) {
 
     // Set arguments e.g.,
     *top = 0x0;
-    *arg1 = (uint64_t)(void *)pl;
+    *arg1 = (uint32_t)(void *)pl;
     
     *top = 1;
     while (*top != 0)

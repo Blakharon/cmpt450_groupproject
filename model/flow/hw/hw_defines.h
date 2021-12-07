@@ -24,7 +24,6 @@
 
 #define Pushrelabel       0x2f000200
 #define Pushrelabel_ARG1  0x2f000201
-#define Pushrelabel_ARG2  0x2f000220
 // Not required leaving it in here for future extensions
 
 

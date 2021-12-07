@@ -34,8 +34,8 @@ struct __attribute__((__packed__)) terminal { // Source/Sink
 };
 
 struct __attribute__((__packed__)) teststruct {
-    uint32_t a;
-    uint32_t b;
+    uint64_t a;
+    uint64_t b;
 };
 
 #endif

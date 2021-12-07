@@ -423,12 +423,12 @@ int main(void) {
     //printf("%d   \n", pl->b);
 
     // Set arguments e.g.,
-    *top = 0x0;
-    *arg1 = (uint64_t)(void *)pl;
+    //*top = 0x0;
+    //*arg1 = (uint64_t)(void *)pl;
     
-    *top = 1;
-    while (*top != 0)
-    ;
+    //*top = 1;
+    //while (*top != 0)
+    //;
 
     printf("%d   \n", *pl); 
     //printf("%d   \n", pl->b); 

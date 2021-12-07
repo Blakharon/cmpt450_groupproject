@@ -348,11 +348,6 @@ void preflow() {
     }
 }
 
-struct teststruct {
-    uint32_t a;
-    uint32_t b;
-}
-
 int main(void) {
     TYPE base = 0x80100000;
 

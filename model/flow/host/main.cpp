@@ -419,7 +419,7 @@ int main(void) {
     uint32_t *pl = (uint32_t *)base;
     *pl = 69;
     
-    printf("%d   \n", pl->a); 
+    printf("%d   \n", *pl); 
     //printf("%d   \n", pl->b);
 
     // Set arguments e.g.,
@@ -430,7 +430,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    printf("%d   \n", pl->a); 
+    printf("%d   \n", *pl); 
     //printf("%d   \n", pl->b); 
 
     m5_dump_stats();

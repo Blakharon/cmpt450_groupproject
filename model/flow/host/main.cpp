@@ -456,6 +456,8 @@ int main(void) {
 
     TYPE base2 = 0x80200000;
     teststruct *pl = (teststruct *)base;
+    pl->a = 69;
+    pl->b = 70;
 
     // Set arguments e.g.,
     *top = 0x0;

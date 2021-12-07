@@ -2,7 +2,8 @@
 
 #define hello(a) 42
 
-void pushrelabel(TYPE_PTR SIZE) {
+void pushrelabel(teststruct *SIZE) {
     //int hello2 = hello();
-    *SIZE = hello(12);
+   SIZE->a = 42;
+   SIZE->b = 30;
 }

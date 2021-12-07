@@ -15,21 +15,6 @@ volatile uint32_t *arg6 = (uint32_t *)0x2f000029;
 volatile uint32_t *arg7 = (uint32_t *)0x2f000031;
 volatile uint32_t *arg8 = (uint32_t *)0x2f000039;
 
-struct pixel {
-    uint32_t height;
-    uint32_t excess_flow;
-    uint32_t pixel_value;
-    int32_t curr_capacities[NUM_NEIGHBOURS + 1]; // NESW edge current capacities: -1 == no edge
-    int32_t capacities[NUM_NEIGHBOURS + 1]; // NESW edge max capacities: -1 == no edge
-};
-
-struct terminal { // Source/Sink
-    uint32_t height;
-    uint32_t excess_flow;
-    int32_t curr_capacities[NUM_NODES];
-    int32_t capacities[NUM_NODES]; // max capacities to each node: -1 == no edge
-};
-
 // residual flow for each edge: [FROM][TO]
 // Source_idx = NUM_NODES, Sink_idx = NUM_NODES + 1
 
@@ -363,8 +348,13 @@ void preflow() {
     }
 }
 
+struct teststruct {
+    uint32_t a;
+    uint32_t b;
+}
+
 int main(void) {
-    TYPE* base = (TYPE*) 0x80100000;
+    TYPE base = 0x80100000;
 
     for (int i = 0; i < NUM_NODES*2; i++) {
         printf("%d   \n", base[i]);
@@ -469,9 +459,8 @@ int main(void) {
     m5_reset_stats();
     //================================ Start accelerator ==========================
 
-    int64_t base = 0x80200000;
-    TYPE *pl = (TYPE *)base;
-    // TYPE *pl = base;
+    TYPE base2 = 0x80200000;
+    teststruct *pl = (teststruct *)base;
 
     // Set arguments e.g.,
     *top = 0x0;

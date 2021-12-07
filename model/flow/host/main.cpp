@@ -6,7 +6,6 @@
 #include <limits.h>
 
 volatile uint8_t *top = (uint8_t *)0x2f000000;
-volatile struct teststruct *arg1 = (struct teststruct *)0x2f000001;
 
 pixel nodes[NUM_NODES]; // Pixels
 pixel res_nodes[NUM_NODES]; // Residual graph
@@ -413,13 +412,17 @@ int main(void) {
     //================================ Start accelerator ==========================
 
     TYPE base2 = 0x80200000;
-    teststruct *pl = (teststruct *)base;
+    
+    struct teststruct *pl = (struct teststruct *)base2;
     pl->a = 69;
     pl->b = 70;
 
+    volatile uint8_t *top = (uint8_t *)0x2f000000;
+    volatile struct teststruct *arg1 = (struct teststruct *)0x2f000001 = pl;
+
     // Set arguments e.g.,
     *top = 0x0;
-    *arg1 = (uint32_t)(void *)pl;
+    //*arg1 = (uint32_t)(void *)pl;
     
     *top = 1;
     while (*top != 0)

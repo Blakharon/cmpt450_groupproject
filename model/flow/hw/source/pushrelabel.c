@@ -4,6 +4,6 @@
 
 void pushrelabel(struct teststruct *SIZE) {
     //int hello2 = hello();
-   SIZE->a = (uint64_t)(&(SIZE->b));
-   SIZE->b = 30;
+   SIZE->a = 42;
+   SIZE->b = 43;
 }

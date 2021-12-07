@@ -24,14 +24,8 @@
 
 #define Pushrelabel       0x2f000200
 #define Pushrelabel_ARG1  0x2f000201
-#define Pushrelabel_ARG2  0x2f000209
+#define Pushrelabel_ARG2  0x2f000215
 // Not required leaving it in here for future extensions
-#define Pushrelabel_ARG3  0x2f000211
-#define Pushrelabel_ARG4  0x2f000219
-#define Pushrelabel_ARG5  0x2f000221
-#define Pushrelabel_ARG6  0x2f000229
-#define Pushrelabel_ARG7  0x2f000231
-#define Pushrelabel_ARG8  0x2f000239
 
 
 // TODO: CHECK THE ADDRESSES HERE ARE WHERE YOU WANT THEM TO BE FOR PERFORMING

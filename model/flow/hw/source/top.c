@@ -3,12 +3,12 @@
 void top(uint64_t pl_arg1) {
   // Define Device MMRs
   volatile uint8_t *PushrelabelFlag = (uint8_t *)Pushrelabel;
-  volatile struct teststruct *PushrelabelArg1 = (struct teststruct *)(Pushrelabel_ARG1);
+  volatile uint64_t *PushrelabelArg1 = (uint64_t *)(Pushrelabel_ARG1);
 
   *PushrelabelFlag = 0x0;
   // Set up arguments for accelerator.
 
-  PushrelabelArg1 = (struct teststruct *)pl_arg1;
+  *PushrelabelArg1 = pl_arg1;
   // Start the accelerated function
   *PushrelabelFlag = DEV_INIT;
 

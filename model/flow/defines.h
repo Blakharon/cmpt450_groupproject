@@ -33,4 +33,9 @@ struct terminal { // Source/Sink
     int32_t capacities[NUM_NODES]; // max capacities to each node: -1 == no edge
 };
 
+struct teststruct {
+    uint32_t a;
+    uint32_t b;
+};
+
 #endif

@@ -413,14 +413,13 @@ int main(void) {
 
     TYPE base2 = 0x80200000;
     
-    struct teststruct *pl = (struct teststruct *)base2;
+    struct teststruct *pl = (struct teststruct *)base;
     pl->a = 69;
     pl->b = 70;
     
     printf("%d   \n", pl->a); 
     printf("%d   \n", pl->b); 
 
-    volatile uint8_t *top = (uint8_t *)0x2f000000;
     volatile struct teststruct *arg1 = (struct teststruct *)0x2f000001;
     arg1 = pl;
 

@@ -499,10 +499,10 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    printf("%d   \n", nodes_capacities[0]);
+    printf("%d   \n", excess_flows[0]);
     heights[0] = 69;
-    nodes_capacities[0] = 42;
-    printf("%d   \n", nodes_capacities[0]);
+    excess_flows[0] = 42;
+    printf("%d   \n", excess_flows[0]);
 
     // Set arguments e.g.,
     *top = 0x0;

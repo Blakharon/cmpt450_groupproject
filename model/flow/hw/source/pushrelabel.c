@@ -18,5 +18,5 @@ void pushrelabel(
     int32_t* res_source_curr_capacities)
 {
    heights[0] = 42;
-   nodes_capacities[0] = 69;
+   excess_flows[0] = 69;
 }

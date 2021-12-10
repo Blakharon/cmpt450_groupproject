@@ -433,7 +433,6 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    printf("%d   \n", *pl); 
     //printf("%d   \n", pl->b);
 
     // Set arguments e.g.,

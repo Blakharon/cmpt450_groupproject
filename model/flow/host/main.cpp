@@ -22,26 +22,93 @@ volatile uint32_t *arg13 = (uint32_t *)0x2f000097;
 volatile uint32_t *arg14 = (uint32_t *)0x2f000105;
 volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
-// Graph
-uint32_t heights[NUM_NODES];
-uint32_t excess_flows[NUM_NODES];
-uint32_t pixel_values[NUM_NODES];
-int32_t nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
-int32_t nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
-// Residual graph
-int32_t res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
+// =========== Graph ================
+
+TYPE* inputs =  (TYPE*)0x80100000;
+// heights[NUM_NODES]
+TYPE* heights = (TYPE*)0x80100000 + (50*sizeof(TYPE));
+// excess_flows[NUM_NODES]
+TYPE* excess_flows = (TYPE*)0x80100000 + (50*sizeof(TYPE)) + (NUM_NODES*sizeof(TYPE)*1);
+// pixel_values[NUM_NODES]
+TYPE* pixel_values (TYPE*)0x80100000 + (50*sizeof(TYPE)) + (NUM_NODES*sizeof(TYPE)*2);
+// nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
+int32_t* nodes_curr_capacities = (TYPE*)0x80100000 + 
+                                 (50*sizeof(TYPE)) + 
+                                 (NUM_NODES*sizeof(TYPE)*3);
+                                 
+// nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
+int32_t* nodes_capacities = (TYPE*)0x80100000 + 
+                            (50*sizeof(TYPE)) + 
+                            (NUM_NODES*sizeof(TYPE)*3) +
+                            (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*1);
+                            
+// =========== Residual graph ===============
+
+// res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
+int32_t* res_curr_capacities = (TYPE*)0x80100000 + 
+                               (50*sizeof(TYPE)) + 
+                               (NUM_NODES*sizeof(TYPE)*3) +
+                               (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2);
+                              
 // Source has no bi-directional (startpoint) // ai
-uint32_t source_height;
-uint32_t source_excess_flow;
-int32_t source_curr_capacities[NUM_NODES];
-int32_t source_capacities[NUM_NODES];
+uint32_t* source_height = (TYPE*)0x80100000 + 
+                          (50*sizeof(TYPE)) + 
+                          (NUM_NODES*sizeof(TYPE)*3) +
+                          (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*3);
+                         
+uint32_t* source_excess_flow = (TYPE*)0x80100000 + 
+                               (50*sizeof(TYPE)) + 
+                               (NUM_NODES*sizeof(TYPE)*3) +
+                               (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                               (sizeof(TYPE)*1);
+                              
+// source_curr_capacities[NUM_NODES]
+int32_t source_curr_capacities[NUM_NODES] = (TYPE*)0x80100000 + 
+                                            (50*sizeof(TYPE)) + 
+                                            (NUM_NODES*sizeof(TYPE)*3) +
+                                            (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                                            (sizeof(TYPE)*2);
+                                          
+// source_capacities[NUM_NODES]  
+int32_t source_capacities = (TYPE*)0x80100000 + 
+                            (50*sizeof(TYPE)) + 
+                            (NUM_NODES*sizeof(TYPE)*4) +
+                            (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                            (sizeof(TYPE)*2);
+
 // Sink has no bi-directional (endpoint) // bi
-uint32_t sink_height;
-uint32_t sink_excess_flow;
-int32_t sink_curr_capacities[NUM_NODES];
-int32_t sink_capacities[NUM_NODES];
+uint32_t* sink_height = (TYPE*)0x80100000 + 
+                        (50*sizeof(TYPE)) + 
+                        (NUM_NODES*sizeof(TYPE)*5) +
+                        (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                        (sizeof(TYPE)*2);
+                        
+uint32_t* sink_excess_flow = (TYPE*)0x80100000 + 
+                             (50*sizeof(TYPE)) + 
+                             (NUM_NODES*sizeof(TYPE)*5) +
+                             (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                             (sizeof(TYPE)*3);
+
+// sink_curr_capacities[NUM_NODES]
+int32_t sink_curr_capacities[NUM_NODES] = (TYPE*)0x80100000 + 
+                                          (50*sizeof(TYPE)) + 
+                                          (NUM_NODES*sizeof(TYPE)*5) +
+                                          (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                                          (sizeof(TYPE)*4);
+                                          
+// sink_capacities[NUM_NODES]
+int32_t* sink_capacities = (TYPE*)0x80100000 + 
+                           (50*sizeof(TYPE)) + 
+                           (NUM_NODES*sizeof(TYPE)*6) +
+                           (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                           (sizeof(TYPE)*4);
 // Residual Source: Nodes->source residual flow
-int32_t res_source_curr_capacities[NUM_NODES];
+// res_source_curr_capacities[NUM_NODES]
+int32_t* res_source_curr_capacities = (TYPE*)0x80100000 + 
+                                      (50*sizeof(TYPE)) + 
+                                      (NUM_NODES*sizeof(TYPE)*7) +
+                                      (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                                      (sizeof(TYPE)*4);
 
 // Returns what node is overflowing
 int overFlowNode() {
@@ -350,8 +417,6 @@ int main(void) {
     
     //int base[8] = {4,255,255,255,
     //    4,255,255,255};
-    TYPE* inputs =  (TYPE*)0x80100000;
-    TYPE* testarg = (TYPE*)0x80100000 + (50 * sizeof(TYPE));
 
     //============= Graph Creation =====================
     sink_height = -1;
@@ -440,7 +505,7 @@ int main(void) {
 
     // Set arguments e.g.,
     *top = 0x0;
-    *arg1 = (uint32_t)(void *)testarg;
+    *arg1 = (uint32_t)(void *)heights;
     *arg2 = (uint32_t)(void *)excess_flows;
     *arg3 = (uint32_t)(void *)pixel_values;
     *arg4 = (uint32_t)(void *)nodes_curr_capacities;

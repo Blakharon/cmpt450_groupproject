@@ -19,12 +19,40 @@ void top(
 {
   // Define Device MMRs
   volatile uint8_t *PushrelabelFlag = (uint8_t *)Pushrelabel;
-  volatile uint64_t *PushrelabelArg1 = (uint64_t *)(Pushrelabel_ARG1);
+  volatile uint64_t *PushrelabelArg1  = (uint64_t *)(Pushrelabel_ARG1);
+  volatile uint64_t *PushrelabelArg2  = (uint64_t *)(Pushrelabel_ARG2);
+  volatile uint64_t *PushrelabelArg3  = (uint64_t *)(Pushrelabel_ARG3);
+  volatile uint64_t *PushrelabelArg4  = (uint64_t *)(Pushrelabel_ARG4);
+  volatile uint64_t *PushrelabelArg5  = (uint64_t *)(Pushrelabel_ARG5);
+  volatile uint64_t *PushrelabelArg6  = (uint64_t *)(Pushrelabel_ARG6);
+  volatile uint64_t *PushrelabelArg7  = (uint64_t *)(Pushrelabel_ARG7);
+  volatile uint64_t *PushrelabelArg8  = (uint64_t *)(Pushrelabel_ARG8);
+  volatile uint64_t *PushrelabelArg9  = (uint64_t *)(Pushrelabel_ARG9);
+  volatile uint64_t *PushrelabelArg10 = (uint64_t *)(Pushrelabel_ARG10);
+  volatile uint64_t *PushrelabelArg11 = (uint64_t *)(Pushrelabel_ARG11);
+  volatile uint64_t *PushrelabelArg12 = (uint64_t *)(Pushrelabel_ARG12);
+  volatile uint64_t *PushrelabelArg13 = (uint64_t *)(Pushrelabel_ARG13);
+  volatile uint64_t *PushrelabelArg14 = (uint64_t *)(Pushrelabel_ARG14);
+  volatile uint64_t *PushrelabelArg15 = (uint64_t *)(Pushrelabel_ARG15);
 
   *PushrelabelFlag = 0x0;
   // Set up arguments for accelerator.
 
-  *PushrelabelArg1 = heights;
+  *PushrelabelArg1  = heights;
+  *PushrelabelArg2  = excess_flows;
+  *PushrelabelArg3  = pixel_values;
+  *PushrelabelArg4  = nodes_curr_capacities;
+  *PushrelabelArg5  = nodes_capacities;
+  *PushrelabelArg6  = res_curr_capacities;
+  *PushrelabelArg7  = source_height;
+  *PushrelabelArg8  = source_excess_flow;
+  *PushrelabelArg9  = source_curr_capacities;
+  *PushrelabelArg10 = source_capacities;
+  *PushrelabelArg11 = sink_height;
+  *PushrelabelArg12 = sink_excess_flow;
+  *PushrelabelArg13 = sink_curr_capacities;
+  *PushrelabelArg14 = sink_capacities;
+  *PushrelabelArg15 = res_source_curr_capacities;
   
   // Start the accelerated function
   *PushrelabelFlag = DEV_INIT;

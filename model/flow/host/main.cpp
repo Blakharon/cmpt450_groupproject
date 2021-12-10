@@ -30,7 +30,7 @@ TYPE* heights = (TYPE*)0x80100000 + (50*sizeof(TYPE));
 // excess_flows[NUM_NODES]
 TYPE* excess_flows = (TYPE*)0x80100000 + (50*sizeof(TYPE)) + (NUM_NODES*sizeof(TYPE)*1);
 // pixel_values[NUM_NODES]
-TYPE* pixel_values (TYPE*)0x80100000 + (50*sizeof(TYPE)) + (NUM_NODES*sizeof(TYPE)*2);
+TYPE* pixel_values = (TYPE*)0x80100000 + (50*sizeof(TYPE)) + (NUM_NODES*sizeof(TYPE)*2);
 // nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
 int32_t* nodes_curr_capacities = (TYPE*)0x80100000 + 
                                  (50*sizeof(TYPE)) + 

@@ -128,7 +128,7 @@ void relabel(int node) {
     
     if (nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + SINK] != nodes_capacities[node*(NUM_NEIGHBOURS+1) + SINK]) {
         // Update height of node
-        heights[node] = sink_height + 1;
+        heights[node] = *sink_height + 1;
         
         return; //Relabelled the node to 1 higher than sink since there's space to push there
     }
@@ -207,7 +207,7 @@ void relabel(int node) {
     
     // Residuals all full so change height to 1 higher than source
     if (continue_count == NUM_NEIGHBOURS) {
-        heights[node] = source_height + 1;
+        heights[node] = *source_height + 1;
     }
 }
 
@@ -400,7 +400,7 @@ bool push(int node) {
 
 void preflow() {
     // Sets height of source vertex == number of pixels + 2 (source&sink)
-    source_height = NUM_NODES + 2;
+    *source_height = NUM_NODES + 2;
     
     for (int i = 0; i < NUM_NODES; i++) {
         // Set flow == capacity for edges from source
@@ -419,7 +419,7 @@ int main(void) {
     //    4,255,255,255};
 
     //============= Graph Creation =====================
-    sink_height = -1;
+    *sink_height = -1;
     // Initialize no edges to each node
     for (int i = 0; i < NUM_NODES; i++) {
         for (int j = 0; j < NUM_NEIGHBOURS + 1; j++) {

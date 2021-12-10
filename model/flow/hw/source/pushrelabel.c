@@ -2,8 +2,8 @@
 
 #define hello(a) 42
 
-void pushrelabel(TYPE_PTR SIZE) {
+void pushrelabel(TYPE_PTR testarg) {
     //int hello2 = hello();
-   *SIZE = 42;
+   *testarg = 42;
    //SIZE->b = 43;
 }

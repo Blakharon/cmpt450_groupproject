@@ -433,11 +433,13 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    //printf("%d   \n", pl->b);
+    uint32_t *testarg;
+    *testarg = 69;
+    printf("%d   \n", *testarg);
 
     // Set arguments e.g.,
     *top = 0x0;
-    *arg1 = (uint32_t)(void *)heights;
+    *arg1 = (uint32_t)(void *)testarg;
     *arg2 = (uint32_t)(void *)excess_flows;
     *arg3 = (uint32_t)(void *)pixel_values;
     *arg4 = (uint32_t)(void *)nodes_curr_capacities;
@@ -456,6 +458,8 @@ int main(void) {
     *top = 1;
     while (*top != 0)
     ;
+
+    printf("%d   \n", *testarg);
 
     m5_dump_stats();
     m5_exit();

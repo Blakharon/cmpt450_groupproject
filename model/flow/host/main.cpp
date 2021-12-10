@@ -350,7 +350,8 @@ int main(void) {
     
     //int base[8] = {4,255,255,255,
     //    4,255,255,255};
-    TYPE* base = (TYPE*) 0x80100000;
+    TYPE* inputs =  (TYPE*)0x80100000;
+    TYPE* testarg = (TYPE*)0x80100000 + (50 * sizeof(TYPE));
 
     //============= Graph Creation =====================
     sink_height = -1;
@@ -365,12 +366,12 @@ int main(void) {
 
     // Set pixels to input values and residuals
     for (int i = 0; i < NUM_NODES; i++) {
-        pixel_values[i] = base[i] >> 2;
+        pixel_values[i] = inputs[i] >> 2;
     }
     
     // Set source->node capacities (ai) and residuals node->source capacities
     for (int i = 0; i < NUM_NODES; i++) {
-        source_capacities[i] = base[i+NUM_NODES];
+        source_capacities[i] = inputs[i+NUM_NODES];
         
         source_curr_capacities[i] = 0;
         res_source_curr_capacities[i] = 0;
@@ -433,7 +434,7 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    uint32_t *testarg;
+    printf("%d   \n", *testarg);
     *testarg = 69;
     printf("%d   \n", *testarg);
 

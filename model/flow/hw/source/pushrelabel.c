@@ -11,7 +11,7 @@ void pushrelabel(
     TYPE_PTR source_excess_flow,
     int32_t* source_curr_capacities,
     int32_t* source_capacities,
-    TYPE_PTR sink_height,
+    int32_t* sink_height,
     TYPE_PTR sink_excess_flow,
     int32_t* sink_curr_capacities,
     int32_t* sink_capacities,

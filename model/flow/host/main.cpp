@@ -511,12 +511,12 @@ int main(void) {
     *arg4 = (uint32_t)(void *)nodes_curr_capacities;
     *arg5 = (uint32_t)(void *)nodes_capacities;
     *arg6 = (uint32_t)(void *)res_curr_capacities;
-    *arg7 = source_height;
-    *arg8 = source_excess_flow;
+    *arg7 = (uint32_t)(void *)source_height;
+    *arg8 = (uint32_t)(void *)source_excess_flow;
     *arg9 = (uint32_t)(void *)source_curr_capacities;
     *arg10 = (uint32_t)(void *)source_capacities;
-    *arg11 = sink_height;
-    *arg12 = sink_excess_flow;
+    *arg11 = (uint32_t)(void *)sink_height;
+    *arg12 = (uint32_t)(void *)sink_excess_flow;
     *arg13 = (uint32_t)(void *)sink_curr_capacities;
     *arg14 = (uint32_t)(void *)sink_capacities;
     *arg15 = (uint32_t)(void *)res_source_curr_capacities;

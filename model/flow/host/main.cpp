@@ -499,10 +499,10 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    printf("%d   \n", *sink_height);
+    printf("%d   \n", nodes_capacities[0]);
     heights[0] = 69;
-    *sink_height = 42;
-    printf("%d   \n", *sink_height);
+    nodes_capacities[0] = 42;
+    printf("%d   \n", nodes_capacities[0]);
 
     // Set arguments e.g.,
     *top = 0x0;
@@ -526,7 +526,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    printf("%d   \n", *sink_height);
+    printf("%d   \n", nodes_capacities[0]);
 
     m5_dump_stats();
     m5_exit();

@@ -7,6 +7,20 @@
 
 volatile uint8_t *top = (uint8_t *)0x2f000000;
 volatile uint32_t *arg1 = (uint32_t *)0x2f000001;
+volatile uint32_t *arg2 = (uint32_t *)0x2f000009;
+volatile uint32_t *arg3 = (uint32_t *)0x2f000017;
+volatile uint32_t *arg4 = (uint32_t *)0x2f000025;
+volatile uint32_t *arg5 = (uint32_t *)0x2f000033;
+volatile uint32_t *arg6 = (uint32_t *)0x2f000041;
+volatile uint32_t *arg7 = (uint32_t *)0x2f000049;
+volatile uint32_t *arg8 = (uint32_t *)0x2f000057;
+volatile uint32_t *arg9 = (uint32_t *)0x2f000065;
+volatile uint32_t *arg10 = (uint32_t *)0x2f000073;
+volatile uint32_t *arg11 = (uint32_t *)0x2f000081;
+volatile uint32_t *arg12 = (uint32_t *)0x2f000089;
+volatile uint32_t *arg13 = (uint32_t *)0x2f000097;
+volatile uint32_t *arg14 = (uint32_t *)0x2f000105;
+volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
 // Graph
 uint32_t heights[NUM_NODES];
@@ -331,11 +345,12 @@ void preflow() {
 }
 
 int main(void) {
-    int base[NUM_NODES*2] = {0,127,127,127,0,127,195,195,195,127,127,195,255,195,127,127,195,195,195,127,0,127,127,127,0,
-    0,0,119,0,0,0,119,255,119,0,119,255,255,255,119,0,119,255,119,0,0,0,119,0,0};
+    //int base[NUM_NODES*2] = {0,127,127,127,0,127,195,195,195,127,127,195,255,195,127,127,195,195,195,127,0,127,127,127,0,
+    //0,0,119,0,0,0,119,255,119,0,119,255,255,255,119,0,119,255,119,0,0,0,119,0,0};
     
     //int base[8] = {4,255,255,255,
     //    4,255,255,255};
+    TYPE* base = (TYPE*) 0x80100000;
 
     //============= Graph Creation =====================
     sink_height = -1;
@@ -417,27 +432,31 @@ int main(void) {
     printf("Max flow: %d\n", sink_excess_flow);
 
     //================================ Start accelerator ==========================
-
-    TYPE base2 = 0x80200000;
-    //struct teststruct *pl = (struct teststruct *)base;
-    //pl->a = 69;
-    //pl->b = 70;
-    uint32_t *pl = (uint32_t *)base;
-    *pl = 69;
     
     printf("%d   \n", *pl); 
     //printf("%d   \n", pl->b);
 
     // Set arguments e.g.,
     *top = 0x0;
-    *arg1 = (uint32_t)(void *)pl;
+    *arg1 = (uint32_t)(void *)heights;
+    *arg2 = (uint32_t)(void *)excess_flows;
+    *arg3 = (uint32_t)(void *)pixel_values;
+    *arg4 = (uint32_t)(void *)nodes_curr_capacities;
+    *arg5 = (uint32_t)(void *)nodes_capacities;
+    *arg6 = (uint32_t)(void *)res_curr_capacities;
+    *arg7 = source_height;
+    *arg8 = source_excess_flow;
+    *arg9 = (uint32_t)(void *)source_curr_capacities;
+    *arg10 = (uint32_t)(void *)source_capacities;
+    *arg11 = sink_height;
+    *arg12 = sink_excess_flow;
+    *arg13 = (uint32_t)(void *)sink_curr_capacities;
+    *arg14 = (uint32_t)(void *)sink_capacities;
+    *arg15 = (uint32_t)(void *)res_source_curr_capacities;
     
     *top = 1;
     while (*top != 0)
     ;
-
-    printf("%d   \n", *pl); 
-    //printf("%d   \n", pl->b); 
 
     m5_dump_stats();
     m5_exit();

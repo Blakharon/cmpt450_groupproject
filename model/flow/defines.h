@@ -3,8 +3,8 @@
 
 #define CHECK
 
-#define TYPE int32_t
-#define TYPE_PTR int32_t*
+#define TYPE uint32_t
+#define TYPE_PTR uint32_t*
 
 #define NUM_NEIGHBOURS 4
 

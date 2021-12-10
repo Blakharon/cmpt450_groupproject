@@ -499,9 +499,10 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    printf("%d   \n", heights[0]);
+    printf("%d   \n", *sink_height);
     heights[0] = 69;
-    printf("%d   \n", heights[0]);
+    *sink_height = 42;
+    printf("%d   \n", *sink_height);
 
     // Set arguments e.g.,
     *top = 0x0;
@@ -525,7 +526,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    printf("%d   \n", heights[0]);
+    printf("%d   \n", *sink_height);
 
     m5_dump_stats();
     m5_exit();

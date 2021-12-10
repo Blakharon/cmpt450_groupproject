@@ -17,6 +17,6 @@ void pushrelabel(
     int32_t* sink_capacities,
     int32_t* res_source_curr_capacities)
 {
-   heights[0] = 42;
-   excess_flows[0] = 69;
+   heights[0] = 43;
+   excess_flows[0] = 68;
 }

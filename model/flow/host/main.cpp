@@ -63,14 +63,14 @@ uint32_t* source_excess_flow = (TYPE*)0x80100000 +
                                (sizeof(TYPE)*1);
                               
 // source_curr_capacities[NUM_NODES]
-int32_t source_curr_capacities[NUM_NODES] = (int32_t*)0x80100000 + 
-                                            (50*sizeof(int32_t)) + 
-                                            (NUM_NODES*sizeof(int32_t)*3) +
-                                            (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                                            (sizeof(int32_t)*2);
+int32_t* source_curr_capacities = (int32_t*)0x80100000 + 
+                                  (50*sizeof(int32_t)) + 
+                                  (NUM_NODES*sizeof(int32_t)*3) +
+                                  (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
+                                  (sizeof(int32_t)*2);
                                           
 // source_capacities[NUM_NODES]  
-int32_t source_capacities = (int32_t*)0x80100000 + 
+int32_t* source_capacities = (int32_t*)0x80100000 + 
                             (50*sizeof(int32_t)) + 
                             (NUM_NODES*sizeof(int32_t)*4) +
                             (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
@@ -90,11 +90,11 @@ uint32_t* sink_excess_flow = (TYPE*)0x80100000 +
                              (sizeof(TYPE)*3);
 
 // sink_curr_capacities[NUM_NODES]
-int32_t sink_curr_capacities[NUM_NODES] = (int32_t*)0x80100000 + 
-                                          (50*sizeof(int32_t)) + 
-                                          (NUM_NODES*sizeof(int32_t)*5) +
-                                          (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                                          (sizeof(int32_t)*4);
+int32_t* sink_curr_capacities = (int32_t*)0x80100000 + 
+                                (50*sizeof(int32_t)) + 
+                                (NUM_NODES*sizeof(int32_t)*5) +
+                                (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
+                                (sizeof(int32_t)*4);
                                           
 // sink_capacities[NUM_NODES]
 int32_t* sink_capacities = (int32_t*)0x80100000 + 

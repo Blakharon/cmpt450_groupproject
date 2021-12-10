@@ -526,7 +526,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    printf("%d   \n", nodes_capacities[0]);
+    printf("%d   \n", excess_flows[0]);
 
     m5_dump_stats();
     m5_exit();

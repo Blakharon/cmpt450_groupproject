@@ -24,7 +24,7 @@ void top(
   *PushrelabelFlag = 0x0;
   // Set up arguments for accelerator.
 
-  *PushrelabelArg1 = pl_arg1;
+  *PushrelabelArg1 = ;
   
   // Start the accelerated function
   *PushrelabelFlag = DEV_INIT;

@@ -417,6 +417,10 @@ int main(void) {
     
     //int base[8] = {4,255,255,255,
     //    4,255,255,255};
+    
+    for (int i = 0; i < NUM_NODES*2; i++) {
+        printf("%d         \n", inputs[i]);
+    }
 
     //============= Graph Creation =====================
     *sink_height = -1;

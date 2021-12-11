@@ -24,7 +24,7 @@ volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
 // =========== Graph ================
 
-int32_t heights[NUM_NODES];
+//int32_t heights[NUM_NODES];
 int32_t excess_flows[NUM_NODES];
 int32_t pixel_values[NUM_NODES];
 int32_t nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
@@ -46,9 +46,10 @@ int32_t res_source_curr_capacities[NUM_NODES];
 
 
 TYPE* inputs =  (TYPE*)0x80100000;
-/*
+
 // heights[NUM_NODES]
-TYPE* heights = (TYPE*)0x80100000 + (50*sizeof(TYPE));
+int32_t* heights = (int32_t*)0x80100000 + (50*sizeof(TYPE));
+/*
 // excess_flows[NUM_NODES]
 TYPE* excess_flows = (TYPE*)0x80100000 + (50*sizeof(TYPE)) + (NUM_NODES*sizeof(TYPE)*1);
 // pixel_values[NUM_NODES]
@@ -548,9 +549,9 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    printf("%d   \n", heights[0]);
+    printf("%d   \n", sizeof(TYPE));
     heights[0] = 69;
-    printf("%d   \n", heights[0]);
+    printf("%d   \n", sizeof(int32_t));
 
     // Set arguments e.g.,
     *top = 0x0;

@@ -41,7 +41,7 @@ void top(
   *PushrelabelArg1  = heights;
   *PushrelabelArg2  = excess_flows;
   *PushrelabelArg3  = pixel_values;
-  /**PushrelabelArg4  = nodes_curr_capacities;
+  *PushrelabelArg4  = nodes_curr_capacities;
   *PushrelabelArg5  = nodes_capacities;
   *PushrelabelArg6  = res_curr_capacities;
   *PushrelabelArg7  = source_height;
@@ -52,7 +52,7 @@ void top(
   *PushrelabelArg12 = sink_excess_flow;
   *PushrelabelArg13 = sink_curr_capacities;
   *PushrelabelArg14 = sink_capacities;
-  *PushrelabelArg15 = res_source_curr_capacities;*/
+  *PushrelabelArg15 = res_source_curr_capacities;
   
   // Start the accelerated function
   *PushrelabelFlag = DEV_INIT;

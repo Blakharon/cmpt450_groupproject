@@ -23,9 +23,8 @@ volatile uint32_t *arg14 = (uint32_t *)0x2f000105;
 volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
 // =========== Graph ================
-//int32_t source_capacities[NUM_NODES];
 // Sink has no bi-directional (endpoint) // bi
-int32_t sink_height[1];
+//int32_t sink_height[1];
 int32_t sink_excess_flow[1];
 int32_t sink_curr_capacities[NUM_NODES];
 int32_t sink_capacities[NUM_NODES];
@@ -85,14 +84,14 @@ int32_t* source_capacities = (int32_t*)0x80100000 +
                             (NUM_NODES*sizeof(int32_t)*4) +
                             (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                             (sizeof(int32_t)*NUM_NODES*2);
-/*
+
 // Sink has no bi-directional (endpoint) // bi
 int32_t* sink_height = (int32_t*)0x80100000 + 
                         (50*sizeof(TYPE)) + 
                         (NUM_NODES*sizeof(TYPE)*5) +
                         (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
-                        (sizeof(TYPE)*2);
-                        
+                        (sizeof(int32_t)*NUM_NODES*2);
+                        /*
 uint32_t* sink_excess_flow = (TYPE*)0x80100000 + 
                              (50*sizeof(TYPE)) + 
                              (NUM_NODES*sizeof(TYPE)*5) +

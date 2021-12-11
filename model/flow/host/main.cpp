@@ -219,7 +219,6 @@ void updateResidualFlow(int node, int neighbour, int flow) {
     }
 
     res_curr_capacities[node*(NUM_NEIGHBOURS+1) + neighbour] += flow;
-    //printf("Updated residual edge: %d\n", res_nodes[node].curr_capacities[neighbour]);
 }
 
 bool push(int node) {
@@ -256,8 +255,6 @@ bool push(int node) {
     // Go through all neighbours of node except sink
     for (int i = 0; i < NUM_NEIGHBOURS; i++) {
         // No neighbour
-        
-        //printf("Neighbour %d curr/capacity: %d/%d\n", i, nodes[node].curr_capacities[i], nodes[node].capacities[i]);
         if (nodes_capacities[node*(NUM_NEIGHBOURS+1) + i] == -1) {
             continue_count++;
             continue;
@@ -280,10 +277,7 @@ bool push(int node) {
             neighbour_idx = node - 1;
         }
         
-        //printf("Trying to push to neighbour: %d\n", i);
-        
         int neighbour_height = heights[neighbour_idx];
-        //printf("Neighbour height: %d\n", neighbour_height);
         
         // Check neighbours for height values
         // Push only if curr_height is bigger than neighbour
@@ -319,19 +313,15 @@ bool push(int node) {
             }
             updateResidualFlow(neighbour_idx, residual_neighbour, flow);
             
-            //printf("Pushing flow: %d\n", flow);
-            
             return true;
         }
     }
     
     // Flow has been maxed out on all edges, so try pushing in the residual graph
-    //printf("Push continue count before residuals: %d\n", continue_count);
     if (continue_count == NUM_NEIGHBOURS) {
         continue_count = 0;
         
         for (int i = 0; i < NUM_NEIGHBOURS; i++) {
-            //printf("Neighbour %d residual curr/capacity: %d/%d\n", i, res_nodes[node].curr_capacities[i], res_nodes[node].capacities[i]);
             // No neighbour
             if (nodes_capacities[node*(NUM_NEIGHBOURS+1) + i] == -1) {
                 continue_count++;
@@ -355,11 +345,7 @@ bool push(int node) {
                 continue;
             }
             
-            //printf("Trying to push to residual neighbour: %d\n", i);
-            //printf("Residual neighbour currcapacity: %d\n", res_nodes[node].curr_capacities[i]);
-            
             int neighbour_height = heights[neighbour_idx];
-            //printf("Residual Neighbour height: %d\n", neighbour_height);
             
             // Check neighbours for height values
             // Push only if curr_height is bigger than neighbour
@@ -381,7 +367,6 @@ bool push(int node) {
                 
                 // Add flow to neighbour edge
                 res_curr_capacities[node*(NUM_NEIGHBOURS+1) + i] -= flow;
-                //printf("Pushing residual flow: %d\n", flow);
                 
                 return true;
             }
@@ -408,14 +393,10 @@ bool push(int node) {
         // Add flow to sink edge
         res_source_curr_capacities[node] -= flow;
         
-        //printf("Pushing back to source: %d\n", flow);
         // If we actually pushed to the sink, return true
         if (flow > 0) {
             return true;
         }
-        
-        //printf("Couldnt push back to source\n");
-        //printf("Excess flow left: %d\n", nodes[node].excess_flow);
     }
     
     return false;
@@ -431,7 +412,6 @@ void preflow() {
         res_source_curr_capacities[i] = source_capacities[i];
         // Set excess flow for node == capacity
         excess_flows[i] = source_capacities[i];
-        //printf("Starting excess flow %d: %d\n", i, nodes[i].excess_flow);
     }
 }
 
@@ -504,7 +484,6 @@ int main(void) {
             // Set capacity to sink (bi): 255 - ai
             nodes_curr_capacities[curr_node_i*(NUM_NEIGHBOURS+1) + SINK] = 0;
             nodes_capacities[curr_node_i*(NUM_NEIGHBOURS+1) + SINK] = 255 - source_capacities[curr_node_i];
-            //printf("sink capacities: %d\n", 255 - source.capacities[curr_node_i]);
         }
     }
     
@@ -514,8 +493,6 @@ int main(void) {
     // Loop until no pixel has overflowed
     while (overFlowNode() != -1) {
         int node = overFlowNode();
-        //printf("\n\nnode: %d\n", node);
-        //printf("height: %d\n", nodes[node].height);
         if (!push(node)) {
             relabel(node);
         }

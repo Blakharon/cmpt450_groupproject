@@ -499,13 +499,13 @@ int main(void) {
     }
     
     
-    printf("Max flow: %d\n", sink_excess_flow[0]);
+    printf("MaxFlow: %d\n", sink_excess_flow[0]);
 
     //================================ Start accelerator ==========================
     
-    printf("%d   \n", sizeof(TYPE));
-    heights[0] = 69;
-    printf("%d   \n", sizeof(int32_t));
+    printf("%d          \n", pixel_values[0]);
+    pixel_values[0] = 70;
+    printf("%d          \n", pixel_values[0]);
 
     // Set arguments e.g.,
     *top = 0x0;
@@ -530,7 +530,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    printf("%d   \n", heights[0]);
+    printf("%d              \n", pixel_values[0]);
 
     m5_dump_stats();
     m5_exit();

@@ -20,7 +20,7 @@ void top(
   // Define Device MMRs
   volatile uint8_t *PushrelabelFlag = (uint8_t *)Pushrelabel;
   volatile uint64_t *PushrelabelArg1  = (uint64_t *)(Pushrelabel_ARG1);
-  volatile uint64_t *PushrelabelArg2  = (uint64_t *)(Pushrelabel_ARG2);
+  /*volatile uint64_t *PushrelabelArg2  = (uint64_t *)(Pushrelabel_ARG2);
   volatile uint64_t *PushrelabelArg3  = (uint64_t *)(Pushrelabel_ARG3);
   volatile uint64_t *PushrelabelArg4  = (uint64_t *)(Pushrelabel_ARG4);
   volatile uint64_t *PushrelabelArg5  = (uint64_t *)(Pushrelabel_ARG5);
@@ -33,13 +33,13 @@ void top(
   volatile uint64_t *PushrelabelArg12 = (uint64_t *)(Pushrelabel_ARG12);
   volatile uint64_t *PushrelabelArg13 = (uint64_t *)(Pushrelabel_ARG13);
   volatile uint64_t *PushrelabelArg14 = (uint64_t *)(Pushrelabel_ARG14);
-  volatile uint64_t *PushrelabelArg15 = (uint64_t *)(Pushrelabel_ARG15);
+  volatile uint64_t *PushrelabelArg15 = (uint64_t *)(Pushrelabel_ARG15);*/
 
   *PushrelabelFlag = 0x0;
   // Set up arguments for accelerator.
 
   *PushrelabelArg1  = heights;
-  *PushrelabelArg2  = excess_flows;
+  /**PushrelabelArg2  = excess_flows;
   *PushrelabelArg3  = pixel_values;
   *PushrelabelArg4  = nodes_curr_capacities;
   *PushrelabelArg5  = nodes_capacities;
@@ -52,7 +52,7 @@ void top(
   *PushrelabelArg12 = sink_excess_flow;
   *PushrelabelArg13 = sink_curr_capacities;
   *PushrelabelArg14 = sink_capacities;
-  *PushrelabelArg15 = res_source_curr_capacities;
+  *PushrelabelArg15 = res_source_curr_capacities;*/
   
   // Start the accelerated function
   *PushrelabelFlag = DEV_INIT;

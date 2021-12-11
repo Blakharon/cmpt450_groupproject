@@ -31,7 +31,7 @@
 
 #define Pushrelabel       0x2f000200
 #define Pushrelabel_ARG1  0x2f000201
-#define Pushrelabel_ARG2  0x2f000209
+/*#define Pushrelabel_ARG2  0x2f000209
 #define Pushrelabel_ARG3  0x2f000211
 #define Pushrelabel_ARG4  0x2f000219
 #define Pushrelabel_ARG5  0x2f000221
@@ -44,7 +44,7 @@
 #define Pushrelabel_ARG12 0x2f000259
 #define Pushrelabel_ARG13 0x2f000261
 #define Pushrelabel_ARG14 0x2f000269
-#define Pushrelabel_ARG15 0x2f000271
+#define Pushrelabel_ARG15 0x2f000271*/
 // Not required leaving it in here for future extensions
 
 

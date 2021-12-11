@@ -509,7 +509,7 @@ int main(void) {
 
     // Set arguments e.g.,
     *top = 0x0;
-    /*
+    
     *arg1 = (uint32_t)(void *)heights;
     *arg2 = (uint32_t)(void *)excess_flows;
     *arg3 = (uint32_t)(void *)pixel_values;
@@ -525,7 +525,6 @@ int main(void) {
     *arg13 = (uint32_t)(void *)sink_curr_capacities;
     *arg14 = (uint32_t)(void *)sink_capacities;
     *arg15 = (uint32_t)(void *)res_source_curr_capacities;
-    */
     
     *top = 1;
     while (*top != 0)

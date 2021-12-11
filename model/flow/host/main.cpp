@@ -499,7 +499,7 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    printf("%d   \n", heights[0]);
+    printf("%p   \n", heights);
     printf("%d   \n", pixel_values[0]);
     heights[0] = 70;
     pixel_values[0] = 42;

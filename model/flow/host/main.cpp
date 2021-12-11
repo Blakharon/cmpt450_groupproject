@@ -95,7 +95,7 @@ int32_t* sink_excess_flow = (int32_t*)0x80100000 +
                              (50*sizeof(int32_t)) + 
                              (NUM_NODES*sizeof(int32_t)*5) +
                              (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                             (sizeof(int32_t)*NUM_NODES*3);
+                             (sizeof(int32_t)*NUM_NODES*4);
 /*
 // sink_curr_capacities[NUM_NODES]
 int32_t* sink_curr_capacities = (int32_t*)0x80100000 + 

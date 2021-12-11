@@ -26,7 +26,7 @@ volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
 
 //int32_t source_height[1];
-//int32_t source_excess_flow;
+int32_t source_excess_flow;
 int32_t source_curr_capacities[NUM_NODES];
 int32_t source_capacities[NUM_NODES];
 // Sink has no bi-directional (endpoint) // bi
@@ -70,13 +70,13 @@ uint32_t* source_height = (TYPE*)0x80100000 +
                           (50*sizeof(TYPE)) + 
                           (NUM_NODES*sizeof(TYPE)*3) +
                           (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*3);
-                         
+    /*                     
 uint32_t* source_excess_flow = (TYPE*)0x80100000 + 
                                (50*sizeof(TYPE)) + 
                                (NUM_NODES*sizeof(TYPE)*3) +
                                (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
                                (sizeof(TYPE)*1);
-                              /*
+                              
 // source_curr_capacities[NUM_NODES]
 int32_t* source_curr_capacities = (int32_t*)0x80100000 + 
                                   (50*sizeof(int32_t)) + 

@@ -154,7 +154,7 @@ def build_test_system(np):
         # print("Loading file m0 at" + str(hex(0x80100000+input_size)))
         # print("Loading file m1 at" + str(hex(0x80100000+input_size+m0_size)))
         
-        test_sys.kernel_extras_addrs = [0x80100000]
+        test_sys.kernel_extras_addrs = [0x80100000, 0x80100000+input_size]
         print("Loading file input at" + str(hex(0x80100000)))
 
     else:

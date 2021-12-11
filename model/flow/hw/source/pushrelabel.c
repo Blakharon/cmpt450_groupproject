@@ -17,5 +17,5 @@ void pushrelabel(
     int32_t* sink_capacities,
     int32_t* res_source_curr_capacities)
 {
-   pixel_values[0] = 43;
+   excess_flows[0] = 43;
 }

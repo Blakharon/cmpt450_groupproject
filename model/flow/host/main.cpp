@@ -501,7 +501,7 @@ int main(void) {
     
     printf("%d   \n", heights[0]);
     printf("%d   \n", pixel_values[0]);
-    heights[0] = 69;
+    heights[0] = 70;
     pixel_values[0] = 42;
     printf("%d   \n", heights[0]);
     printf("%d   \n", pixel_values[0]);

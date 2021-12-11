@@ -141,7 +141,6 @@ def build_test_system(np):
             # m0_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m0)
             # m1_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m1)
         input_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.input)
-        print("Input size: " + str(input_size))
         
         # Base address to load each file
         # 0x80100000
@@ -155,7 +154,7 @@ def build_test_system(np):
         # print("Loading file m0 at" + str(hex(0x80100000+input_size)))
         # print("Loading file m1 at" + str(hex(0x80100000+input_size+m0_size)))
         
-        test_sys.kernel_extras_addrs = [0x80100000, 0x80100000+input_size]
+        test_sys.kernel_extras_addrs = [0x80100000, 0x80100000+input_size, 0x80100000+(input_size*8)+(input_size*3*5)+8]
         print("Loading file input at" + str(hex(0x80100000)))
 
     else:

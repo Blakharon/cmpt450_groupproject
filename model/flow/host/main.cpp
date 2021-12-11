@@ -499,8 +499,11 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
+    printf("%d   \n", heights[0]);
     printf("%d   \n", excess_flows[0]);
+    heights[0] = 69;
     excess_flows[0] = 42;
+    printf("%d   \n", heights[0]);
     printf("%d   \n", excess_flows[0]);
 
     // Set arguments e.g.,
@@ -525,6 +528,7 @@ int main(void) {
     while (*top != 0)
     ;
 
+    printf("%d   \n", heights[0]);
     printf("%d   \n", excess_flows[0]);
 
     m5_dump_stats();

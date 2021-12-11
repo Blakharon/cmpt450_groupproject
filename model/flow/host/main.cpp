@@ -26,7 +26,7 @@ volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
 uint32_t* inputs =  (uint32_t*)0x80100000;
 // heights[NUM_NODES]
-uint32_t* heights = (uint32_t*)0x80100000 + (50*sizeof(uint32_t));
+uint64_t* heights = (uint64_t*)0x80100000 + (50*sizeof(uint64_t));
 // excess_flows[NUM_NODES]
 uint32_t* excess_flows = (uint32_t*)0x80100000 + (50*sizeof(uint32_t)) + (NUM_NODES*sizeof(uint32_t)*1);
 // pixel_values[NUM_NODES]
@@ -499,8 +499,8 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    printf("%p   \n", heights);
-    printf("%p   \n", pixel_values);
+    //printf("%p   \n", heights);
+    //printf("%p   \n", pixel_values);
     heights[0] = 70;
     pixel_values[0] = 42;
     printf("%d   \n", heights[0]);

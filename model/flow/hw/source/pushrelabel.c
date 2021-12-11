@@ -1,7 +1,7 @@
 #include "../hw_defines.h"
 
 void pushrelabel(
-    uint32_t* heights, 
+    uint64_t* heights, 
     uint32_t* excess_flows, 
     uint32_t* pixel_values,
     int32_t* nodes_curr_capacities,
@@ -17,6 +17,6 @@ void pushrelabel(
     int32_t* sink_capacities,
     int32_t* res_source_curr_capacities)
 {
-   heights[0] = (uint32_t)heights;
+   heights[0] = (uint64_t)heights;
    pixel_values[0] = 65;
 }

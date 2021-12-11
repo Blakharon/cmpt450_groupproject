@@ -24,13 +24,13 @@ volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
 // =========== Graph ================
 
-int32_t* inputs =  (int32_t*)0x80100000;
+TYPE* inputs =  (TYPE*)0x80100000;
 // heights[NUM_NODES]
-int32_t* heights = (int32_t*)0x80100000 + (50*sizeof(int32_t));
+TYPE* heights = (TYPE*)0x80100000 + (50*sizeof(TYPE));
 // excess_flows[NUM_NODES]
-int32_t* excess_flows = (int32_t*)0x80100000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*1);
+TYPE* excess_flows = (TYPE*)0x80100000 + (50*sizeof(TYPE)) + (NUM_NODES*sizeof(TYPE)*1);
 // pixel_values[NUM_NODES]
-int32_t* pixel_values = (int32_t*)0x80100000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*2);
+TYPE* pixel_values = (TYPE*)0x80100000 + (50*sizeof(TYPE)) + (NUM_NODES*sizeof(TYPE)*2);
 // nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
 int32_t* nodes_curr_capacities = (int32_t*)0x80100000 + 
                                  (50*sizeof(int32_t)) + 
@@ -51,16 +51,16 @@ int32_t* res_curr_capacities = (int32_t*)0x80100000 +
                                (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2);
                               
 // Source has no bi-directional (startpoint) // ai
-int32_t* source_height = (int32_t*)0x80100000 + 
-                          (50*sizeof(int32_t)) + 
-                          (NUM_NODES*sizeof(int32_t)*3) +
-                          (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*3);
+uint32_t* source_height = (TYPE*)0x80100000 + 
+                          (50*sizeof(TYPE)) + 
+                          (NUM_NODES*sizeof(TYPE)*3) +
+                          (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*3);
                          
-int32_t* source_excess_flow = (int32_t*)0x80100000 + 
-                               (50*sizeof(int32_t)) + 
-                               (NUM_NODES*sizeof(int32_t)*3) +
-                               (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                               (sizeof(int32_t)*1);
+uint32_t* source_excess_flow = (TYPE*)0x80100000 + 
+                               (50*sizeof(TYPE)) + 
+                               (NUM_NODES*sizeof(TYPE)*3) +
+                               (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                               (sizeof(TYPE)*1);
                               
 // source_curr_capacities[NUM_NODES]
 int32_t* source_curr_capacities = (int32_t*)0x80100000 + 
@@ -77,17 +77,17 @@ int32_t* source_capacities = (int32_t*)0x80100000 +
                             (sizeof(int32_t)*2);
 
 // Sink has no bi-directional (endpoint) // bi
-int32_t* sink_height = (int32_t*)0x80100000 + 
-                        (50*sizeof(int32_t)) + 
-                        (NUM_NODES*sizeof(int32_t)*5) +
-                        (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                        (sizeof(int32_t)*2);
+uint32_t* sink_height = (TYPE*)0x80100000 + 
+                        (50*sizeof(TYPE)) + 
+                        (NUM_NODES*sizeof(TYPE)*5) +
+                        (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                        (sizeof(TYPE)*2);
                         
-int32_t* sink_excess_flow = (int32_t*)0x80100000 + 
-                             (50*sizeof(int32_t)) + 
-                             (NUM_NODES*sizeof(int32_t)*5) +
-                             (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                             (sizeof(int32_t)*3);
+uint32_t* sink_excess_flow = (TYPE*)0x80100000 + 
+                             (50*sizeof(TYPE)) + 
+                             (NUM_NODES*sizeof(TYPE)*5) +
+                             (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
+                             (sizeof(TYPE)*3);
 
 // sink_curr_capacities[NUM_NODES]
 int32_t* sink_curr_capacities = (int32_t*)0x80100000 + 
@@ -500,11 +500,8 @@ int main(void) {
     //================================ Start accelerator ==========================
     
     printf("%d   \n", heights[0]);
-    printf("%d   \n", pixel_values[0]);
-    heights[0] = 70;
-    pixel_values[0] = 42;
+    heights[0] = 69;
     printf("%d   \n", heights[0]);
-    printf("%d   \n", pixel_values[0]);
 
     // Set arguments e.g.,
     *top = 0x0;
@@ -529,7 +526,6 @@ int main(void) {
     ;
 
     printf("%d   \n", heights[0]);
-    printf("%d   \n", pixel_values[0]);
 
     m5_dump_stats();
     m5_exit();

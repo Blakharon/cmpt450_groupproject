@@ -77,7 +77,7 @@ int32_t* source_capacities = (int32_t*)0x80100000 +
                             (sizeof(int32_t)*2);
 
 // Sink has no bi-directional (endpoint) // bi
-uint32_t* sink_height = (TYPE*)0x80100000 + 
+int32_t* sink_height = (int32_t*)0x80100000 + 
                         (50*sizeof(TYPE)) + 
                         (NUM_NODES*sizeof(TYPE)*5) +
                         (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(TYPE)*2) +
@@ -422,7 +422,7 @@ bool push(int node) {
 
 void preflow() {
     // Sets height of source vertex == number of pixels + 2 (source&sink)
-    source_height = NUM_NODES + 2;
+    source_height[0] = NUM_NODES + 2;
     
     for (int i = 0; i < NUM_NODES; i++) {
         // Set flow == capacity for edges from source
@@ -442,7 +442,7 @@ int main(void) {
     //    4,255,255,255};
 
     //============= Graph Creation =====================
-    sink_height = -1;
+    sink_height[0] = -1;
     // Initialize no edges to each node
     for (int i = 0; i < NUM_NODES; i++) {
         for (int j = 0; j < NUM_NEIGHBOURS + 1; j++) {

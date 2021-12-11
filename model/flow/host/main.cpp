@@ -24,13 +24,13 @@ volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
 // =========== Graph ================
 
-uint32_t* inputs =  (uint32_t*)0x80100000;
+int32_t* inputs =  (int32_t*)0x80100000;
 // heights[NUM_NODES]
-uint32_t* heights = (uint32_t*)0x80100000 + (50*sizeof(uint32_t));
+int32_t* heights = (int32_t*)0x80100000 + (50*sizeof(int32_t));
 // excess_flows[NUM_NODES]
-uint32_t* excess_flows = (uint32_t*)0x80100000 + (50*sizeof(uint32_t)) + (NUM_NODES*sizeof(uint32_t)*1);
+int32_t* excess_flows = (int32_t*)0x80100000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*1);
 // pixel_values[NUM_NODES]
-uint32_t* pixel_values = (uint32_t*)0x80100000 + (50*sizeof(uint32_t)) + (NUM_NODES*sizeof(uint32_t)*2);
+int32_t* pixel_values = (int32_t*)0x80100000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*2);
 // nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
 int32_t* nodes_curr_capacities = (int32_t*)0x80100000 + 
                                  (50*sizeof(int32_t)) + 
@@ -51,16 +51,16 @@ int32_t* res_curr_capacities = (int32_t*)0x80100000 +
                                (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2);
                               
 // Source has no bi-directional (startpoint) // ai
-uint32_t* source_height = (uint32_t*)0x80100000 + 
-                          (50*sizeof(uint32_t)) + 
-                          (NUM_NODES*sizeof(uint32_t)*3) +
-                          (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(uint32_t)*3);
+int32_t* source_height = (int32_t*)0x80100000 + 
+                          (50*sizeof(int32_t)) + 
+                          (NUM_NODES*sizeof(int32_t)*3) +
+                          (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*3);
                          
-uint32_t* source_excess_flow = (uint32_t*)0x80100000 + 
-                               (50*sizeof(uint32_t)) + 
-                               (NUM_NODES*sizeof(uint32_t)*3) +
-                               (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(uint32_t)*2) +
-                               (sizeof(uint32_t)*1);
+int32_t* source_excess_flow = (int32_t*)0x80100000 + 
+                               (50*sizeof(int32_t)) + 
+                               (NUM_NODES*sizeof(int32_t)*3) +
+                               (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
+                               (sizeof(int32_t)*1);
                               
 // source_curr_capacities[NUM_NODES]
 int32_t* source_curr_capacities = (int32_t*)0x80100000 + 
@@ -83,11 +83,11 @@ int32_t* sink_height = (int32_t*)0x80100000 +
                         (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                         (sizeof(int32_t)*2);
                         
-uint32_t* sink_excess_flow = (uint32_t*)0x80100000 + 
-                             (50*sizeof(uint32_t)) + 
-                             (NUM_NODES*sizeof(uint32_t)*5) +
-                             (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(uint32_t)*2) +
-                             (sizeof(uint32_t)*3);
+int32_t* sink_excess_flow = (int32_t*)0x80100000 + 
+                             (50*sizeof(int32_t)) + 
+                             (NUM_NODES*sizeof(int32_t)*5) +
+                             (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
+                             (sizeof(int32_t)*3);
 
 // sink_curr_capacities[NUM_NODES]
 int32_t* sink_curr_capacities = (int32_t*)0x80100000 + 

@@ -500,11 +500,11 @@ int main(void) {
     //================================ Start accelerator ==========================
     
     printf("%d   \n", heights[0]);
-    printf("%d   \n", pixel_values[0]);
+    printf("%d   \n", excess_flows[0]);
     heights[0] = 69;
-    pixel_values[0] = 42;
+    excess_flows[0] = 42;
     printf("%d   \n", heights[0]);
-    printf("%d   \n", pixel_values[0]);
+    printf("%d   \n", excess_flows[0]);
 
     // Set arguments e.g.,
     *top = 0x0;
@@ -529,7 +529,7 @@ int main(void) {
     ;
 
     printf("%d   \n", heights[0]);
-    printf("%d   \n", pixel_values[0]);
+    printf("%d   \n", excess_flows[0]);
 
     m5_dump_stats();
     m5_exit();

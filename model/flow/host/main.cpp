@@ -499,9 +499,9 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    printf("%d   \n", nodes_curr_capacities[0]);
-    nodes_curr_capacities[0] = 42;
-    printf("%d   \n", nodes_curr_capacities[0]);
+    printf("%d   \n", pixel_values[0]);
+    pixel_values[0] = 42;
+    printf("%d   \n", pixel_values[0]);
 
     // Set arguments e.g.,
     *top = 0x0;
@@ -525,7 +525,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    printf("%d   \n", nodes_curr_capacities[0]);
+    printf("%d   \n", pixel_values[0]);
 
     m5_dump_stats();
     m5_exit();

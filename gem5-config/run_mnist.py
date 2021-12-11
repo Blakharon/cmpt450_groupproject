@@ -141,6 +141,7 @@ def build_test_system(np):
             # m0_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m0)
             # m1_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.m1)
         input_size = os.path.getsize(os.environ["LAB_PATH"]+"/"+options.input)
+        print("Input size: " + str(input_size))
         
         # Base address to load each file
         # 0x80100000

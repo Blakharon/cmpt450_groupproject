@@ -20,8 +20,8 @@ void top(
   // Define Device MMRs
   volatile uint8_t *PushrelabelFlag = (uint8_t *)Pushrelabel;
   volatile uint64_t *PushrelabelArg1  = (uint64_t *)(Pushrelabel_ARG1);
-  /*volatile uint64_t *PushrelabelArg2  = (uint64_t *)(Pushrelabel_ARG2);
-  volatile uint64_t *PushrelabelArg3  = (uint64_t *)(Pushrelabel_ARG3);
+  volatile uint64_t *PushrelabelArg2  = (uint64_t *)(Pushrelabel_ARG2);
+  /*volatile uint64_t *PushrelabelArg3  = (uint64_t *)(Pushrelabel_ARG3);
   volatile uint64_t *PushrelabelArg4  = (uint64_t *)(Pushrelabel_ARG4);
   volatile uint64_t *PushrelabelArg5  = (uint64_t *)(Pushrelabel_ARG5);
   volatile uint64_t *PushrelabelArg6  = (uint64_t *)(Pushrelabel_ARG6);

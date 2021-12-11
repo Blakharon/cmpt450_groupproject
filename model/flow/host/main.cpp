@@ -23,13 +23,6 @@ volatile uint32_t *arg14 = (uint32_t *)0x2f000105;
 volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
 // =========== Graph ================
-// Sink has no bi-directional (endpoint) // bi
-//int32_t sink_curr_capacities[NUM_NODES];
-//int32_t sink_capacities[NUM_NODES];
-// Residual Source: Nodes->source residual flow
-//int32_t res_source_curr_capacities[NUM_NODES];
-
-
 TYPE* inputs =  (TYPE*)0x80100000;
 
 // heights[NUM_NODES]

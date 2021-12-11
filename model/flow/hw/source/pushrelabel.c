@@ -1,18 +1,18 @@
 #include "../hw_defines.h"
 
 void pushrelabel(
-    TYPE_PTR heights, 
-    TYPE_PTR excess_flows, 
-    TYPE_PTR pixel_values,
+    uint32_t* heights, 
+    uint32_t* excess_flows, 
+    uint32_t* pixel_values,
     int32_t* nodes_curr_capacities,
     int32_t* nodes_capacities,
     int32_t* res_curr_capacities,
-    TYPE_PTR source_height,
-    TYPE_PTR source_excess_flow,
+    uint32_t* source_height,
+    uint32_t* source_excess_flow,
     int32_t* source_curr_capacities,
     int32_t* source_capacities,
     int32_t* sink_height,
-    TYPE_PTR sink_excess_flow,
+    uint32_t* sink_excess_flow,
     int32_t* sink_curr_capacities,
     int32_t* sink_capacities,
     int32_t* res_source_curr_capacities)

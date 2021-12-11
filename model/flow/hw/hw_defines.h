@@ -11,7 +11,7 @@
 
 
 // Device MMR addresses
-#define TOP 0x2f000000
+#define TOP       0x2f000000
 #define TOP_ARG1  0x2f000001
 #define TOP_ARG2  0x2f000009
 // Not required leaving it in here for future extensions

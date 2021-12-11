@@ -55,12 +55,12 @@ void top(
   *PushrelabelArg15 = res_source_curr_capacities;
   
   // Start the accelerated function
-  *PushrelabelFlag = DEV_INIT;
+  //*PushrelabelFlag = DEV_INIT;
 
   // Poll function for finish
-  while ((*PushrelabelFlag & DEV_INTR) != DEV_INTR)
-    ;
-  *PushrelabelFlag = 0x0;
+  //while ((*PushrelabelFlag & DEV_INTR) != DEV_INTR)
+  //  ;
+  //*PushrelabelFlag = 0x0;
 
   return;
 }

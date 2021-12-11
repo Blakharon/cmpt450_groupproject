@@ -17,21 +17,21 @@
 #define SINK 4
 
 // Graph
-uint32_t heights[NUM_NODES];
-uint32_t excess_flows[NUM_NODES];
-uint32_t pixel_values[NUM_NODES];
+int32_t heights[NUM_NODES];
+int32_t excess_flows[NUM_NODES];
+int32_t pixel_values[NUM_NODES];
 int32_t nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
 int32_t nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
 // Residual graph
 int32_t res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
 // Source has no bi-directional (startpoint) // ai
-uint32_t source_height;
-uint32_t source_excess_flow;
+int32_t source_height;
+int32_t source_excess_flow;
 int32_t source_curr_capacities[NUM_NODES];
 int32_t source_capacities[NUM_NODES];
 // Sink has no bi-directional (endpoint) // bi
-uint32_t sink_height;
-uint32_t sink_excess_flow;
+int32_t sink_height;
+int32_t sink_excess_flow;
 int32_t sink_curr_capacities[NUM_NODES];
 int32_t sink_capacities[NUM_NODES];
 // Residual Source: Nodes->source residual flow

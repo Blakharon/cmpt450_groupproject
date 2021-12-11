@@ -24,6 +24,27 @@ volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
 // =========== Graph ================
 
+int32_t heights[NUM_NODES];
+int32_t excess_flows[NUM_NODES];
+int32_t pixel_values[NUM_NODES];
+int32_t nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
+int32_t nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
+// Residual graph
+int32_t res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
+// Source has no bi-directional (startpoint) // ai
+int32_t source_height;
+int32_t source_excess_flow;
+int32_t source_curr_capacities[NUM_NODES];
+int32_t source_capacities[NUM_NODES];
+// Sink has no bi-directional (endpoint) // bi
+int32_t sink_height;
+int32_t sink_excess_flow;
+int32_t sink_curr_capacities[NUM_NODES];
+int32_t sink_capacities[NUM_NODES];
+// Residual Source: Nodes->source residual flow
+int32_t res_source_curr_capacities[NUM_NODES];
+
+/*
 TYPE* inputs =  (TYPE*)0x80100000;
 // heights[NUM_NODES]
 TYPE* heights = (TYPE*)0x80100000 + (50*sizeof(TYPE));
@@ -109,6 +130,7 @@ int32_t* res_source_curr_capacities = (int32_t*)0x80100000 +
                                       (NUM_NODES*sizeof(int32_t)*7) +
                                       (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                                       (sizeof(int32_t)*4);
+*/
 
 // Returns what node is overflowing
 int overFlowNode() {
@@ -531,6 +553,7 @@ int main(void) {
 
     // Set arguments e.g.,
     *top = 0x0;
+    /*
     *arg1 = (uint32_t)(void *)heights;
     *arg2 = (uint32_t)(void *)excess_flows;
     *arg3 = (uint32_t)(void *)pixel_values;
@@ -546,6 +569,7 @@ int main(void) {
     *arg13 = (uint32_t)(void *)sink_curr_capacities;
     *arg14 = (uint32_t)(void *)sink_capacities;
     *arg15 = (uint32_t)(void *)res_source_curr_capacities;
+    */
     
     *top = 1;
     while (*top != 0)

@@ -17,6 +17,6 @@ void pushrelabel(
     int32_t* sink_capacities,
     int32_t* res_source_curr_capacities)
 {
-   heights[0] = 43;
+   heights[0] = (uint32_t)heights;
    pixel_values[0] = 65;
 }

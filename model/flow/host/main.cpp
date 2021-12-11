@@ -24,10 +24,10 @@ volatile uint32_t *arg15 = (uint32_t *)0x2f000113;
 
 // =========== Graph ================
 
-int32_t nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
-int32_t nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
+//int32_t nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
+//int32_t nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
 // Residual graph
-int32_t res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
+//int32_t res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
 // Source has no bi-directional (startpoint) // ai
 int32_t source_height[1];
 int32_t source_excess_flow;
@@ -50,12 +50,11 @@ int32_t* heights = (int32_t*)0x80100000 + (50*sizeof(int32_t));
 int32_t* excess_flows = (int32_t*)0x80100000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*1);
 // pixel_values[NUM_NODES]
 int32_t* pixel_values = (int32_t*)0x80100000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*2);
-/*
 // nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
 int32_t* nodes_curr_capacities = (int32_t*)0x80100000 + 
                                  (50*sizeof(int32_t)) + 
                                  (NUM_NODES*sizeof(int32_t)*3);
-                                 
+                               
 // nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
 int32_t* nodes_capacities = (int32_t*)0x80100000 + 
                             (50*sizeof(int32_t)) + 
@@ -69,7 +68,7 @@ int32_t* res_curr_capacities = (int32_t*)0x80100000 +
                                (50*sizeof(int32_t)) + 
                                (NUM_NODES*sizeof(int32_t)*3) +
                                (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2);
-                              
+     /*                         
 // Source has no bi-directional (startpoint) // ai
 uint32_t* source_height = (TYPE*)0x80100000 + 
                           (50*sizeof(TYPE)) + 

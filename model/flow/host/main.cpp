@@ -32,12 +32,12 @@ int32_t nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
 // Residual graph
 int32_t res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)];
 // Source has no bi-directional (startpoint) // ai
-int32_t source_height;
+int32_t source_height[1];
 int32_t source_excess_flow;
 int32_t source_curr_capacities[NUM_NODES];
 int32_t source_capacities[NUM_NODES];
 // Sink has no bi-directional (endpoint) // bi
-int32_t sink_height;
+int32_t sink_height[1];
 int32_t sink_excess_flow;
 int32_t sink_curr_capacities[NUM_NODES];
 int32_t sink_capacities[NUM_NODES];

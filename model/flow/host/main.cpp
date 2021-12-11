@@ -44,8 +44,9 @@ int32_t sink_capacities[NUM_NODES];
 // Residual Source: Nodes->source residual flow
 int32_t res_source_curr_capacities[NUM_NODES];
 
-/*
+
 TYPE* inputs =  (TYPE*)0x80100000;
+/*
 // heights[NUM_NODES]
 TYPE* heights = (TYPE*)0x80100000 + (50*sizeof(TYPE));
 // excess_flows[NUM_NODES]

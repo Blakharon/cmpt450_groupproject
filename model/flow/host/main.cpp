@@ -109,7 +109,7 @@ int32_t* res_source_curr_capacities = (int32_t*)0x80100000 +
                                       (NUM_NODES*sizeof(int32_t)*7) +
                                       (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                                       (sizeof(int32_t)*NUM_NODES*4);
-*/
+
 
 // Returns what node is overflowing
 int overFlowNode() {

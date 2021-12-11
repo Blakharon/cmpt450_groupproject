@@ -128,7 +128,7 @@ void relabel(int node) {
     
     if (nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + SINK] != nodes_capacities[node*(NUM_NEIGHBOURS+1) + SINK]) {
         // Update height of node
-        heights[node] = sink_height + 1;
+        heights[node] = sink_height[0] + 1;
         
         return; //Relabelled the node to 1 higher than sink since there's space to push there
     }
@@ -207,7 +207,7 @@ void relabel(int node) {
     
     // Residuals all full so change height to 1 higher than source
     if (continue_count == NUM_NEIGHBOURS) {
-        heights[node] = source_height + 1;
+        heights[node] = source_height[0] + 1;
     }
 }
 

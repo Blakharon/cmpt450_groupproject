@@ -503,9 +503,9 @@ int main(void) {
 
     //================================ Start accelerator ==========================
     
-    printf("%d            \n", pixel_values[0]);
-    pixel_values[0] = 70;
-    printf("%d              \n", pixel_values[0]);
+    printf("%d            \n", res_source_curr_capacities[0]);
+    res_source_curr_capacities[0] = 70;
+    printf("%d              \n", res_source_curr_capacities[0]);
 
     // Set arguments e.g.,
     *top = 0x0;
@@ -530,7 +530,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    printf("%d                  \n", pixel_values[0]);
+    printf("%d                  \n", res_source_curr_capacities[0]);
 
     m5_dump_stats();
     m5_exit();

@@ -39,8 +39,8 @@ void top(
   // Set up arguments for accelerator.
 
   *PushrelabelArg1  = heights;
-  /**PushrelabelArg2  = excess_flows;
-  *PushrelabelArg3  = pixel_values;
+  *PushrelabelArg2  = excess_flows;
+  /**PushrelabelArg3  = pixel_values;
   *PushrelabelArg4  = nodes_curr_capacities;
   *PushrelabelArg5  = nodes_capacities;
   *PushrelabelArg6  = res_curr_capacities;

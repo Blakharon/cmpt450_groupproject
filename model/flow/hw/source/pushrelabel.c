@@ -18,5 +18,5 @@ void pushrelabel(
     int32_t* res_source_curr_capacities)
 {
    heights[0] = 80;
-   //excess_values[0] = 65;
+   excess_values[0] = 65;
 }

@@ -360,12 +360,18 @@ int main(void) {
     /* Run Accelerator */
 
     // Set arguments e.g.,
+    
+    struct test* tes = (struct test*)0x80600000;
+    tes->a = 5;
+    tes->b = 5;
+        
+
     *top = 0x0;
     *arg1 = (uint32_t)(void *) nodes;
-    *arg2 = (uint32_t)(void *) source;
+    *arg2 = (uint32_t)(void *) tes;
     *arg3 = (uint32_t)(void *) flow;
     *arg4 = (uint32_t)(void *) cut;
-        
+
     *top = 0x01;
     int count = 0;
     while (*top != 0)
@@ -377,6 +383,7 @@ int main(void) {
         printf("%d %d\n", cut[i], i);
     }
     printf("Flow: %d\n", *flow);
+    printf("test: %d %d\n", tes->a, tes->b);
 
     m5_dump_stats();
     m5_exit();

@@ -32,7 +32,6 @@ void top(
   volatile uint64_t *PushrelabelArg12 = (uint64_t *)(Pushrelabel_ARG12);
   volatile uint64_t *PushrelabelArg13 = (uint64_t *)(Pushrelabel_ARG13);
   volatile uint64_t *PushrelabelArg14 = (uint64_t *)(Pushrelabel_ARG14);
-  volatile uint64_t *PushrelabelArg15 = (uint64_t *)(Pushrelabel_ARG15);
 
   *PushrelabelFlag = 0x0;
   // Set up arguments for accelerator.

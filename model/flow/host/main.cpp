@@ -497,6 +497,7 @@ int main(void) {
     for (int i = 1; i < 36; i++) {
         printf("node     : %d\n", sink_excess_flow[i]);
         printf("push_type: %d\n", source_height[i]);
+        printf("resneighbour: %d\n", source_excess_flow[i]);
     }
 
     for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {

@@ -462,6 +462,7 @@ int main(void) {
     //================== End of initial overFlowNode() =======================
     int nodes_used[38];
     int push_type[38];
+    int res_neighbour[38];
     //while (node != -1) {
     for (int s = 0; s < 35; s++) {
         nodes_used[s] = node;
@@ -558,6 +559,8 @@ int main(void) {
                     } else {
                         residual_neighbour = EAST;
                     }
+                    
+                    res_neighbour[s] = residual_neighbour;
                     
                     //================== updateResidualFlow() ======================
                     
@@ -795,6 +798,7 @@ int main(void) {
     for (int i = 0; i < 35; i++) {
         printf("nodes: %d\n", nodes_used[i]);
         printf("push_type: %d\n", push_type[i]);
+        printf("resneighbour: %d\n", res_neighbour[i]);
     }
     
     for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {

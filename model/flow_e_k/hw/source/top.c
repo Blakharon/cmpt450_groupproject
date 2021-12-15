@@ -1,6 +1,6 @@
 #include "../hw_defines.h"
 
-void top(uint64_t nodes, uint64_t source, uint64_t flow, uint64_t cut) {
+void top(uint64_t capacities, uint64_t source_caps, uint64_t flow, uint64_t cut) {
   // Define Device MMRs
   volatile uint8_t *EdmondsKarpFlag = (uint8_t *)EdmondsKarp;
   volatile uint64_t *EdmondsKarpArg1 = (uint64_t *)(EdmondsKarp_ARG1);
@@ -11,10 +11,10 @@ void top(uint64_t nodes, uint64_t source, uint64_t flow, uint64_t cut) {
   *EdmondsKarpFlag = 0x0;
   // Set up arguments for accelerator.
 
-  *EdmondsKarpArg1 = nodes;
-  *EdmondsKarpArg2 = source;
+  *EdmondsKarpArg1 = capacities;
+  *EdmondsKarpArg2 = source_caps;
   *EdmondsKarpArg3 = flow;
-  *EdmondsKarpArg2 = cut;
+  *EdmondsKarpArg4 = cut;
   // Start the accelerated function
   *EdmondsKarpFlag = DEV_INIT;
 

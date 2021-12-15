@@ -3,15 +3,16 @@ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
 @DIFF = constant [4 x i32] [i32 -5, i32 1, i32 5, i32 -1], align 16
+@blk_sz = constant i32 5, align 4
 
 ; Function Attrs: norecurse nounwind uwtable
-define void @top(i64 %nodes, i64 %source, i64 %flow, i64 %cut) #0 {
+define void @top(i64 %capacities, i64 %source_caps, i64 %flow, i64 %cut) #0 {
 entry:
   store volatile i8 0, i8* inttoptr (i64 788529664 to i8*), align 512
-  store volatile i64 %nodes, i64* inttoptr (i64 788529665 to i64*), align 8
-  store volatile i64 %source, i64* inttoptr (i64 788529673 to i64*), align 8
+  store volatile i64 %capacities, i64* inttoptr (i64 788529665 to i64*), align 8
+  store volatile i64 %source_caps, i64* inttoptr (i64 788529673 to i64*), align 8
   store volatile i64 %flow, i64* inttoptr (i64 788529681 to i64*), align 8
-  store volatile i64 %cut, i64* inttoptr (i64 788529673 to i64*), align 8
+  store volatile i64 %cut, i64* inttoptr (i64 788529689 to i64*), align 8
   store volatile i8 1, i8* inttoptr (i64 788529664 to i8*), align 512
   br label %while.cond
 

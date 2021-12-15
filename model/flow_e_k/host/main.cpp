@@ -141,7 +141,7 @@ volatile uint32_t *arg8 = (uint32_t *)0x2f000039;
 
 // }
 
-void edmondskarp(struct node* nodes, struct terminal* source, int32_t* flow, int32_t* cut) {
+void edmondskarp(int32_t* capacities, int32_t* source_caps, int32_t* flow, int32_t* cut) {
     int maxFlow = 0;
 
     int parentsList[NUM_NODES+2];
@@ -165,8 +165,8 @@ void edmondskarp(struct node* nodes, struct terminal* source, int32_t* flow, int
             // Perform manual first push of BFS
             // #pragma clang loop unroll_count(NUM_NODES)
             for(int i=0; i<NUM_NODES; ++i){
-                if (source->capacities[i]>0) {
-                    currentPathCapacity[i] = source->capacities[i];
+                if (source_caps[i]>0) {
+                    currentPathCapacity[i] = source_caps[i];
                     parentsList[i] = NUM_NODES+1;
                     q[qe++] = i;
                 }
@@ -178,11 +178,12 @@ void edmondskarp(struct node* nodes, struct terminal* source, int32_t* flow, int
                 #define min(a,b) ((a)<(b)?(a):(b))
 
                 int currentNode = q[qs++];
+                // printf("%03d : %03d \n", currentNode, currentPathCapacity[currentNode]);
 
                 // Check if it can see sink
-                if (nodes[currentNode].capacities[SINK]>0) {
+                if (capacities[(blk_sz*currentNode) + SINK]>0) {
                     parentsList[NUM_NODES] = currentNode;
-                    f = min(currentPathCapacity[currentNode], nodes[currentNode].capacities[SINK]);
+                    f = min(currentPathCapacity[currentNode], capacities[(blk_sz*currentNode) + SINK]);
                     break;
                 }
 
@@ -190,10 +191,10 @@ void edmondskarp(struct node* nodes, struct terminal* source, int32_t* flow, int
                 // #pragma clang loop unroll_count(NUM_NEIGHBOURS)
                 for (int i=0; i<NUM_NEIGHBOURS; ++i) {
                     int to = currentNode+DIFF[i];
-                    if (nodes[currentNode].capacities[i] > 0 && parentsList[to] == -1)
+                    if (capacities[blk_sz*currentNode + i] > 0 && parentsList[to] == -1)
                     {
                         parentsList[to] = currentNode;
-                        currentPathCapacity[to] = min(currentPathCapacity[currentNode], nodes[currentNode].capacities[i]);
+                        currentPathCapacity[to] = min(currentPathCapacity[currentNode], capacities[blk_sz*currentNode + i]);
                         q[qe++] = to;
                     }
                 }
@@ -211,20 +212,25 @@ void edmondskarp(struct node* nodes, struct terminal* source, int32_t* flow, int
 
         // Perform sink stuff manually
         int prev = parentsList[NUM_NODES]; // Parent of sink
-        nodes[prev].capacities[SINK] -= f;
+        capacities[blk_sz*prev + SINK] -= f;
+        // nodes[prev].capacities[SINK] -= f;
 
         int curr = prev;
         prev = parentsList[curr];
         
         // Backtrack regularly
+        // printf("Flow: %03d \n", f);
         while(prev != NUM_NODES+1)
         {
+            // printf("%03d <- %03d\n", prev, curr);
             for (int i = 0; i < NUM_NEIGHBOURS; ++i) 
             {
                 if (curr - prev == DIFF[i])
                 {
-                    nodes[prev].capacities[i] -= f;
-                    nodes[curr].capacities[i^0x2] += f;
+                    capacities[blk_sz*prev + i] -= f;
+                    capacities[blk_sz*curr + (i^0x2)] += f;
+                    // nodes[prev].capacities[i] -= f;
+                    // nodes[curr].capacities[i^0x2] += f;
                 }
             }
             
@@ -233,19 +239,14 @@ void edmondskarp(struct node* nodes, struct terminal* source, int32_t* flow, int
         }
 
         // Perform source stuff manually
-        source->capacities[curr] -= f;
+        // source->capacities[curr] -= f;
+        source_caps[curr] -= f;
     }
 
     // printf("Foreground:\n");
     for(int i=0; i<NUM_NODES; ++i)
     {
-        // cut[i] = (parentsList[i] != -1);
-        cut[i] = 1;
-
-        // if (parentsList[i] != -1) {
-        //     // printf("%d\n", i);
-        //     cut[i] = 1;
-        // }
+        cut[i] = (parentsList[i] != -1);
     }
 
     *flow = maxFlow;
@@ -256,93 +257,82 @@ int main(void) {
     int64_t base2 = 0x80200000;
     
     // Input
-    node* nodes = (node*) base2;
-    uint64_t nodes_size = sizeof(node) * NUM_NODES;
+    int32_t* capacities = (int32_t*) base2;
+    uint64_t cap_size = 4 * NUM_NODES * (NUM_NEIGHBOURS+1);
 
-    terminal* source = (terminal*) base2 + nodes_size;
+    int32_t* source_caps = (int32_t*) (base2 + cap_size);
+
+    // node* nodes = (node*) base2;
+    // uint64_t nodes_size = sizeof(node) * NUM_NODES;
+
+    // terminal* source = (terminal*) base2 + nodes_size;
     
     // Output
     int32_t* flow = (int32_t*) 0x80500000;
-    int32_t* cut = (int32_t*) 0x80500000 + sizeof(int32_t);
+    int32_t* cut = (int32_t*) 0x80500004;// + sizeof(int32_t);
 
     for (int i = 0; i < 2*NUM_NODES; i++) {
         printf("%03d\n", base[i]);
     }
 
-    // node nodes[NUM_NODES];
+    int32_t pix_vals[NUM_NODES];
     // terminal source; // Source has no bi-directional (startpoint) // ai
     // terminal sink; // Sink has no bi-directional (endpoint) // bi = 255 - ai
 
     //============= Graph Creation =====================
 
-    // Create a clear division between pixels
-    // // Set half of pixels to white
-    // for (int i = 0; i < 13; i++) {
-    //     nodes[i].pixel_value = 200; // 255 = white
-    // }
-    
-    // // Set other half to black
-    // for (int i = 13; i < NUM_NODES; i++) { 
-    //     nodes[i].pixel_value = 50; // 0 = black
-    // }
-
     // Set pixels to input values
     for (int i = 0; i < NUM_NODES; i++) {
-        nodes[i].pixel_value = base[i] >> 2;
+        pix_vals[i] = base[i] >> 2;
     }
     
     // Set source->node capacities (ai) 
     for (int i = 0; i < NUM_NODES; i++) {
-        // if (nodes[i].pixel_value == 255) { // white
-        //     source.capacities[i] = 255;
-        // } else if (nodes[i].pixel_value == 0) { // black
-        //     source.capacities[i] = 0;
-        // } else {
-        //     source.capacities[i] = 2;
-        // }
-        source->capacities[i] = base[i+25];
-        
-        source->curr_capacities[i] = 0;
+        source_caps[i] = base[i+25];
     }
     
     // Set max capacities of each pixel's neighbours: 255 - |neighbour.pixel_value - curr.pixel_value|
     for (int row = 0; row < NUM_ROWS; row++) {
         for (int col = 0; col < NUM_COLS; col++) {
-            int curr_node_i = col + row*NUM_COLS;
-            node& curr_node = nodes[curr_node_i];
+            int i = (col + row*NUM_COLS);
             
             #define abs(a) ((a)<0?(-a):(a))
 
             // Check W neighbour
             if (col != 0) {
-                node w_neighbour = nodes[(col - 1) + row*NUM_COLS];
-                curr_node.capacities[WEST] = 63 - abs(curr_node.pixel_value - w_neighbour.pixel_value);
-                curr_node.curr_capacities[WEST] = 0;
+                // node w_neighbour = nodes[(col - 1) + row*NUM_COLS];
+                // curr_node.capacities[WEST] = 63 - abs(curr_node.pixel_value - w_neighbour.pixel_value);
+                capacities[blk_sz*i + WEST] = 63 - abs(pix_vals[i] - pix_vals[i + DIFF[WEST]]);
+                // curr_node.curr_capacities[WEST] = 0;
             }
             
             // Check N neighbour
             if (row != 0) {
-                node n_neighbour = nodes[col + (row - 1)*NUM_COLS];
-                curr_node.capacities[NORTH] = 63 - abs(curr_node.pixel_value - n_neighbour.pixel_value);
-                curr_node.curr_capacities[NORTH] = 0;
+                // node n_neighbour = nodes[col + (row - 1)*NUM_COLS];
+                // curr_node.capacities[NORTH] = 63 - abs(curr_node.pixel_value - n_neighbour.pixel_value);
+                capacities[blk_sz*i + NORTH] = 63 - abs(pix_vals[i] - pix_vals[i + DIFF[NORTH]]);
+                // curr_node.curr_capacities[NORTH] = 0;
             }
             
             // Check E neighbour
             if (col != NUM_COLS - 1) {
-                node e_neighbour = nodes[(col + 1) + row*NUM_COLS];
-                curr_node.capacities[EAST] = 63 - abs(curr_node.pixel_value - e_neighbour.pixel_value);
-                curr_node.curr_capacities[EAST] = 0;
+                // node e_neighbour = nodes[(col + 1) + row*NUM_COLS];
+                // curr_node.capacities[EAST] = 63 - abs(curr_node.pixel_value - e_neighbour.pixel_value);
+                capacities[blk_sz*i + EAST] = 63 - abs(pix_vals[i] - pix_vals[i + DIFF[EAST]]);
+                // curr_node.curr_capacities[EAST] = 0;
             }
             
             // Check S neighbour
             if (row != NUM_ROWS - 1) {
-                node s_neighbour = nodes[col + (row + 1)*NUM_COLS];
-                curr_node.capacities[SOUTH] = 63 - abs(curr_node.pixel_value - s_neighbour.pixel_value);
-                curr_node.curr_capacities[SOUTH] = 0;
+                // node s_neighbour = nodes[col + (row + 1)*NUM_COLS];
+                // curr_node.capacities[SOUTH] = 63 - abs(curr_node.pixel_value - s_neighbour.pixel_value);
+                capacities[blk_sz*i + SOUTH] = 63 - abs(pix_vals[i] - pix_vals[i + DIFF[SOUTH]]);
+                // curr_node.curr_capacities[SOUTH] = 0;
             }
             
             // Set capacity to sink (bi): 255 - ai
-            curr_node.capacities[SINK] = 255 - source->capacities[curr_node_i];
+            capacities[blk_sz*i+SINK] = 255 - source_caps[i];
+            // curr_node.capacities[SINK] = 255 - source->capacities[curr_node_i];
         }
     }
 
@@ -354,21 +344,21 @@ int main(void) {
     // ;
 
     // Run Edmonds
-    // edmondskarp(nodes, source, flow, cut);
+    // edmondskarp(capacities, source_caps, flow, cut);
     // printf("f:%d\n", *flow);
 
     /* Run Accelerator */
 
     // Set arguments e.g.,
     
-    struct test* tes = (struct test*)0x80600000;
-    tes->a = 5;
-    tes->b = 5;
+    // struct test* tes = (struct test*)0x80600000;
+    // tes->a = 5;
+    // tes->b = 5;
         
 
     *top = 0x0;
-    *arg1 = (uint32_t)(void *) nodes;
-    *arg2 = (uint32_t)(void *) tes;
+    *arg1 = (uint32_t)(void *) capacities;
+    *arg2 = (uint32_t)(void *) source_caps;
     *arg3 = (uint32_t)(void *) flow;
     *arg4 = (uint32_t)(void *) cut;
 
@@ -376,14 +366,15 @@ int main(void) {
     int count = 0;
     while (*top != 0)
         count++;
-    printf("c:%d\n", count);
+    printf("c:%03d\n", count);
     // printf("%d   \n", *pl); 
 
     for(int i=0; i<NUM_NODES; ++i) {
-        printf("%d %d\n", cut[i], i);
+        printf("%03d %03d\n", cut[i], i);
     }
-    printf("Flow: %d\n", *flow);
-    printf("test: %d %d\n", tes->a, tes->b);
+    printf("Flow: %03d\n", *flow);
+    // printf("test: %d %d\n", tes->a, tes->b);
+    printf("%03d\n", (int32_t)(cut - flow));
 
     m5_dump_stats();
     m5_exit();

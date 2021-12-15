@@ -28,81 +28,81 @@ TYPE* inputs =  (TYPE*)0x80100000;
 // heights[NUM_NODES]
 int32_t* heights = (int32_t*)0x80100000 + (50*sizeof(int32_t));
 // excess_flows[NUM_NODES]
-int32_t* excess_flows = (int32_t*)0x80110000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*1);
+int32_t* excess_flows = (int32_t*)0x80120000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*1);
 // pixel_values[NUM_NODES]
-int32_t* pixel_values = (int32_t*)0x80120000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*2);
+int32_t* pixel_values = (int32_t*)0x80140000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*2);
 // nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* nodes_curr_capacities = (int32_t*)0x80130000 + 
+int32_t* nodes_curr_capacities = (int32_t*)0x80160000 + 
                                  (50*sizeof(int32_t)) + 
                                  (NUM_NODES*sizeof(int32_t)*3);
                                
 // nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* nodes_capacities = (int32_t*)0x80140000 + 
+int32_t* nodes_capacities = (int32_t*)0x80180000 + 
                             (50*sizeof(int32_t)) + 
                             (NUM_NODES*sizeof(int32_t)*3) +
                             (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*1);
 
 // res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* res_curr_capacities = (int32_t*)0x80150000 + 
+int32_t* res_curr_capacities = (int32_t*)0x801A0000 + 
                                (50*sizeof(int32_t)) + 
                                (NUM_NODES*sizeof(int32_t)*3) +
                                (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2);
                            
 // Source has no bi-directional (startpoint) // ai
-int32_t* source_height = (int32_t*)0x80160000 + 
+int32_t* source_height = (int32_t*)0x801C0000 + 
                           (50*sizeof(int32_t)) + 
                           (NUM_NODES*sizeof(int32_t)*3) +
                           (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*3);
                          
-int32_t* source_excess_flow = (int32_t*)0x80170000 + 
+int32_t* source_excess_flow = (int32_t*)0x801E0000 + 
                                (50*sizeof(int32_t)) + 
                                (NUM_NODES*sizeof(int32_t)*3) +
                                (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                                (sizeof(int32_t)*NUM_NODES*1);
                               
 // source_curr_capacities[NUM_NODES]
-int32_t* source_curr_capacities = (int32_t*)0x80180000 + 
+int32_t* source_curr_capacities = (int32_t*)0x80200000 + 
                                   (50*sizeof(int32_t)) + 
                                   (NUM_NODES*sizeof(int32_t)*3) +
                                   (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                                   (sizeof(int32_t)*NUM_NODES*2);
                                           
 // source_capacities[NUM_NODES]  
-int32_t* source_capacities = (int32_t*)0x80190000 + 
+int32_t* source_capacities = (int32_t*)0x80220000 + 
                             (50*sizeof(int32_t)) + 
                             (NUM_NODES*sizeof(int32_t)*4) +
                             (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                             (sizeof(int32_t)*NUM_NODES*2);
 
 // Sink has no bi-directional (endpoint) // bi
-int32_t* sink_height = (int32_t*)0x80200000 + 
+int32_t* sink_height = (int32_t*)0x80240000 + 
                         (50*sizeof(int32_t)) + 
                         (NUM_NODES*sizeof(int32_t)*5) +
                         (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                         (sizeof(int32_t)*NUM_NODES*2);
                         
-int32_t* sink_excess_flow = (int32_t*)0x80210000 + 
+int32_t* sink_excess_flow = (int32_t*)0x80260000 + 
                              (50*sizeof(int32_t)) + 
                              (NUM_NODES*sizeof(int32_t)*5) +
                              (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                              (sizeof(int32_t)*NUM_NODES*4);
 
 // sink_curr_capacities[NUM_NODES]
-int32_t* sink_curr_capacities = (int32_t*)0x80220000 + 
+int32_t* sink_curr_capacities = (int32_t*)0x80280000 + 
                                 (50*sizeof(int32_t)) + 
                                 (NUM_NODES*sizeof(int32_t)*5) +
                                 (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                                 (sizeof(int32_t)*NUM_NODES*5);
                                           
 // sink_capacities[NUM_NODES]
-int32_t* sink_capacities = (int32_t*)0x80230000 + 
+int32_t* sink_capacities = (int32_t*)0x802A0000 + 
                            (50*sizeof(int32_t)) + 
                            (NUM_NODES*sizeof(int32_t)*6) +
                            (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                            (sizeof(int32_t)*NUM_NODES*5);
 // Residual Source: Nodes->source residual flow
 // res_source_curr_capacities[NUM_NODES]
-int32_t* res_source_curr_capacities = (int32_t*)0x80240000 + 
+int32_t* res_source_curr_capacities = (int32_t*)0x802D0000 + 
                                       (50*sizeof(int32_t)) + 
                                       (NUM_NODES*sizeof(int32_t)*7) +
                                       (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +

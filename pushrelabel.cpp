@@ -785,7 +785,7 @@ int main(void) {
     */
     
 
-    for (int i = 0; i < NUM_NODES*(NUM_NEIGHBOURS+1); i++) {
+    for (int i = 0; i < NUM_NODES; i++) {
         printf("excess_flows: %d\n", source_capacities[i]);
     }
     

@@ -494,7 +494,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    for (int i = 0; i < NUM_NODES*(NUM_NEIGHBOURS+1); i++) {
+    for (int i = 0; i < NUM_NODES; i++) {
         printf("excess_flows: %d\n", excess_flows[i]);
     }
 

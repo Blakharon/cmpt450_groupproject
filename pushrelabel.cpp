@@ -461,9 +461,10 @@ int main(void) {
     }
     //================== End of initial overFlowNode() =======================
     int nodes_used[38];
+    int push_type[38];
     //while (node != -1) {
-    for (int i = 0; i < 38; i++) {
-        nodes_used[i] = node;
+    for (int s = 0; s < 38; s++) {
+        nodes_used[s] = node;
         int pushed = 0;
         //============================ Push() ========================
         int continue_count = 0;
@@ -492,6 +493,7 @@ int main(void) {
             
             // If we actually pushed to the sink, return true
             if (flow > 0) {
+                push_type[s] = 1;
                 pushed = 1;
             }
         }
@@ -569,6 +571,7 @@ int main(void) {
                     //=================== end of updateResidualFlow() ===================
                     
                     pushed = 1;
+                    push_type[s] = 2;
                     break;
                 }
             }
@@ -627,6 +630,7 @@ int main(void) {
                         res_curr_capacities[node*(NUM_NEIGHBOURS+1) + i] -= flow;
                         
                         pushed = 1;
+                        push_type[s] = 3;
                         break;
                     }
                 }
@@ -657,6 +661,7 @@ int main(void) {
                 // If we actually pushed to the sink, return true
                 if (flow > 0) {
                     pushed = 1;
+                    push_type[s] = 4;
                 }
             }
         }
@@ -789,6 +794,11 @@ int main(void) {
 
     for (int i = 0; i < 38; i++) {
         printf("nodes: %d\n", nodes_used[i]);
+        printf("push_type: %d\n", push_type[i]);
+    }
+    
+    for (int i = 0; i < NUM_NODES; i++) {
+        printf("excess flows: %d\n", excess_flows[i]);
     }
     
     printf("MaxFlow: %d\n", sink_excess_flow[0]);

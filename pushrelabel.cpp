@@ -792,7 +792,7 @@ int main(void) {
     */
     
 
-    for (int i = 0; i < 37; i++) {
+    for (int i = 0; i < 38; i++) {
         printf("nodes: %d\n", nodes_used[i]);
         printf("push_type: %d\n", push_type[i]);
     }

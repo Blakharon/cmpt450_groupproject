@@ -18,8 +18,6 @@ volatile uint32_t *arg9 = (uint32_t *)0x2f000041;
 volatile uint32_t *arg10 = (uint32_t *)0x2f000049;
 volatile uint32_t *arg11 = (uint32_t *)0x2f000051;
 volatile uint32_t *arg12 = (uint32_t *)0x2f000059;
-volatile uint32_t *arg13 = (uint32_t *)0x2f000061;
-volatile uint32_t *arg14 = (uint32_t *)0x2f000069;
 
 // =========== Graph ================
 TYPE* inputs =  (TYPE*)0x80100000;
@@ -496,8 +494,8 @@ int main(void) {
     while (*top != 0)
     ;
 
-    for (int i = 0; i < NUM_NODES; i++) {
-        printf("source_curr_capacities: %d\n", source_curr_capacities[i]);
+    for (int i = 0; i < NUM_NODES*(NUM_NEIGHBOURS+1); i++) {
+        printf("nodes_capacities: %d\n", nodes_capacities[i]);
     }
 
     printf("MaxFlow: %d                       \n", sink_excess_flow[0]);

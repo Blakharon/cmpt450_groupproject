@@ -495,7 +495,7 @@ int main(void) {
     ;
 
     for (int i = 0; i < NUM_NODES*(NUM_NEIGHBOURS+1); i++) {
-        printf("nodes_capacities: %d\n", nodes_capacities[i]);
+        printf("excess_flows: %d\n", excess_flows[i]);
     }
 
     printf("MaxFlow: %d                       \n", sink_excess_flow[0]);

@@ -20,7 +20,6 @@ volatile uint32_t *arg11 = (uint32_t *)0x2f000051;
 volatile uint32_t *arg12 = (uint32_t *)0x2f000059;
 volatile uint32_t *arg13 = (uint32_t *)0x2f000061;
 volatile uint32_t *arg14 = (uint32_t *)0x2f000069;
-volatile uint32_t *arg15 = (uint32_t *)0x2f000071;
 
 // =========== Graph ================
 TYPE* inputs =  (TYPE*)0x80100000;
@@ -487,19 +486,18 @@ int main(void) {
     
     *arg1 = (uint32_t)(void *)heights;
     *arg2 = (uint32_t)(void *)excess_flows;
-    *arg3 = (uint32_t)(void *)pixel_values;
-    *arg4 = (uint32_t)(void *)nodes_curr_capacities;
-    *arg5 = (uint32_t)(void *)nodes_capacities;
-    *arg6 = (uint32_t)(void *)res_curr_capacities;
-    *arg7 = (uint32_t)(void *)source_height;
-    *arg8 = (uint32_t)(void *)source_excess_flow;
-    *arg9 = (uint32_t)(void *)source_curr_capacities;
-    *arg10 = (uint32_t)(void *)source_capacities;
-    *arg11 = (uint32_t)(void *)sink_height;
-    *arg12 = (uint32_t)(void *)sink_excess_flow;
-    *arg13 = (uint32_t)(void *)sink_curr_capacities;
-    *arg14 = (uint32_t)(void *)sink_capacities;
-    *arg15 = (uint32_t)(void *)res_source_curr_capacities;
+    *arg3 = (uint32_t)(void *)nodes_curr_capacities;
+    *arg4 = (uint32_t)(void *)nodes_capacities;
+    *arg5 = (uint32_t)(void *)res_curr_capacities;
+    *arg6 = (uint32_t)(void *)source_height;
+    *arg7 = (uint32_t)(void *)source_excess_flow;
+    *arg8 = (uint32_t)(void *)source_curr_capacities;
+    *arg9 = (uint32_t)(void *)source_capacities;
+    *arg10 = (uint32_t)(void *)sink_height;
+    *arg11 = (uint32_t)(void *)sink_excess_flow;
+    *arg12 = (uint32_t)(void *)sink_curr_capacities;
+    *arg13 = (uint32_t)(void *)sink_capacities;
+    *arg14 = (uint32_t)(void *)res_source_curr_capacities;
     
     *top = 1;
     while (*top != 0)

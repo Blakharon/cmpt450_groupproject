@@ -2,8 +2,7 @@
 
 void top(
     uint64_t heights, 
-    uint64_t excess_flows, 
-    uint64_t pixel_values, 
+    uint64_t excess_flows,  
     uint64_t nodes_curr_capacities, 
     uint64_t nodes_capacities, 
     uint64_t res_curr_capacities, 
@@ -40,19 +39,18 @@ void top(
 
   *PushrelabelArg1  = heights;
   *PushrelabelArg2  = excess_flows;
-  *PushrelabelArg3  = pixel_values;
-  *PushrelabelArg4  = nodes_curr_capacities;
-  *PushrelabelArg5  = nodes_capacities;
-  *PushrelabelArg6  = res_curr_capacities;
-  *PushrelabelArg7  = source_height;
-  *PushrelabelArg8  = source_excess_flow;
-  *PushrelabelArg9  = source_curr_capacities;
-  *PushrelabelArg10 = source_capacities;
-  *PushrelabelArg11 = sink_height;
-  *PushrelabelArg12 = sink_excess_flow;
-  *PushrelabelArg13 = sink_curr_capacities;
-  *PushrelabelArg14 = sink_capacities;
-  *PushrelabelArg15 = res_source_curr_capacities;
+  *PushrelabelArg3  = nodes_curr_capacities;
+  *PushrelabelArg4  = nodes_capacities;
+  *PushrelabelArg5  = res_curr_capacities;
+  *PushrelabelArg6  = source_height;
+  *PushrelabelArg7  = source_excess_flow;
+  *PushrelabelArg8  = source_curr_capacities;
+  *PushrelabelArg9  = source_capacities;
+  *PushrelabelArg10 = sink_height;
+  *PushrelabelArg11 = sink_excess_flow;
+  *PushrelabelArg12 = sink_curr_capacities;
+  *PushrelabelArg13 = sink_capacities;
+  *PushrelabelArg14 = res_source_curr_capacities;
   
   // Start the accelerated function
   *PushrelabelFlag = DEV_INIT;

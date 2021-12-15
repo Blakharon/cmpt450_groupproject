@@ -3,7 +3,6 @@
 void pushrelabel(
     int32_t* heights, 
     int32_t* excess_flows, 
-    int32_t* pixel_values,
     int32_t* nodes_curr_capacities,
     int32_t* nodes_capacities,
     int32_t* res_curr_capacities,
@@ -18,14 +17,6 @@ void pushrelabel(
     int32_t* res_source_curr_capacities)
 {
 
-    //if (nodes_capacities[2] == -1) {
-    //    sink_excess_flow[0] = 42;
-    //} else {
-    //    sink_excess_flow[0] = 24;
-    //}
-    
-
-///*
     //========== Push-relabel algorithm ====================
 
     //===================== Preflow() ====================
@@ -59,7 +50,7 @@ void pushrelabel(
     }
     
     sink_excess_flow[0] = node;
-    /*
+    
     //================== End of initial overFlowNode() =======================
     
     while (node != -1) {
@@ -374,6 +365,4 @@ void pushrelabel(
         
         //==================== End of overFlowNode() =======================
     }
-    */
-   
 }

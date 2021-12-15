@@ -49,7 +49,7 @@ void pushrelabel(
     //================== End of initial overFlowNode() =======================
     
     while (node != -1) {
-        bool pushed = false;
+        int pushed = 0;
         //============================ Push() ========================
         int continue_count = 0;
 
@@ -77,11 +77,11 @@ void pushrelabel(
             
             // If we actually pushed to the sink, return true
             if (flow > 0) {
-                pushed = true;
+                pushed = 1;
             }
         }
 
-        if (pushed != true) {
+        if (pushed != 1) {
             // Go through all neighbours of node except sink
             for (int i = 0; i < NUM_NEIGHBOURS; i++) {
                 // No neighbour
@@ -153,13 +153,13 @@ void pushrelabel(
                     
                     //=================== end of updateResidualFlow() ===================
                     
-                    pushed = true;
+                    pushed = 1;
                     break;
                 }
             }
         }
         
-        if (pushed != true) {
+        if (pushed != 1) {
             // Flow has been maxed out on all edges, so try pushing in the residual graph
             if (continue_count == NUM_NEIGHBOURS) {
                 continue_count = 0;
@@ -211,14 +211,14 @@ void pushrelabel(
                         // Add flow to neighbour edge
                         res_curr_capacities[node*(NUM_NEIGHBOURS+1) + i] -= flow;
                         
-                        pushed = true;
+                        pushed = 1;
                         break;
                     }
                 }
             }
         }
         
-        if (pushed != true) {
+        if (pushed != 1) {
             // Residual flows maxed out, push back to source
             if (continue_count == NUM_NEIGHBOURS) {
                 int flow;
@@ -241,28 +241,28 @@ void pushrelabel(
                 
                 // If we actually pushed to the sink, return true
                 if (flow > 0) {
-                    pushed = true;
+                    pushed = 1;
                 }
             }
         }
 
         //==================== End of Push() ========================
-        if (pushed != true) {
+        if (pushed != 1) {
         
             //======================= Relabel() =========================
                 int min_height = INT_MAX;
                 int continue_count = 0;
-                bool relabelled;
-                relabelled = false;
+                int relabelled;
+                relabelled = 0;
                 
                 if (nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + SINK] != nodes_capacities[node*(NUM_NEIGHBOURS+1) + SINK]) {
                     // Update height of node
                     heights[node] = sink_height[0] + 1;
                     
-                    relabelled = true; //Relabelled the node to 1 higher than sink since there's space to push there
+                    relabelled = 1; //Relabelled the node to 1 higher than sink since there's space to push there
                 }
                 
-                if (relabelled != true) {
+                if (relabelled != 1) {
                     min_height = INT_MAX;
                     // Check for capacities to neighbours and relabel them if there is space
                     for (int i = 0; i < NUM_NEIGHBOURS; i++) {

@@ -102,7 +102,7 @@ int32_t* sink_capacities = (int32_t*)0x80E0000 +
                            (sizeof(int32_t)*NUM_NODES*5);
 // Residual Source: Nodes->source residual flow
 // res_source_curr_capacities[NUM_NODES]
-int32_t* res_source_curr_capacities = (int32_t*)0x80F0000 + 
+int32_t* res_source_curr_capacities = (int32_t*)0x80E0000 + 
                                       (50*sizeof(int32_t)) + 
                                       (NUM_NODES*sizeof(int32_t)*7) +
                                       (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +

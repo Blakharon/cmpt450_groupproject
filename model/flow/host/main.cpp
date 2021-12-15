@@ -505,7 +505,6 @@ int main(void) {
     while (*top != 0)
     ;
 
-    printf("nodes_capacities[2]: %d\n", nodes_capacities[2]);
     printf("MaxFlow: %d                       \n", sink_excess_flow[0]);
 
     m5_dump_stats();

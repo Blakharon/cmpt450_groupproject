@@ -136,10 +136,10 @@ void pushrelabel(
                     int32_t residual_neighbour;
                     if (i == 0) {
                         residual_neighbour = SOUTH;
-                    } else if (i == 2) {
-                        residual_neighbour = NORTH;
                     } else if (i == 1) {
                         residual_neighbour = WEST;
+                    } else if (i == 2) {
+                        residual_neighbour = NORTH;
                     } else {
                         residual_neighbour = EAST;
                     }

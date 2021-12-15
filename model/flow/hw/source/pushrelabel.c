@@ -40,7 +40,7 @@ void pushrelabel(
         excess_flows[i] = source_capacities[i];
     }
     
-    /*
+    
     
     //=================== End of Preflow() ====================
     
@@ -57,6 +57,9 @@ void pushrelabel(
             node = -1;
         }
     }
+    
+    sink_excess_flow[0] = node;
+    /*
     //================== End of initial overFlowNode() =======================
     
     while (node != -1) {

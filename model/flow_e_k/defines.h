@@ -20,7 +20,7 @@
 #define WEST 3
 #define SINK 4
 
-const int DIFF[] = {-NUM_COLS, 1, NUM_COLS, -1};
+const int32_t DIFF[] = {-NUM_COLS, 1, NUM_COLS, -1};
 const int32_t blk_sz = NUM_NEIGHBOURS+1;
 
 // struct node { // Pixel

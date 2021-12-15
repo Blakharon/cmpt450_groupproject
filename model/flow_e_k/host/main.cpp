@@ -371,10 +371,9 @@ int main(void) {
 
     for(int i=0; i<NUM_NODES; ++i) {
         printf("%03d %03d\n", cut[i], i);
+        // if (cut[i] == -1331) break; // Used for debugging
     }
     printf("Flow: %03d\n", *flow);
-    // printf("test: %d %d\n", tes->a, tes->b);
-    printf("%03d\n", (int32_t)(cut - flow));
 
     m5_dump_stats();
     m5_exit();

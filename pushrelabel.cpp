@@ -560,7 +560,7 @@ int main(void) {
                         residual_neighbour = EAST;
                     }
                     
-                    res_neighbour[s] = residual_neighbour;
+                    res_neighbour[s] = i;
                     
                     //================== updateResidualFlow() ======================
                     

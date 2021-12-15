@@ -144,7 +144,7 @@ void pushrelabel(
                         residual_neighbour = EAST;
                     }
                     
-                    source_excess_flow[s+1] = residual_neighbour;
+                    source_excess_flow[s+1] = i;
                     
                     //================== updateResidualFlow() ======================
                     

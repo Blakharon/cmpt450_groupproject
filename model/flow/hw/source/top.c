@@ -2,8 +2,7 @@
 
 void top(
     uint64_t heights, 
-    uint64_t excess_flows, 
-    uint64_t pixel_values, 
+    uint64_t excess_flows,  
     uint64_t nodes_curr_capacities, 
     uint64_t nodes_capacities, 
     uint64_t res_curr_capacities, 
@@ -13,8 +12,6 @@ void top(
     uint64_t source_capacities, 
     uint64_t sink_height, 
     uint64_t sink_excess_flow, 
-    uint64_t sink_curr_capacities, 
-    uint64_t sink_capacities, 
     uint64_t res_source_curr_capacities)
 {
   // Define Device MMRs
@@ -31,28 +28,22 @@ void top(
   volatile uint64_t *PushrelabelArg10 = (uint64_t *)(Pushrelabel_ARG10);
   volatile uint64_t *PushrelabelArg11 = (uint64_t *)(Pushrelabel_ARG11);
   volatile uint64_t *PushrelabelArg12 = (uint64_t *)(Pushrelabel_ARG12);
-  volatile uint64_t *PushrelabelArg13 = (uint64_t *)(Pushrelabel_ARG13);
-  volatile uint64_t *PushrelabelArg14 = (uint64_t *)(Pushrelabel_ARG14);
-  volatile uint64_t *PushrelabelArg15 = (uint64_t *)(Pushrelabel_ARG15);
 
   *PushrelabelFlag = 0x0;
   // Set up arguments for accelerator.
 
   *PushrelabelArg1  = heights;
   *PushrelabelArg2  = excess_flows;
-  *PushrelabelArg3  = pixel_values;
-  *PushrelabelArg4  = nodes_curr_capacities;
-  *PushrelabelArg5  = nodes_capacities;
-  *PushrelabelArg6  = res_curr_capacities;
-  *PushrelabelArg7  = source_height;
-  *PushrelabelArg8  = source_excess_flow;
-  *PushrelabelArg9  = source_curr_capacities;
-  *PushrelabelArg10 = source_capacities;
-  *PushrelabelArg11 = sink_height;
-  *PushrelabelArg12 = sink_excess_flow;
-  *PushrelabelArg13 = sink_curr_capacities;
-  *PushrelabelArg14 = sink_capacities;
-  *PushrelabelArg15 = res_source_curr_capacities;
+  *PushrelabelArg3  = nodes_curr_capacities;
+  *PushrelabelArg4  = nodes_capacities;
+  *PushrelabelArg5  = res_curr_capacities;
+  *PushrelabelArg6  = source_height;
+  *PushrelabelArg7  = source_excess_flow;
+  *PushrelabelArg8  = source_curr_capacities;
+  *PushrelabelArg9  = source_capacities;
+  *PushrelabelArg10 = sink_height;
+  *PushrelabelArg11 = sink_excess_flow;
+  *PushrelabelArg12 = res_source_curr_capacities;
   
   // Start the accelerated function
   *PushrelabelFlag = DEV_INIT;

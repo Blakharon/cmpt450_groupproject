@@ -18,52 +18,44 @@ volatile uint32_t *arg9 = (uint32_t *)0x2f000041;
 volatile uint32_t *arg10 = (uint32_t *)0x2f000049;
 volatile uint32_t *arg11 = (uint32_t *)0x2f000051;
 volatile uint32_t *arg12 = (uint32_t *)0x2f000059;
-volatile uint32_t *arg13 = (uint32_t *)0x2f000061;
-volatile uint32_t *arg14 = (uint32_t *)0x2f000069;
-volatile uint32_t *arg15 = (uint32_t *)0x2f000071;
 
 // =========== Graph ================
 TYPE* inputs =  (TYPE*)0x80100000;
 
 // heights[NUM_NODES]
-int32_t* heights = (int32_t*)0x80120000;
+int32_t* heights = (int32_t*)0x80200000;
 // excess_flows[NUM_NODES]
-int32_t* excess_flows = (int32_t*)0x80140000;
+int32_t* excess_flows = (int32_t*)0x80230000;
 // pixel_values[NUM_NODES]
-int32_t* pixel_values = (int32_t*)0x80160000;
+int32_t* pixel_values = (int32_t*)0x80260000;
 // nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* nodes_curr_capacities = (int32_t*)0x80180000;
+int32_t* nodes_curr_capacities = (int32_t*)0x80280000;
                                
 // nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* nodes_capacities = (int32_t*)0x801A0000;
+int32_t* nodes_capacities = (int32_t*)0x80350000;
 
 // res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* res_curr_capacities = (int32_t*)0x801C0000;
+int32_t* res_curr_capacities = (int32_t*)0x80480000;
                            
 // Source has no bi-directional (startpoint) // ai
-int32_t* source_height = (int32_t*)0x801E0000;
+int32_t* source_height = (int32_t*)0x80500000;
                          
-int32_t* source_excess_flow = (int32_t*)0x80210000;
+int32_t* source_excess_flow = (int32_t*)0x80530000;
                               
 // source_curr_capacities[NUM_NODES]
-int32_t* source_curr_capacities = (int32_t*)0x80230000;
+int32_t* source_curr_capacities = (int32_t*)0x80560000;
                                           
 // source_capacities[NUM_NODES]  
-int32_t* source_capacities = (int32_t*)0x80250000;
+int32_t* source_capacities = (int32_t*)0x80590000;
 
 // Sink has no bi-directional (endpoint) // bi
-int32_t* sink_height = (int32_t*)0x80270000;
+int32_t* sink_height = (int32_t*)0x805C0000;
                         
-int32_t* sink_excess_flow = (int32_t*)0x80290000;
-
-// sink_curr_capacities[NUM_NODES]
-int32_t* sink_curr_capacities = (int32_t*)0x802B0000;
+int32_t* sink_excess_flow = (int32_t*)0x805F0000;
                                           
-// sink_capacities[NUM_NODES]
-int32_t* sink_capacities = (int32_t*)0x802D0000;
 // Residual Source: Nodes->source residual flow
 // res_source_curr_capacities[NUM_NODES]
-int32_t* res_source_curr_capacities = (int32_t*)0x802F0000;
+int32_t* res_source_curr_capacities = (int32_t*)0x80630000;
 
 
 int main(void) {
@@ -487,23 +479,41 @@ int main(void) {
     
     *arg1 = (uint32_t)(void *)heights;
     *arg2 = (uint32_t)(void *)excess_flows;
-    *arg3 = (uint32_t)(void *)pixel_values;
-    *arg4 = (uint32_t)(void *)nodes_curr_capacities;
-    *arg5 = (uint32_t)(void *)nodes_capacities;
-    *arg6 = (uint32_t)(void *)res_curr_capacities;
-    *arg7 = (uint32_t)(void *)source_height;
-    *arg8 = (uint32_t)(void *)source_excess_flow;
-    *arg9 = (uint32_t)(void *)source_curr_capacities;
-    *arg10 = (uint32_t)(void *)source_capacities;
-    *arg11 = (uint32_t)(void *)sink_height;
-    *arg12 = (uint32_t)(void *)sink_excess_flow;
-    *arg13 = (uint32_t)(void *)sink_curr_capacities;
-    *arg14 = (uint32_t)(void *)sink_capacities;
-    *arg15 = (uint32_t)(void *)res_source_curr_capacities;
+    *arg3 = (uint32_t)(void *)nodes_curr_capacities;
+    *arg4 = (uint32_t)(void *)nodes_capacities;
+    *arg5 = (uint32_t)(void *)res_curr_capacities;
+    *arg6 = (uint32_t)(void *)source_height;
+    *arg7 = (uint32_t)(void *)source_excess_flow;
+    *arg8 = (uint32_t)(void *)source_curr_capacities;
+    *arg9 = (uint32_t)(void *)source_capacities;
+    *arg10 = (uint32_t)(void *)sink_height;
+    *arg11 = (uint32_t)(void *)sink_excess_flow;
+    *arg12 = (uint32_t)(void *)res_source_curr_capacities;
     
     *top = 1;
     while (*top != 0)
     ;
+
+    for (int i = 1; i < 38; i++) {
+        printf("node     : %d\n", sink_excess_flow[i]);
+        printf("push_type: %d\n", source_height[i]);
+    }
+
+    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+        printf("nodes_capacities: %d\n", nodes_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
+    }
+    
+    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+        printf("nodes_curr_capacities: %d\n", nodes_curr_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
+    }
+    
+    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+        printf("res_curr_capacities    : %d\n", res_curr_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
+    }
+    
+    for (int i = 0; i < NUM_NODES; i++) {
+        printf("excess flows              : %d\n", excess_flows[i]);
+    }
 
     printf("MaxFlow: %d                       \n", sink_excess_flow[0]);
 

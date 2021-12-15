@@ -3,7 +3,6 @@
 void pushrelabel(
     int32_t* heights, 
     int32_t* excess_flows, 
-    int32_t* pixel_values,
     int32_t* nodes_curr_capacities,
     int32_t* nodes_capacities,
     int32_t* res_curr_capacities,
@@ -13,19 +12,9 @@ void pushrelabel(
     int32_t* source_capacities,
     int32_t* sink_height,
     int32_t* sink_excess_flow,
-    int32_t* sink_curr_capacities,
-    int32_t* sink_capacities,
     int32_t* res_source_curr_capacities)
 {
-/*
-    if (nodes_capacities[2] == -1) {
-        sink_excess_flow[0] = 42;
-    } else {
-        sink_excess_flow[0] = 24;
-    }
-    */
 
-///*
     //========== Push-relabel algorithm ====================
 
     //===================== Preflow() ====================
@@ -39,7 +28,7 @@ void pushrelabel(
         // Set excess flow for node == capacity
         excess_flows[i] = source_capacities[i];
     }
-    
+
     //=================== End of Preflow() ====================
     
     //================ initial overFlowNode() =========================
@@ -55,9 +44,12 @@ void pushrelabel(
             node = -1;
         }
     }
+    
     //================== End of initial overFlowNode() =======================
     
-    while (node != -1) {
+    //while (node != -1) {
+    for (int s = 0; s < 37; s++) {
+        sink_excess_flow[s+1] = node;
         int pushed = 0;
         //============================ Push() ========================
         int continue_count = 0;
@@ -87,6 +79,7 @@ void pushrelabel(
             // If we actually pushed to the sink, return true
             if (flow > 0) {
                 pushed = 1;
+                source_height[s+1] = 1;
             }
         }
 
@@ -163,6 +156,7 @@ void pushrelabel(
                     //=================== end of updateResidualFlow() ===================
                     
                     pushed = 1;
+                    source_height[s+1] = 2;
                     break;
                 }
             }
@@ -220,6 +214,7 @@ void pushrelabel(
                         // Add flow to neighbour edge
                         res_curr_capacities[node*(NUM_NEIGHBOURS+1) + i] -= flow;
                         
+                        source_height[s+1] = 3;
                         pushed = 1;
                         break;
                     }
@@ -250,6 +245,7 @@ void pushrelabel(
                 
                 // If we actually pushed to the sink, return true
                 if (flow > 0) {
+                    source_height[s+1] = 4;
                     pushed = 1;
                 }
             }
@@ -369,5 +365,5 @@ void pushrelabel(
         
         //==================== End of overFlowNode() =======================
     }
-   // */
+    
 }

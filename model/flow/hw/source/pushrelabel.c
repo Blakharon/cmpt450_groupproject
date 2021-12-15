@@ -32,7 +32,7 @@ void pushrelabel(
     //=================== End of Preflow() ====================
     
     //================ initial overFlowNode() =========================
-    volatile int node;
+    int node;
     for (int i = 0; i < NUM_NODES; i++) {
         if (excess_flows[i] > 0) {
             node = i;
@@ -47,9 +47,9 @@ void pushrelabel(
     
     //================== End of initial overFlowNode() =======================
     
-    //while (node != -1) {
-    for (int s = 0; s < 37; s++) {
-        sink_excess_flow[s+1] = node;
+    while (node != -1) {
+    //for (int s = 0; s < 37; s++) {
+        //sink_excess_flow[s+1] = node;
         int pushed = 0;
         //============================ Push() ========================
         int continue_count = 0;
@@ -79,7 +79,7 @@ void pushrelabel(
             // If we actually pushed to the sink, return true
             if (flow > 0) {
                 pushed = 1;
-                source_height[s+1] = 1;
+                //source_height[s+1] = 1;
             }
         }
 
@@ -156,7 +156,7 @@ void pushrelabel(
                     //=================== end of updateResidualFlow() ===================
                     
                     pushed = 1;
-                    source_height[s+1] = 2;
+                    //source_height[s+1] = 2;
                     break;
                 }
             }
@@ -214,7 +214,7 @@ void pushrelabel(
                         // Add flow to neighbour edge
                         res_curr_capacities[node*(NUM_NEIGHBOURS+1) + i] -= flow;
                         
-                        source_height[s+1] = 3;
+                        //source_height[s+1] = 3;
                         pushed = 1;
                         break;
                     }
@@ -245,7 +245,7 @@ void pushrelabel(
                 
                 // If we actually pushed to the sink, return true
                 if (flow > 0) {
-                    source_height[s+1] = 4;
+                    //source_height[s+1] = 4;
                     pushed = 1;
                 }
             }

@@ -802,11 +802,11 @@ int main(void) {
     }
     
     for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
-        printf("nodes_capacities: %d\n", nodes_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
+        printf("nodes_capacities: %d\n", nodes_capacities[i+(6*(NUM_NEIGHBOURS+1))]);
     }
     
     for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
-        printf("nodes_curr_capacities: %d\n", nodes_curr_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
+        printf("nodes_curr_capacities: %d\n", nodes_curr_capacities[i+(6*(NUM_NEIGHBOURS+1))]);
     }
     
     for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {

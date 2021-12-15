@@ -50,14 +50,14 @@ void pushrelabel(
     while (node != -1) {
     //for (int32_t s = 0; s < 37; s++) {
         //sink_excess_flow[s+1] = node;
-        volatile int32_t pushed = 0;
+        int32_t pushed = 0;
         //============================ Push() ========================
-        volatile int32_t continue_count = 0;
+        int32_t continue_count = 0;
 
         // Try pushing to sink first
         if (nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + SINK] < nodes_capacities[node*(NUM_NEIGHBOURS+1) + SINK]) {
-            volatile int32_t flow;
-            volatile int32_t edge_flow_left = nodes_capacities[node*(NUM_NEIGHBOURS+1) + SINK] - nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + SINK];
+            int32_t flow;
+            int32_t edge_flow_left = nodes_capacities[node*(NUM_NEIGHBOURS+1) + SINK] - nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + SINK];
             
             if (excess_flows[node] > edge_flow_left) {
                 flow = edge_flow_left;
@@ -98,7 +98,7 @@ void pushrelabel(
                     continue;
                 }
                 
-                volatile int32_t neighbour_idx;
+                int32_t neighbour_idx;
                 if (i == 0) { // North neighbour
                     neighbour_idx = node - NUM_COLS;
                 } else if (i == 1) { // East neighbour
@@ -109,13 +109,13 @@ void pushrelabel(
                     neighbour_idx = node - 1;
                 }
                 
-                volatile int32_t neighbour_height = heights[neighbour_idx];
+                int32_t neighbour_height = heights[neighbour_idx];
                 
                 // Check neighbours for height values
                 // Push only if curr_height is bigger than neighbour
                 if (heights[node] > neighbour_height) {
-                    volatile int32_t flow;
-                    volatile int32_t edge_flow_left = nodes_capacities[node*(NUM_NEIGHBOURS+1) + i] - nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + i];
+                    int32_t flow;
+                    int32_t edge_flow_left = nodes_capacities[node*(NUM_NEIGHBOURS+1) + i] - nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + i];
                     
                     if (excess_flows[node] > edge_flow_left) {
                         flow = edge_flow_left;
@@ -133,7 +133,7 @@ void pushrelabel(
                     nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + i] += flow;
                     
                     // Update residual flow
-                    volatile int32_t residual_neighbour;
+                    int32_t residual_neighbour;
                     if (i == NORTH) {
                         residual_neighbour = SOUTH;
                     } else if (i == SOUTH) {
@@ -191,13 +191,13 @@ void pushrelabel(
                         continue;
                     }
                     
-                    volatile int32_t neighbour_height = heights[neighbour_idx];
+                    int32_t neighbour_height = heights[neighbour_idx];
                     
                     // Check neighbours for height values
                     // Push only if curr_height is bigger than neighbour
                     if (heights[node] > neighbour_height) {
-                        volatile int32_t flow;
-                        volatile int32_t edge_flow_left = res_curr_capacities[node*(NUM_NEIGHBOURS+1) + i];
+                        int32_t flow;
+                        int32_t edge_flow_left = res_curr_capacities[node*(NUM_NEIGHBOURS+1) + i];
                         
                         if (excess_flows[node] > edge_flow_left) {
                             flow = edge_flow_left;
@@ -225,8 +225,8 @@ void pushrelabel(
         if (pushed != 1) {
             // Residual flows maxed out, push back to source
             if (continue_count == NUM_NEIGHBOURS) {
-                volatile int32_t flow;
-                volatile int32_t edge_flow_left = res_source_curr_capacities[node];
+                int32_t flow;
+                int32_t edge_flow_left = res_source_curr_capacities[node];
                 
                 if (excess_flows[node] > edge_flow_left) {
                     flow = edge_flow_left;
@@ -255,9 +255,9 @@ void pushrelabel(
         if (pushed != 1) {
         
             //======================= Relabel() =========================
-                volatile int32_t min_height = 999999999;
-                volatile int32_t continue_count = 0;
-                volatile int32_t relabelled;
+                int32_t min_height = 999999999;
+                int32_t continue_count = 0;
+                int32_t relabelled;
                 relabelled = 0;
                 
                 if (nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + SINK] != nodes_capacities[node*(NUM_NEIGHBOURS+1) + SINK]) {

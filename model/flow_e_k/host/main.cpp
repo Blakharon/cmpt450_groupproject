@@ -260,7 +260,8 @@ int main(void) {
     int32_t* capacities = (int32_t*) base2;
     uint64_t cap_size = 4 * NUM_NODES * (NUM_NEIGHBOURS+1);
 
-    int32_t* source_caps = (int32_t*) (base2 + cap_size);
+    //int32_t* source_caps = (int32_t*) (base2 + cap_size);
+    int32_t* source_caps = (int32_t*)0x80300000;
 
     // node* nodes = (node*) base2;
     // uint64_t nodes_size = sizeof(node) * NUM_NODES;
@@ -268,8 +269,8 @@ int main(void) {
     // terminal* source = (terminal*) base2 + nodes_size;
     
     // Output
-    int32_t* flow = (int32_t*) 0x80500000;
-    int32_t* cut = (int32_t*) 0x80500004;// + sizeof(int32_t);
+    int32_t* flow = (int32_t*) 0x80400000;
+    int32_t* cut = (int32_t*) 0x80500000;// + sizeof(int32_t);
 
     for (int i = 0; i < 2*NUM_NODES; i++) {
         printf("%03d\n", base[i]);

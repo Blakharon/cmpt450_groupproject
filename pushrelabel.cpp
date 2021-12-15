@@ -440,6 +440,10 @@ int main(void) {
         excess_flows[i] = source_capacities[i];
     }
     
+    for (int i = 0; i < NUM_NODES; i++) {
+        printf("source_curr_capacities: %d\n", source_curr_capacities[i]);
+    }
+    
     //=================== End of Preflow() ====================
     
     //================ initial overFlowNode() =========================
@@ -780,11 +784,7 @@ int main(void) {
     }
     */
     
-    for (int i = 0; i < NUM_NODES; i++) {
-        printf("source_capacities: %d\n", source_capacities[i]);
-        
-    }
-    
+
     for (int i = 0; i < NUM_NODES; i++) {
         printf("res_source_curr_capacities: %d\n", res_source_curr_capacities[i]);
         

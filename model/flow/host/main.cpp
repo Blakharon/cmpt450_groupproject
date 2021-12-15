@@ -60,10 +60,10 @@ int32_t* sink_excess_flow = (int32_t*)0x80290000;
 int32_t* sink_curr_capacities = (int32_t*)0x802B0000;
                                           
 // sink_capacities[NUM_NODES]
-int32_t* sink_capacities = (int32_t*)0x80100000;
+int32_t* sink_capacities = (int32_t*)0x802D0000;
 // Residual Source: Nodes->source residual flow
 // res_source_curr_capacities[NUM_NODES]
-int32_t* res_source_curr_capacities = (int32_t*)0x802D0000;
+int32_t* res_source_curr_capacities = (int32_t*)0x802F0000;
 
 
 int main(void) {

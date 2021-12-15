@@ -26,89 +26,44 @@ volatile uint32_t *arg15 = (uint32_t *)0x2f000071;
 TYPE* inputs =  (TYPE*)0x80100000;
 
 // heights[NUM_NODES]
-int32_t* heights = (int32_t*)0x80100000 + (50*sizeof(int32_t));
+int32_t* heights = (int32_t*)0x80120000;
 // excess_flows[NUM_NODES]
-int32_t* excess_flows = (int32_t*)0x80100000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*1);
+int32_t* excess_flows = (int32_t*)0x80140000;
 // pixel_values[NUM_NODES]
-int32_t* pixel_values = (int32_t*)0x80100000 + (50*sizeof(int32_t)) + (NUM_NODES*sizeof(int32_t)*2);
+int32_t* pixel_values = (int32_t*)0x80160000;
 // nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* nodes_curr_capacities = (int32_t*)0x80100000 + 
-                                 (50*sizeof(int32_t)) + 
-                                 (NUM_NODES*sizeof(int32_t)*3);
+int32_t* nodes_curr_capacities = (int32_t*)0x80180000;
                                
 // nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* nodes_capacities = (int32_t*)0x80100000 + 
-                            (50*sizeof(int32_t)) + 
-                            (NUM_NODES*sizeof(int32_t)*3) +
-                            (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*1);
-                            
-// =========== Residual graph ===============
+int32_t* nodes_capacities = (int32_t*)0x801A0000;
 
 // res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* res_curr_capacities = (int32_t*)0x80100000 + 
-                               (50*sizeof(int32_t)) + 
-                               (NUM_NODES*sizeof(int32_t)*3) +
-                               (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2);
+int32_t* res_curr_capacities = (int32_t*)0x801C0000;
                            
 // Source has no bi-directional (startpoint) // ai
-int32_t* source_height = (int32_t*)0x80100000 + 
-                          (50*sizeof(int32_t)) + 
-                          (NUM_NODES*sizeof(int32_t)*3) +
-                          (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*3);
+int32_t* source_height = (int32_t*)0x801E0000;
                          
-int32_t* source_excess_flow = (int32_t*)0x80100000 + 
-                               (50*sizeof(int32_t)) + 
-                               (NUM_NODES*sizeof(int32_t)*3) +
-                               (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                               (sizeof(int32_t)*NUM_NODES*1);
+int32_t* source_excess_flow = (int32_t*)0x80210000;
                               
 // source_curr_capacities[NUM_NODES]
-int32_t* source_curr_capacities = (int32_t*)0x80100000 + 
-                                  (50*sizeof(int32_t)) + 
-                                  (NUM_NODES*sizeof(int32_t)*3) +
-                                  (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                                  (sizeof(int32_t)*NUM_NODES*2);
+int32_t* source_curr_capacities = (int32_t*)0x80230000;
                                           
 // source_capacities[NUM_NODES]  
-int32_t* source_capacities = (int32_t*)0x80100000 + 
-                            (50*sizeof(int32_t)) + 
-                            (NUM_NODES*sizeof(int32_t)*4) +
-                            (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                            (sizeof(int32_t)*NUM_NODES*2);
+int32_t* source_capacities = (int32_t*)0x80250000;
 
 // Sink has no bi-directional (endpoint) // bi
-int32_t* sink_height = (int32_t*)0x80100000 + 
-                        (50*sizeof(int32_t)) + 
-                        (NUM_NODES*sizeof(int32_t)*5) +
-                        (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                        (sizeof(int32_t)*NUM_NODES*2);
+int32_t* sink_height = (int32_t*)0x80270000;
                         
-int32_t* sink_excess_flow = (int32_t*)0x80100000 + 
-                             (50*sizeof(int32_t)) + 
-                             (NUM_NODES*sizeof(int32_t)*5) +
-                             (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                             (sizeof(int32_t)*NUM_NODES*4);
+int32_t* sink_excess_flow = (int32_t*)0x80290000;
 
 // sink_curr_capacities[NUM_NODES]
-int32_t* sink_curr_capacities = (int32_t*)0x80100000 + 
-                                (50*sizeof(int32_t)) + 
-                                (NUM_NODES*sizeof(int32_t)*5) +
-                                (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                                (sizeof(int32_t)*NUM_NODES*5);
+int32_t* sink_curr_capacities = (int32_t*)0x802B0000;
                                           
 // sink_capacities[NUM_NODES]
-int32_t* sink_capacities = (int32_t*)0x80100000 + 
-                           (50*sizeof(int32_t)) + 
-                           (NUM_NODES*sizeof(int32_t)*6) +
-                           (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                           (sizeof(int32_t)*NUM_NODES*5);
+int32_t* sink_capacities = (int32_t*)0x802D0000;
 // Residual Source: Nodes->source residual flow
 // res_source_curr_capacities[NUM_NODES]
-int32_t* res_source_curr_capacities = (int32_t*)0x80100000 + 
-                                      (50*sizeof(int32_t)) + 
-                                      (NUM_NODES*sizeof(int32_t)*7) +
-                                      (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
-                                      (sizeof(int32_t)*NUM_NODES*5);
+int32_t* res_source_curr_capacities = (int32_t*)0x802F0000;
 
 
 int main(void) {
@@ -177,6 +132,8 @@ int main(void) {
         }
     }
     
+    /*
+    
     //========== Push-relabel algorithm ====================
 
     //===================== Preflow() ====================
@@ -209,7 +166,7 @@ int main(void) {
     //================== End of initial overFlowNode() =======================
     
     while (node != -1) {
-        bool pushed = false;
+        int pushed = 0;
         //============================ Push() ========================
         int continue_count = 0;
 
@@ -237,11 +194,11 @@ int main(void) {
             
             // If we actually pushed to the sink, return true
             if (flow > 0) {
-                pushed = true;
+                pushed = 1;
             }
         }
 
-        if (pushed != true) {
+        if (pushed != 1) {
             // Go through all neighbours of node except sink
             for (int i = 0; i < NUM_NEIGHBOURS; i++) {
                 // No neighbour
@@ -313,13 +270,13 @@ int main(void) {
                     
                     //=================== end of updateResidualFlow() ===================
                     
-                    pushed = true;
+                    pushed = 1;
                     break;
                 }
             }
         }
         
-        if (pushed != true) {
+        if (pushed != 1) {
             // Flow has been maxed out on all edges, so try pushing in the residual graph
             if (continue_count == NUM_NEIGHBOURS) {
                 continue_count = 0;
@@ -371,14 +328,14 @@ int main(void) {
                         // Add flow to neighbour edge
                         res_curr_capacities[node*(NUM_NEIGHBOURS+1) + i] -= flow;
                         
-                        pushed = true;
+                        pushed = 1;
                         break;
                     }
                 }
             }
         }
         
-        if (pushed != true) {
+        if (pushed != 1) {
             // Residual flows maxed out, push back to source
             if (continue_count == NUM_NEIGHBOURS) {
                 int flow;
@@ -401,29 +358,29 @@ int main(void) {
                 
                 // If we actually pushed to the sink, return true
                 if (flow > 0) {
-                    pushed = true;
+                    pushed = 1;
                 }
             }
         }
 
         //==================== End of Push() ========================
-        if (pushed != true) {
+        if (pushed != 1) {
         
             //======================= Relabel() =========================
-                int min_height = INT_MAX;
+                int min_height = 999999999;
                 int continue_count = 0;
-                bool relabelled;
-                relabelled = false;
+                int relabelled;
+                relabelled = 0;
                 
                 if (nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + SINK] != nodes_capacities[node*(NUM_NEIGHBOURS+1) + SINK]) {
                     // Update height of node
                     heights[node] = sink_height[0] + 1;
                     
-                    relabelled = true; //Relabelled the node to 1 higher than sink since there's space to push there
+                    relabelled = 1; //Relabelled the node to 1 higher than sink since there's space to push there
                 }
                 
-                if (relabelled != true) {
-                    min_height = INT_MAX;
+                if (relabelled != 1) {
+                    min_height = 999999999;
                     // Check for capacities to neighbours and relabel them if there is space
                     for (int i = 0; i < NUM_NEIGHBOURS; i++) {
                         int neighbour_idx;
@@ -520,15 +477,10 @@ int main(void) {
         
         //==================== End of overFlowNode() =======================
     }
-    
-    
-    printf("MaxFlow: %d\n", sink_excess_flow[0]);
+
+*/
 
     //================================ Start accelerator ==========================
-    
-    printf("%d            \n", res_source_curr_capacities[0]);
-    res_source_curr_capacities[0] = 70;
-    printf("%d              \n", res_source_curr_capacities[0]);
 
     // Set arguments e.g.,
     *top = 0x0;
@@ -553,7 +505,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    printf("%d                  \n", res_source_curr_capacities[0]);
+    printf("MaxFlow: %d                       \n", sink_excess_flow[0]);
 
     m5_dump_stats();
     m5_exit();

@@ -3,10 +3,21 @@ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
 ; Function Attrs: norecurse nounwind uwtable
-define void @top(i64 %pl_arg1) #0 {
+define void @top(i64 %heights, i64 %excess_flows, i64 %nodes_curr_capacities, i64 %nodes_capacities, i64 %res_curr_capacities, i64 %source_height, i64 %source_excess_flow, i64 %source_curr_capacities, i64 %source_capacities, i64 %sink_height, i64 %sink_excess_flow, i64 %res_source_curr_capacities) #0 {
 entry:
   store volatile i8 0, i8* inttoptr (i64 788529664 to i8*), align 512
-  store volatile i64 %pl_arg1, i64* inttoptr (i64 788529665 to i64*), align 8
+  store volatile i64 %heights, i64* inttoptr (i64 788529665 to i64*), align 8
+  store volatile i64 %excess_flows, i64* inttoptr (i64 788529673 to i64*), align 8
+  store volatile i64 %nodes_curr_capacities, i64* inttoptr (i64 788529681 to i64*), align 8
+  store volatile i64 %nodes_capacities, i64* inttoptr (i64 788529689 to i64*), align 8
+  store volatile i64 %res_curr_capacities, i64* inttoptr (i64 788529697 to i64*), align 8
+  store volatile i64 %source_height, i64* inttoptr (i64 788529705 to i64*), align 8
+  store volatile i64 %source_excess_flow, i64* inttoptr (i64 788529713 to i64*), align 8
+  store volatile i64 %source_curr_capacities, i64* inttoptr (i64 788529721 to i64*), align 8
+  store volatile i64 %source_capacities, i64* inttoptr (i64 788529729 to i64*), align 8
+  store volatile i64 %sink_height, i64* inttoptr (i64 788529737 to i64*), align 8
+  store volatile i64 %sink_excess_flow, i64* inttoptr (i64 788529745 to i64*), align 8
+  store volatile i64 %res_source_curr_capacities, i64* inttoptr (i64 788529753 to i64*), align 8
   store volatile i8 1, i8* inttoptr (i64 788529664 to i8*), align 512
   br label %while.cond
 

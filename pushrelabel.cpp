@@ -460,9 +460,9 @@ int main(void) {
         }
     }
     //================== End of initial overFlowNode() =======================
-    int nodes_used[40];
+    int nodes_used[38];
     //while (node != -1) {
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 38; i++) {
         nodes_used[i] = node;
         int pushed = 0;
         //============================ Push() ========================
@@ -787,7 +787,7 @@ int main(void) {
     */
     
 
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 38; i++) {
         printf("nodes: %d\n", nodes_used[i]);
     }
     

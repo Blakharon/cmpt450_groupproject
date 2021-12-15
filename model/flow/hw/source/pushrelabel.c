@@ -48,7 +48,7 @@ void pushrelabel(
     //================== End of initial overFlowNode() =======================
     
     //while (node != -1) {
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 38; i++) {
         sink_excess_flow[i+1] = node;
         int pushed = 0;
         //============================ Push() ========================

@@ -494,7 +494,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    for (int i = 1; i < 41; i++) {
+    for (int i = 1; i < 39; i++) {
         printf("node: %d\n", sink_excess_flow[i]);
     }
 

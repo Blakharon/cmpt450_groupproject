@@ -23,39 +23,39 @@ volatile uint32_t *arg12 = (uint32_t *)0x2f000059;
 TYPE* inputs =  (TYPE*)0x80100000;
 
 // heights[NUM_NODES]
-volatile int32_t* heights = (int32_t*)0x80200000;
+int32_t* heights = (int32_t*)0x80200000;
 // excess_flows[NUM_NODES]
-volatile int32_t* excess_flows = (int32_t*)0x80230000;
+int32_t* excess_flows = (int32_t*)0x80230000;
 // pixel_values[NUM_NODES]
-volatile int32_t* pixel_values = (int32_t*)0x80260000;
+int32_t* pixel_values = (int32_t*)0x80260000;
 // nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-volatile int32_t* nodes_curr_capacities = (int32_t*)0x80280000;
+int32_t* nodes_curr_capacities = (int32_t*)0x80280000;
                                
 // nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-volatile int32_t* nodes_capacities = (int32_t*)0x80350000;
+int32_t* nodes_capacities = (int32_t*)0x80350000;
 
 // res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-volatile int32_t* res_curr_capacities = (int32_t*)0x80480000;
+int32_t* res_curr_capacities = (int32_t*)0x80480000;
                            
 // Source has no bi-directional (startpoint) // ai
-volatile int32_t* source_height = (int32_t*)0x80500000;
+int32_t* source_height = (int32_t*)0x80500000;
                          
-volatile int32_t* source_excess_flow = (int32_t*)0x80530000;
+int32_t* source_excess_flow = (int32_t*)0x80530000;
                               
 // source_curr_capacities[NUM_NODES]
-volatile int32_t* source_curr_capacities = (int32_t*)0x80560000;
+int32_t* source_curr_capacities = (int32_t*)0x80560000;
                                           
 // source_capacities[NUM_NODES]  
-volatile int32_t* source_capacities = (int32_t*)0x80590000;
+int32_t* source_capacities = (int32_t*)0x80590000;
 
 // Sink has no bi-directional (endpoint) // bi
-volatile int32_t* sink_height = (int32_t*)0x805C0000;
+int32_t* sink_height = (int32_t*)0x805C0000;
                         
-volatile int32_t* sink_excess_flow = (int32_t*)0x805F0000;
+int32_t* sink_excess_flow = (int32_t*)0x805F0000;
                                           
 // Residual Source: Nodes->source residual flow
 // res_source_curr_capacities[NUM_NODES]
-volatile int32_t* res_source_curr_capacities = (int32_t*)0x80630000;
+int32_t* res_source_curr_capacities = (int32_t*)0x80630000;
 
 
 int main(void) {

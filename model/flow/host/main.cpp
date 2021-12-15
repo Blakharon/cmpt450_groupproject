@@ -494,7 +494,7 @@ int main(void) {
     while (*top != 0)
     ;
 
-    for (int i = 1; i < 38; i++) {
+    for (int i = 1; i < 37; i++) {
         printf("node     : %d\n", sink_excess_flow[i]);
         printf("push_type: %d\n", source_height[i]);
     }

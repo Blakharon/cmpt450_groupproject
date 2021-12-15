@@ -32,10 +32,10 @@ int32_t* pixel_values = (int32_t*)0x80260000;
 int32_t* nodes_curr_capacities = (int32_t*)0x80280000;
                                
 // nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* nodes_capacities = (int32_t*)0x80320000;
+int32_t* nodes_capacities = (int32_t*)0x80350000;
 
 // res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* res_curr_capacities = (int32_t*)0x80400000;
+int32_t* res_curr_capacities = (int32_t*)0x80480000;
                            
 // Source has no bi-directional (startpoint) // ai
 int32_t* source_height = (int32_t*)0x80500000;

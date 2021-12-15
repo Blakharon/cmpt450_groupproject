@@ -4,12 +4,14 @@ void edmondskarp(int32_t* capacities, int32_t* source_caps, int32_t* flow, int32
     int maxFlow = 0;
 
     int parentsList[NUM_NODES+2];
+    int currentPathCapacity[NUM_NODES];
+    int q[NUM_NODES+3];
 
     // flow[10] = (int32_t) capacities[blk_sz*12];
 
-    // for(int i = 0; i<NUM_NODES; ++i){
-    //     cut[i] = capacities[blk_sz*i + NORTH];
-    // }
+    for(int i = 0; i<NUM_NODES; ++i){
+        cut[i] = capacities[blk_sz*i + NORTH];
+    }
 
     // int tmp = 0;
     // for(int i = 0; i<NUM_NODES*blk_sz; ++i){
@@ -27,14 +29,14 @@ void edmondskarp(int32_t* capacities, int32_t* source_caps, int32_t* flow, int32
         // Perform Breadth-First Search
         int f = 0;
         {
-            int currentPathCapacity[NUM_NODES];
+            // int currentPathCapacity[NUM_NODES];
     
             #pragma clang loop unroll_count(NUM_NODES+1)
             for(int i=0; i<NUM_NODES+1; i++){
                 parentsList[i] = -1;
             }
 
-            int q[NUM_NODES+3];
+            // int q[NUM_NODES+3];
             int qs=0, qe=0;
 
             // Perform manual first push of BFS
@@ -46,6 +48,16 @@ void edmondskarp(int32_t* capacities, int32_t* source_caps, int32_t* flow, int32
                     q[qe++] = i;
                 }
             }
+
+            cut[0] = qs;
+            cut[1] = qe;
+            cut[2] = q[0];
+            // cut[2] = 42;
+            // for(int ii = 0; ii<20; ++ii){
+            //     cut[ii+2] = q[ii];
+            // }
+
+            break;
 
             // while(!q.empty())
             while(qs<qe)
@@ -64,7 +76,7 @@ void edmondskarp(int32_t* capacities, int32_t* source_caps, int32_t* flow, int32
                 }
 
                 // Otherwise, try other edges
-                // #pragma clang loop unroll_count(NUM_NEIGHBOURS)
+                // pragma clang loop unroll_count(NUM_NEIGHBOURS)
                 for (int i=0; i<NUM_NEIGHBOURS; ++i) {
                     int to = currentNode+DIFF[i];
                     if (capacities[blk_sz*currentNode + i] > 0 && parentsList[to] == -1)
@@ -77,7 +89,7 @@ void edmondskarp(int32_t* capacities, int32_t* source_caps, int32_t* flow, int32
             }
         }
         
-        // printf("flow: %d\n", flow);
+        return;
 
         if (f == 0)
         {

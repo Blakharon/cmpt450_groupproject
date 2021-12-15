@@ -32,7 +32,7 @@ void pushrelabel(
     //=================== End of Preflow() ====================
     
     //================ initial overFlowNode() =========================
-    volatile int32_t *node = (int32_t *)0x80660000;
+    int32_t *node = (int32_t *)0x80660000;
     for (int32_t i = 0; i < NUM_NODES; i++) {
         if (excess_flows[i] > 0) {
             *node = i;

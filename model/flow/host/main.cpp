@@ -482,8 +482,6 @@ int main(void) {
 
     //================================ Start accelerator ==========================
 
-    printf("MaxFlow Before: %d     \n", sink_excess_flow[0]);
-
     // Set arguments e.g.,
     *top = 0x0;
     

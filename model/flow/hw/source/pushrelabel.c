@@ -134,11 +134,11 @@ void pushrelabel(
                     
                     // Update residual flow
                     int32_t residual_neighbour;
-                    if (i == NORTH) {
+                    if (i == 0) {
                         residual_neighbour = SOUTH;
-                    } else if (i == SOUTH) {
+                    } else if (i == 2) {
                         residual_neighbour = NORTH;
-                    } else if (i == EAST) {
+                    } else if (i == 1) {
                         residual_neighbour = WEST;
                     } else {
                         residual_neighbour = EAST;

@@ -781,7 +781,7 @@ int main(void) {
     */
     
     for (int i = 0; i < NUM_NODES; i++) {
-        printf("heights: %d\n", heights[i]);
+        printf("source_capacities: %d\n", source_capacities[i]);
     }
     
     printf("source_excess_flow: %d\n", source_excess_flow[0]);

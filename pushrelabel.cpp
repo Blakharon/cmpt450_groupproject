@@ -550,17 +550,9 @@ int main(void) {
                     
                     // Update residual flow
                     int residual_neighbour;
-                    if (i == NORTH) {
-                        residual_neighbour = SOUTH;
-                    } else if (i == SOUTH) {
-                        residual_neighbour = NORTH;
-                    } else if (i == EAST) {
-                        residual_neighbour = WEST;
-                    } else {
-                        residual_neighbour = EAST;
-                    }
+                    residual_neighbour = i^0x2;
                     
-                    res_neighbour[s] = i;
+                    res_neighbour[s] = residual_neighbour;
                     
                     //================== updateResidualFlow() ======================
                     

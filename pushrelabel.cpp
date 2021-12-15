@@ -463,7 +463,7 @@ int main(void) {
     int nodes_used[38];
     int push_type[38];
     //while (node != -1) {
-    for (int s = 0; s < 38; s++) {
+    for (int s = 0; s < 37; s++) {
         nodes_used[s] = node;
         int pushed = 0;
         //============================ Push() ========================
@@ -792,9 +792,17 @@ int main(void) {
     */
     
 
-    for (int i = 0; i < 38; i++) {
+    for (int i = 0; i < 37; i++) {
         printf("nodes: %d\n", nodes_used[i]);
         printf("push_type: %d\n", push_type[i]);
+    }
+    
+    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+        printf("nodes_capacities: %d\n", nodes_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
+    }
+    
+    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+        printf("nodes_curr_capacities: %d\n", nodes_curr_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
     }
     
     for (int i = 0; i < NUM_NODES; i++) {

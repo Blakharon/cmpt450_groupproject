@@ -494,13 +494,21 @@ int main(void) {
     while (*top != 0)
     ;
 
-    for (int i = 1; i < 39; i++) {
+    for (int i = 1; i < 38; i++) {
         printf("node     : %d\n", sink_excess_flow[i]);
         printf("push_type: %d\n", source_height[i]);
     }
     
     for (int i = 0; i < NUM_NODES; i++) {
         printf("excess flows: %d\n", excess_flows[i]);
+    }
+
+    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+        printf("nodes_capacities: %d\n", nodes_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
+    }
+    
+    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+        printf("nodes_curr_capacities: %d\n", nodes_curr_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
     }
 
     printf("MaxFlow: %d                       \n", sink_excess_flow[0]);

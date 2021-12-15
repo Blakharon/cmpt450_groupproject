@@ -250,7 +250,7 @@ void pushrelabel(
         if (pushed != 1) {
         
             //======================= Relabel() =========================
-                int min_height = INT_MAX;
+                int min_height = 999999999;
                 int continue_count = 0;
                 int relabelled;
                 relabelled = 0;
@@ -263,7 +263,7 @@ void pushrelabel(
                 }
                 
                 if (relabelled != 1) {
-                    min_height = INT_MAX;
+                    min_height = 999999999;
                     // Check for capacities to neighbours and relabel them if there is space
                     for (int i = 0; i < NUM_NEIGHBOURS; i++) {
                         int neighbour_idx;

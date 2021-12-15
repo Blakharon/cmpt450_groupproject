@@ -780,6 +780,9 @@ int main(void) {
     }
     */
     
+    for (int i = 0; i < NUM_NODES; i++) {
+        printf("res_source_curr_capacities: %d\n", res_source_curr_capacities[i]);
+    }
     
-    printf("MaxFlow: %d\n", sink_excess_flow[0]);
+    printf("MaxFlow: %d\n", pixel_values[0]);
 }

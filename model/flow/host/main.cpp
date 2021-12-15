@@ -75,34 +75,34 @@ int32_t* source_capacities = (int32_t*)0x80A0000 +
                             (sizeof(int32_t)*NUM_NODES*2);
 
 // Sink has no bi-directional (endpoint) // bi
-int32_t* sink_height = (int32_t*)0x80B0000 + 
+int32_t* sink_height = (int32_t*)0x80A0000 + 
                         (50*sizeof(int32_t)) + 
                         (NUM_NODES*sizeof(int32_t)*5) +
                         (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                         (sizeof(int32_t)*NUM_NODES*2);
                         
-int32_t* sink_excess_flow = (int32_t*)0x80C0000 + 
+int32_t* sink_excess_flow = (int32_t*)0x80A0000 + 
                              (50*sizeof(int32_t)) + 
                              (NUM_NODES*sizeof(int32_t)*5) +
                              (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                              (sizeof(int32_t)*NUM_NODES*4);
 
 // sink_curr_capacities[NUM_NODES]
-int32_t* sink_curr_capacities = (int32_t*)0x80D0000 + 
+int32_t* sink_curr_capacities = (int32_t*)0x80A0000 + 
                                 (50*sizeof(int32_t)) + 
                                 (NUM_NODES*sizeof(int32_t)*5) +
                                 (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                                 (sizeof(int32_t)*NUM_NODES*5);
                                           
 // sink_capacities[NUM_NODES]
-int32_t* sink_capacities = (int32_t*)0x80E0000 + 
+int32_t* sink_capacities = (int32_t*)0x80A0000 + 
                            (50*sizeof(int32_t)) + 
                            (NUM_NODES*sizeof(int32_t)*6) +
                            (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +
                            (sizeof(int32_t)*NUM_NODES*5);
 // Residual Source: Nodes->source residual flow
 // res_source_curr_capacities[NUM_NODES]
-int32_t* res_source_curr_capacities = (int32_t*)0x80E0000 + 
+int32_t* res_source_curr_capacities = (int32_t*)0x80A0000 + 
                                       (50*sizeof(int32_t)) + 
                                       (NUM_NODES*sizeof(int32_t)*7) +
                                       (NUM_NODES*(NUM_NEIGHBOURS+1)*sizeof(int32_t)*2) +

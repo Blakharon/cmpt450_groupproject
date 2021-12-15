@@ -661,8 +661,8 @@ int main(void) {
             //======================= Relabel() =========================
                 int min_height = INT_MAX;
                 int continue_count = 0;
-                bool relabelled;
-                relabelled = false;
+                int relabelled;
+                relabelled = 0;
                 
                 if (nodes_curr_capacities[node*(NUM_NEIGHBOURS+1) + SINK] != nodes_capacities[node*(NUM_NEIGHBOURS+1) + SINK]) {
                     // Update height of node
@@ -783,6 +783,8 @@ int main(void) {
     for (int i = 0; i < NUM_NODES; i++) {
         printf("heights: %d\n", heights[i]);
     }
+    
+    printf("source_excess_flow: %d\n", source_excess_flow[0]);
     
     printf("MaxFlow: %d\n", sink_excess_flow[0]);
 }

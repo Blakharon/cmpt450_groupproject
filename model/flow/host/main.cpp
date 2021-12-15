@@ -23,16 +23,16 @@ volatile uint32_t *arg12 = (uint32_t *)0x2f000059;
 TYPE* inputs =  (TYPE*)0x80100000;
 
 // heights[NUM_NODES]
-int32_t* heights = (int32_t*)0x80120000;
+int32_t* heights = (int32_t*)0x80200000;
 // excess_flows[NUM_NODES]
-int32_t* excess_flows = (int32_t*)0x80140000;
+int32_t* excess_flows = (int32_t*)0x80230000;
 // pixel_values[NUM_NODES]
-int32_t* pixel_values = (int32_t*)0x80160000;
+int32_t* pixel_values = (int32_t*)0x80260000;
 // nodes_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* nodes_curr_capacities = (int32_t*)0x80180000;
+int32_t* nodes_curr_capacities = (int32_t*)0x80280000;
                                
 // nodes_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
-int32_t* nodes_capacities = (int32_t*)0x80300000;
+int32_t* nodes_capacities = (int32_t*)0x80320000;
 
 // res_curr_capacities[NUM_NODES*(NUM_NEIGHBOURS+1)]
 int32_t* res_curr_capacities = (int32_t*)0x80400000;

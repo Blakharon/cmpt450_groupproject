@@ -460,8 +460,10 @@ int main(void) {
         }
     }
     //================== End of initial overFlowNode() =======================
-    
-    while (node != -1) {
+    int nodes_used[3];
+    //while (node != -1) {
+    for (int i = 0; i < 3; i++) {
+        nodes_used[i] = node;
         int pushed = 0;
         //============================ Push() ========================
         int continue_count = 0;
@@ -785,11 +787,9 @@ int main(void) {
     */
     
 
-    for (int i = 0; i < NUM_NODES; i++) {
-        printf("excess_flows: %d\n", source_capacities[i]);
+    for (int i = 0; i < 3; i++) {
+        printf("nodes: %d\n", nodes_used[i]);
     }
-    
-    printf("source_excess_flow: %d\n", source_excess_flow[0]);
     
     printf("MaxFlow: %d\n", sink_excess_flow[0]);
 }

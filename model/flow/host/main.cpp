@@ -51,7 +51,7 @@ int32_t* source_capacities = (int32_t*)0x80590000;
 // Sink has no bi-directional (endpoint) // bi
 int32_t* sink_height = (int32_t*)0x805C0000;
                         
-int32_t* sink_excess_flow = (int32_t*)0x805F000;
+int32_t* sink_excess_flow = (int32_t*)0x805F0000;
                                           
 // Residual Source: Nodes->source residual flow
 // res_source_curr_capacities[NUM_NODES]

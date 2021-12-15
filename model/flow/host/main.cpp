@@ -497,6 +497,10 @@ int main(void) {
     for (int i = 1; i < 39; i++) {
         printf("node: %d\n", sink_excess_flow[i]);
     }
+    
+    for (int i = 0; i < NUM_NODES; i++) {
+        printf("excess flows: %d\n", excess_flows[i]);
+    }
 
     printf("MaxFlow: %d                       \n", sink_excess_flow[0]);
 

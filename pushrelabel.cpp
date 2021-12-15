@@ -805,6 +805,10 @@ int main(void) {
         printf("nodes_curr_capacities: %d\n", nodes_curr_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
     }
     
+    for (int i = 0; i < NUM_NEIGHBOURS + 1; i++) {
+        printf("res_curr_capacities    : %d\n", res_curr_capacities[i+(7*(NUM_NEIGHBOURS+1))]);
+    }
+    
     for (int i = 0; i < NUM_NODES; i++) {
         printf("excess flows: %d\n", excess_flows[i]);
     }

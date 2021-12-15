@@ -17,7 +17,7 @@ void pushrelabel(
     int32_t* sink_capacities,
     int32_t* res_source_curr_capacities)
 {
-    if (nodes_curr_capacities[2] == 0) {
+    if (nodes_capacities[2] == -1) {
         sink_excess_flow[0] = 42;
     } else {
         sink_excess_flow[0] = 24;

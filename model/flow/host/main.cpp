@@ -506,7 +506,7 @@ int main(void) {
     ;
 
     for (int i = 0; i < NUM_NODES; i++) {
-        printf("pixel_values: %d\n", pixel_values[i]);
+        printf("nodes_capacities: %d\n", nodes_capacities[i]);
     }
 
     printf("MaxFlow: %d                       \n", sink_excess_flow[0]);

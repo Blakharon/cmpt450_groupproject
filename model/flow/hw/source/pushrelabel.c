@@ -17,13 +17,13 @@ void pushrelabel(
     int32_t* sink_capacities,
     int32_t* res_source_curr_capacities)
 {
-/*
-    if (nodes_capacities[2] == -1) {
-        sink_excess_flow[0] = 42;
-    } else {
-        sink_excess_flow[0] = 24;
-    }
-    */
+
+    //if (nodes_capacities[2] == -1) {
+    //    sink_excess_flow[0] = 42;
+    //} else {
+    //    sink_excess_flow[0] = 24;
+    //}
+    
 
 ///*
     //========== Push-relabel algorithm ====================
@@ -369,5 +369,5 @@ void pushrelabel(
         
         //==================== End of overFlowNode() =======================
     }
-   // */
+   //*/
 }

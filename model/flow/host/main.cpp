@@ -54,12 +54,7 @@ int32_t* source_capacities = (int32_t*)0x80250000;
 int32_t* sink_height = (int32_t*)0x80270000;
                         
 int32_t* sink_excess_flow = (int32_t*)0x80290000;
-
-// sink_curr_capacities[NUM_NODES]
-int32_t* sink_curr_capacities = (int32_t*)0x802B0000;
                                           
-// sink_capacities[NUM_NODES]
-int32_t* sink_capacities = (int32_t*)0x802D0000;
 // Residual Source: Nodes->source residual flow
 // res_source_curr_capacities[NUM_NODES]
 int32_t* res_source_curr_capacities = (int32_t*)0x802F0000;
@@ -495,9 +490,7 @@ int main(void) {
     *arg9 = (uint32_t)(void *)source_capacities;
     *arg10 = (uint32_t)(void *)sink_height;
     *arg11 = (uint32_t)(void *)sink_excess_flow;
-    *arg12 = (uint32_t)(void *)sink_curr_capacities;
-    *arg13 = (uint32_t)(void *)sink_capacities;
-    *arg14 = (uint32_t)(void *)res_source_curr_capacities;
+    *arg12 = (uint32_t)(void *)res_source_curr_capacities;
     
     *top = 1;
     while (*top != 0)

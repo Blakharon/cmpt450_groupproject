@@ -12,8 +12,6 @@ void top(
     uint64_t source_capacities, 
     uint64_t sink_height, 
     uint64_t sink_excess_flow, 
-    uint64_t sink_curr_capacities, 
-    uint64_t sink_capacities, 
     uint64_t res_source_curr_capacities)
 {
   // Define Device MMRs
@@ -30,8 +28,6 @@ void top(
   volatile uint64_t *PushrelabelArg10 = (uint64_t *)(Pushrelabel_ARG10);
   volatile uint64_t *PushrelabelArg11 = (uint64_t *)(Pushrelabel_ARG11);
   volatile uint64_t *PushrelabelArg12 = (uint64_t *)(Pushrelabel_ARG12);
-  volatile uint64_t *PushrelabelArg13 = (uint64_t *)(Pushrelabel_ARG13);
-  volatile uint64_t *PushrelabelArg14 = (uint64_t *)(Pushrelabel_ARG14);
 
   *PushrelabelFlag = 0x0;
   // Set up arguments for accelerator.
@@ -47,9 +43,7 @@ void top(
   *PushrelabelArg9  = source_capacities;
   *PushrelabelArg10 = sink_height;
   *PushrelabelArg11 = sink_excess_flow;
-  *PushrelabelArg12 = sink_curr_capacities;
-  *PushrelabelArg13 = sink_capacities;
-  *PushrelabelArg14 = res_source_curr_capacities;
+  *PushrelabelArg12 = res_source_curr_capacities;
   
   // Start the accelerated function
   *PushrelabelFlag = DEV_INIT;

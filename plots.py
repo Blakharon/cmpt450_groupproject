@@ -95,7 +95,8 @@ def performance_plots():
     print(df_average_rows)
 
     plt.figure()
-    fig = sea.barplot(x='Image Size', y='Average Runtime Cycles', data=df_average_rows, hue="Algorithm", edgecolor="black", ci=None)
+    fig = sea.barplot(x='Image Size', y='Average Runtime Cycles', data=df_average_rows, hue="Algorithm", ci=None)
+    fig.set_yscale("log")
     plt.title("MaxFlow Runtime Performance")
     fig.legend(loc=(1.02, 0.6), title="Algorithm")
     plt.tight_layout()
@@ -116,7 +117,8 @@ def stall_cycle_plots():
     print(df_average_rows)
 
     plt.figure()
-    fig = sea.barplot(x='Image Size', y='Average Stall Cycles', data=df_average_rows, hue="Algorithm", edgecolor="black", ci=None)
+    fig = sea.barplot(x='Image Size', y='Average Stall Cycles', data=df_average_rows, hue="Algorithm", ci=None)
+    fig.set_yscale("log")
     plt.title("MaxFlow Stall Cycles")
     fig.legend(loc=(1.02, 0.6), title="Algorithm")
     plt.tight_layout()
@@ -137,7 +139,8 @@ def energy_plots():
     print(df_average_rows)
 
     plt.figure()
-    fig = sea.barplot(x='Image Size', y='Average Total Energy', data=df_average_rows, hue="Algorithm", edgecolor="black", ci=None)
+    fig = sea.barplot(x='Image Size', y='Average Total Energy', data=df_average_rows, hue="Algorithm", ci=None)
+    fig.set_yscale("log")
     plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%dmW"))
     plt.title("MaxFlow Energy Usage")
     fig.legend(loc=(1.02, 0.6), title="Algorithm")

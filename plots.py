@@ -89,114 +89,29 @@ def performance_plots():
     plt.autoscale(enable=True, axis='x', tight=False)
     plt.savefig("MaxFlow Runtime Performance.png", format='png', dpi=600)
 
-def q2_plots():
-    dataq2 = df[(df["Accelerator"] == "top") & (df["Optimized"] == "Unoptimized") & (df["Model"] == "Cache")]
-    dataq2["Compute Cycles"] = dataq2["Runtime Cycles"] - dataq2["Stall Cycles"]
-    print("\nDataQ2:\n")
-    print(dataq2)
+def stall_cycle_plots():
     plt.figure()
-    fig1 = sea.barplot(x='Cache Size', y='Stall Cycles', data=dataq2, hue="Loop Unroll Factor", edgecolor="black", ci=None, palette=["lightblue","bisque","lightgreen","lightcoral"])
-    fig2 = sea.barplot(x='Cache Size', y='Compute Cycles', data=dataq2, hue="Loop Unroll Factor", edgecolor="black", ci=None)
-    plt.ylabel("Compute and Stall Cycles")
-    plt.title("Top Stall & Compute Cycles")
-    fig1.legend(loc=(1.02, 0.4), title="Loop Unroll Factors")
+    fig = sea.barplot(x='Image Size', y='Stall Cycles', data=df, hue="Algorithm", edgecolor="black", ci=None)
+    plt.title("MaxFlow Stall Cycles")
+    fig.legend(loc=(1.02, 0.6), title="Algorithm")
     plt.tight_layout()
     plt.autoscale(enable=True, axis='x', tight=False)
-    plt.savefig("Top Stall & Compute Cycles.png", format='png', dpi=600)
-    
-def q3_plots():
-    dataq3 = df[(df["Accelerator"] == "top") & (df["Optimized"] == "Unoptimized") & (df["Model"] == "Cache")]
-    dataq3["Total Energy"] = dataq3["Energy"] * dataq3["Runtime Cycles"]
-    print("\nDataQ3:\n")
-    print(dataq3)
+    plt.savefig("MaxFlow Stall Cycles.png", format='png', dpi=600)
+   
+def energy_plots():
     plt.figure()
-    fig = sea.scatterplot(x='Cache Size', y='Total Energy', data=dataq3, hue="Loop Unroll Factor", edgecolor="black", ci=None)
+    fig = sea.barplot(x='Image Size', y='Total Energy', data=df, hue="Algorithm", edgecolor="black", ci=None)
     plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%dmW"))
-    plt.title("Top Energy Usage")
-    fig.legend(loc=(1.02, 0.6), title="Loop Unroll Factors")
+    plt.title("MaxFlow Energy Usage")
+    fig.legend(loc=(1.02, 0.6), title="Algorithm")
     plt.tight_layout()
     plt.autoscale(enable=True, axis='x', tight=False)
-    plt.savefig("Top Total Energy Usage.png", format='png', dpi=600)
-    
-def q4_plots():
-    dataq4 = df[(df["Accelerator"] == "top") & (df["Model"] == "Cache")]
-    dataq4["Total Energy"] = dataq4["Energy"] * dataq4["Runtime Cycles"]
-    dataq4 = dataq4[(dataq4["Cache Size"] == "1024K") & (dataq4["Loop Unroll Factor"] == "256")]
-    print("\nDataQ4:\n")
-    print(dataq4)
-    #Runtime
-    plt.figure()
-    fig = sea.scatterplot(x='Cache Size', y='Runtime Cycles', data=dataq4, hue="Optimized", edgecolor="black", ci=None)
-    plt.title("Top: Optimized vs Unoptimized Runtime")
-    fig.legend(loc=(1.02, 0.6), title="Optimized")
-    plt.tight_layout()
-    plt.autoscale(enable=True, axis='x', tight=False)
-    plt.savefig("Top: Optimized vs Unoptimized Cache Accesses.png", format='png', dpi=600)
-    
-    #Energy
-    plt.figure()
-    fig = sea.scatterplot(x='Cache Size', y='Total Energy', data=dataq4, hue="Optimized", edgecolor="black", ci=None)
-    plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%dmW"))
-    plt.title("Top: Optimized vs Unoptimized Total Energy")
-    fig.legend(loc=(1.02, 0.6), title="Optimized")
-    plt.tight_layout()
-    plt.autoscale(enable=True, axis='x', tight=False)
-    plt.savefig("Top: Optimized vs Unoptimized Total Energy.png", format='png', dpi=600)
-
-def q5_plots():
-    dataq1 = df[(df["Accelerator"] == "top") & (df["Optimized"] == "Unoptimized") & (df["Model"] == "DMA_Tile")]
-    dataq1["Multipliers"] = dataq1["Loop Unroll Factor"]
-    print("\nDataQ5:\n")
-    print(dataq1)
-    plt.figure()
-    fig = sea.scatterplot(x='Multipliers', y='Runtime Cycles', hue="Multipliers", data=dataq1, edgecolor="black", ci=None)
-    plt.title("Top Runtime Performance DMA_Tile")
-    plt.tight_layout()
-    plt.autoscale(enable=True, axis='x', tight=False)
-    plt.savefig("Top Runtime Performance DMA_Tile.png", format='png', dpi=600)
-
-def q6_plots():
-    dataq2 = df[(df["Accelerator"] == "top") & (df["Optimized"] == "Unoptimized") & (df["Model"] == "DMA_Tile")]
-    dataq2["Total Energy"] = dataq2["Energy"] * dataq2["Runtime Cycles"]
-    dataq2["Multipliers"] = dataq2["Loop Unroll Factor"]
-    print("\nDataQ6:\n")
-    print(dataq2)
-    plt.figure()
-    fig = sea.scatterplot(x='Multipliers', y='Total Energy', data=dataq2, hue="Multipliers", edgecolor="black", ci=None)
-    plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%dmW"))
-    plt.title("Top: Energy Usage DMA_Tile")
-    plt.tight_layout()
-    plt.autoscale(enable=True, axis='x', tight=False)
-    plt.savefig("Top: Energy Usage DMA_Tile.png", format='png', dpi=600)
-    
-def q7_plots():
-    dataq1 = df[(df["Accelerator"] == "top") & (df["Optimized"] == "Unoptimized") & (df["Model"] == "DMA_Tile_Merged")]
-    dataq1["Multipliers"] = dataq1["Loop Unroll Factor"]
-    print("\nDataQ7:\n")
-    print(dataq1)
-    plt.figure()
-    fig = sea.scatterplot(x='Multipliers', y='Runtime Cycles', data=dataq1, hue="Multipliers", edgecolor="black", ci=None)
-    plt.title("Top Runtime Performance DMA_Tile_Merged")
-    plt.tight_layout()
-    plt.autoscale(enable=True, axis='x', tight=False)
-    plt.savefig("Top Runtime Performance DMA_Tile_Merged.png", format='png', dpi=600)
-
-def q8_plots():
-    dataq2 = df[(df["Accelerator"] == "top") & (df["Optimized"] == "Unoptimized") & (df["Model"] == "DMA_Tile_Merged")]
-    dataq2["Total Energy"] = dataq2["Energy"] * dataq2["Runtime Cycles"]
-    dataq2["Multipliers"] = dataq2["Loop Unroll Factor"]
-    print("\nDataQ8:\n")
-    print(dataq2)
-    plt.figure()
-    fig = sea.scatterplot(x='Multipliers', y='Total Energy', data=dataq2, hue="Multipliers", edgecolor="black", ci=None)
-    plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%dmW"))
-    plt.title("Top: Energy Usage DMA_Tile_Merged")
-    plt.tight_layout()
-    plt.autoscale(enable=True, axis='x', tight=False)
-    plt.savefig("Top: Energy Usage DMA_Tile_Merged.png", format='png', dpi=600)
+    plt.savefig("MaxFlow Energy Usage.png", format='png', dpi=600)
 
 def doplot_benchmarks(benchmarks,stat,norm=True):
     performance_plots()
+    stall_cycle_plots()
+    energy_plots()
 
 rows = []
 for i,ac in enumerate(accelerators):
@@ -209,6 +124,8 @@ df = pd.DataFrame(rows, columns=["Model", "Algorithm", "Image Size", 'Runtime Cy
 
 df = df.replace("pl", "Push Relabel")
 df = df.replace("ek", "Edmonds Karp")
+
+df["Total Energy"] = df["Energy"] * df["Runtime Cycles"]
 print(df)
 
 doplot_benchmarks(benchmarks,"ipc",norm=False)

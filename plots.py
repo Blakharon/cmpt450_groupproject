@@ -9,29 +9,27 @@ import os
 
 sea.set()
 
-datadir = os.getcwd()+'/results/'
+datadir = os.getcwd()+'/outputs/'
 
-multipliers_merged = ["16K", "32K"]
+all_accelerators = ["pl", "ek"]
+accelerators = ["pl"]
 
-multipliers = ["8K", "16K", "32K", "64K", "128K"]
+all_image_sizes = ["25x25", "15x15", "5x5"]
+image_sizes = ["25x25"]
 
-#optimizations = ["opt"]
-optimizations = [""]
+all_images = ["circle0", "circle1", "circle2", "circle3", "circle4", "circle5"]
+images = ["circle0", "circle1", "circle2", "circle3", "circle4", "circle5"];
 
 all_benchmarks = ["Performance", "Stall_Cycles", "Energy"]
-
-accelerators = ["top", "gemm", "relu", "argmax"]
-              
 benchmarks = ["Performance", "Stall_cycles", "Energy"]
-              
-loop_unrolls = ["32", "64", "128", "256"]
-#loop_unrolls = ["32"]
-
-cache_sizes = ["32K", "64K", "128K", "256K", "1024K"]
-#cache_sizes = ["32K"]
 
 def getCSstat(filename, statsfile, accelerator, benchmark):
     filename = os.path.join(datadir, '', filename, statsfile).replace('\\','/')
+    
+    if (accelerator == "pl"):
+        accelerator = "pushrelabel"
+    else:
+        accelerator = "edmondskarp"
     
     if (benchmark == "Performance"):
         with open(filename) as f:
@@ -82,17 +80,14 @@ def getCSstat(filename, statsfile, accelerator, benchmark):
     else:
         print("Invalid benchmark")
 
-def q1_plots():
-    dataq1 = df[(df["Accelerator"] == "top") & (df["Optimized"] == "Unoptimized") & (df["Model"] == "Cache")]
-    print("\nDataQ1:\n")
-    print(dataq1)
+def performance_plots():
     plt.figure()
-    fig = sea.scatterplot(x='Cache Size', y='Runtime Cycles', data=dataq1, hue="Loop Unroll Factor", edgecolor="black", ci=None)
-    plt.title("Top Runtime Performance")
-    fig.legend(loc=(1.02, 0.6), title="Loop Unroll Factors")
+    fig = sea.barplot(x='Image Size', y='Runtime Cycles', data=df, hue="Algorithm", edgecolor="black", ci=None)
+    plt.title("MaxFlow Runtime Performance")
+    fig.legend(loc=(1.02, 0.6), title="Algorithm")
     plt.tight_layout()
     plt.autoscale(enable=True, axis='x', tight=False)
-    plt.savefig("Top Runtime Performance.png", format='png', dpi=600)
+    plt.savefig("MaxFlow Runtime Performance.png", format='png', dpi=600)
 
 def q2_plots():
     dataq2 = df[(df["Accelerator"] == "top") & (df["Optimized"] == "Unoptimized") & (df["Model"] == "Cache")]
@@ -201,31 +196,19 @@ def q8_plots():
     plt.savefig("Top: Energy Usage DMA_Tile_Merged.png", format='png', dpi=600)
 
 def doplot_benchmarks(benchmarks,stat,norm=True):
-    q1_plots()
-    q2_plots()
-    q3_plots()
-    q4_plots()
-    q5_plots()
-    q6_plots()
-    q7_plots()
-    q8_plots()
+    performance_plots()
 
 rows = []
-for i,lu in enumerate(loop_unrolls):
-    for j,cs in enumerate(cache_sizes):
-        for ac in accelerators:
-            for opt in optimizations:
-                rows.append(["Cache","Unoptimized",lu,cs,ac,getCSstat(datadir, lu+"x"+cs+"-debug-trace"+opt+".txt", ac, "Performance"),getCSstat(datadir, lu+"x"+cs+"-debug-trace.txt", ac, "Stall_Cycles"),getCSstat(datadir, lu+"x"+cs+"-debug-trace.txt", ac, "Energy")])
-                
-rows.append(["Cache", "Optimized","256","1024K","top",getCSstat(datadir, "256x1024Kopt-debug-trace.txt", "top", "Performance"),getCSstat(datadir, "256x1024Kopt-debug-trace.txt", "top", "Stall_Cycles"),getCSstat(datadir, "256x1024Kopt-debug-trace.txt", "top", "Energy")])
+for i,ac in enumerate(accelerators):
+    for j,im in enumerate(image_sizes):
+        for k,bm in enumerate(benchmarks):
+            for l,ci in enumerate(images):
+                rows.append(["Cache",ac,im,getCSstat(datadir, im+"_"+ac+"_"+ci+".txt", ac,  "Performance"),getCSstat(datadir, im+"_"+ac+"_"+ci+".txt", ac, "Stall_Cycles"),getCSstat(datadir, im+"_"+ac+"_"+ci+".txt", ac, "Energy")])
 
-for mul in multipliers:
-    rows.append(["DMA_Tile", "Unoptimized",mul,"1K","top",getCSstat(datadir, "dmatile-"+mul+"-debug-trace.txt", "top", "Performance"),getCSstat(datadir, "dmatile-"+mul+"-debug-trace.txt", "top", "Stall_Cycles"),getCSstat(datadir, "dmatile-"+mul+"-debug-trace.txt", "top", "Energy")])
-    
-for mul in multipliers_merged:
-    rows.append(["DMA_Tile_Merged", "Unoptimized",mul,"1K","top",getCSstat(datadir, "dmatilemerged-"+mul+"-debug-trace.txt", "top", "Performance"),getCSstat(datadir, "dmatilemerged-"+mul+"-debug-trace.txt", "top", "Stall_Cycles"),getCSstat(datadir, "dmatilemerged-"+mul+"-debug-trace.txt", "top", "Energy")])
+df = pd.DataFrame(rows, columns=["Model", "Algorithm", "Image Size", 'Runtime Cycles', "Stall Cycles", "Energy"])
 
-df = pd.DataFrame(rows, columns=["Model", "Optimized", 'Loop Unroll Factor', 'Cache Size', "Accelerator", 'Runtime Cycles', "Stall Cycles", "Energy"])
+df = df.replace("pl", "Push Relabel")
+df = df.replace("ek", "Edmonds Karp")
 print(df)
 
 doplot_benchmarks(benchmarks,"ipc",norm=False)

@@ -81,8 +81,20 @@ def getCSstat(filename, statsfile, accelerator, benchmark):
         print("Invalid benchmark")
 
 def performance_plots():
+    pl_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Push Relabel")]
+    ek_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Edmonds Karp")]
+    
+    average_rows = []
+    average_rows.append(["Push Relabel","25x25",pl_25x25_avg["Runtime Cycles"].mean()])
+    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Runtime Cycles"])
+    average_rows.append(["Edmonds Karp","25x25",ek_25x25_avg["Runtime Cycles"].mean()])
+    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Runtime Cycles"])
+    
+    print("Average Runtime Cycles")
+    print(df_average_rows)
+
     plt.figure()
-    fig = sea.barplot(x='Image Size', y='Runtime Cycles', data=df, hue="Algorithm", edgecolor="black", ci=None)
+    fig = sea.barplot(x='Image Size', y='Runtime Cycles', data=df_average_rows, hue="Algorithm", edgecolor="black", ci=None)
     plt.title("MaxFlow Runtime Performance")
     fig.legend(loc=(1.02, 0.6), title="Algorithm")
     plt.tight_layout()
@@ -90,8 +102,20 @@ def performance_plots():
     plt.savefig("MaxFlow Runtime Performance.png", format='png', dpi=600)
 
 def stall_cycle_plots():
+    pl_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Push Relabel")]
+    ek_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Edmonds Karp")]
+    
+    average_rows = []
+    average_rows.append(["Push Relabel","25x25",pl_25x25_avg["Stall Cycles"].mean()])
+    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Stall Cycles"])
+    average_rows.append(["Edmonds Karp","25x25",ek_25x25_avg["Stall Cycles"].mean()])
+    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Stall Cycles"])
+    
+    print("Average Stall Cycles")
+    print(df_average_rows)
+
     plt.figure()
-    fig = sea.barplot(x='Image Size', y='Stall Cycles', data=df, hue="Algorithm", edgecolor="black", ci=None)
+    fig = sea.barplot(x='Image Size', y='Stall Cycles', data=df_average_rows, hue="Algorithm", edgecolor="black", ci=None)
     plt.title("MaxFlow Stall Cycles")
     fig.legend(loc=(1.02, 0.6), title="Algorithm")
     plt.tight_layout()
@@ -99,8 +123,20 @@ def stall_cycle_plots():
     plt.savefig("MaxFlow Stall Cycles.png", format='png', dpi=600)
    
 def energy_plots():
+    pl_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Push Relabel")]
+    ek_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Edmonds Karp")]
+    
+    average_rows = []
+    average_rows.append(["Push Relabel","25x25",pl_25x25_avg["Total Energy"].mean()])
+    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Average Total Energy"])
+    average_rows.append(["Edmonds Karp","25x25",ek_25x25_avg["Total Energy"].mean()])
+    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Average Total Energy"])
+    
+    print("Average Total Energy")
+    print(df_average_rows)
+
     plt.figure()
-    fig = sea.barplot(x='Image Size', y='Total Energy', data=df, hue="Algorithm", edgecolor="black", ci=None)
+    fig = sea.barplot(x='Image Size', y='Average Total Energy', data=df_average_rows, hue="Algorithm", edgecolor="black", ci=None)
     plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%dmW"))
     plt.title("MaxFlow Energy Usage")
     fig.legend(loc=(1.02, 0.6), title="Algorithm")
@@ -116,9 +152,8 @@ def doplot_benchmarks(benchmarks,stat,norm=True):
 rows = []
 for i,ac in enumerate(accelerators):
     for j,im in enumerate(image_sizes):
-        for k,bm in enumerate(benchmarks):
-            for l,ci in enumerate(images):
-                rows.append(["Cache",ac,im,getCSstat(datadir, im+"_"+ac+"_"+ci+".txt", ac,  "Performance"),getCSstat(datadir, im+"_"+ac+"_"+ci+".txt", ac, "Stall_Cycles"),getCSstat(datadir, im+"_"+ac+"_"+ci+".txt", ac, "Energy")])
+        for l,ci in enumerate(images):
+            rows.append(["Cache",ac,im,getCSstat(datadir, im+"_"+ac+"_"+ci+".txt", ac,  "Performance"),getCSstat(datadir, im+"_"+ac+"_"+ci+".txt", ac, "Stall_Cycles"),getCSstat(datadir, im+"_"+ac+"_"+ci+".txt", ac, "Energy")])
 
 df = pd.DataFrame(rows, columns=["Model", "Algorithm", "Image Size", 'Runtime Cycles', "Stall Cycles", "Energy"])
 

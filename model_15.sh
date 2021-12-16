@@ -8,10 +8,10 @@ PRINT_TO_FILE="false"
 TYPE="cache"
 
 # Input file paths relative to the base repo.
-INPUT="inputs/mnist/bin/circle_25x25_5.bin"
+INPUT="inputs/mnist/bin/circle_15x15_0.bin"
 M0="inputs/mnist/bin/m0.bin"
 M1="inputs/mnist/bin/m1.bin"
-MASK="inputs/mnist/bin/circle_mask_25x25.bin"
+MASK="inputs/mnist/bin/circle_mask_15x15.bin"
 
 while getopts "t:b:f:dp" opt
 	do

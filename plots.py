@@ -13,6 +13,7 @@ datadir = os.getcwd()+'/outputs/'
 
 all_accelerators = ["pl", "ek"]
 accelerators = ["pl", "ek"]
+acclerators_names = ["Push Relabel", "Edmonds Karp"]
 
 all_image_sizes = ["25x25", "15x15", "5x5"]
 image_sizes = ["25x25"]
@@ -81,20 +82,20 @@ def getCSstat(filename, statsfile, accelerator, benchmark):
         print("Invalid benchmark")
 
 def performance_plots():
-    pl_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Push Relabel")]
-    ek_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Edmonds Karp")]
-    
     average_rows = []
-    average_rows.append(["Push Relabel","25x25",pl_25x25_avg["Runtime Cycles"].mean()])
-    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Runtime Cycles"])
-    average_rows.append(["Edmonds Karp","25x25",ek_25x25_avg["Runtime Cycles"].mean()])
-    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Runtime Cycles"])
+
+    for imgsize in image_sizes:
+        for ac in acclerators_names:
+            avg = df[(df["Image Size"] == imgsize) & (df["Algorithm"] == ac)]
+            average_rows.append([ac,imgsize,avg["Runtime Cycles"].mean()])
+            
+    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Average Runtime Cycles"])
     
     print("Average Runtime Cycles")
     print(df_average_rows)
 
     plt.figure()
-    fig = sea.barplot(x='Image Size', y='Runtime Cycles', data=df_average_rows, hue="Algorithm", edgecolor="black", ci=None)
+    fig = sea.barplot(x='Image Size', y='Average Runtime Cycles', data=df_average_rows, hue="Algorithm", edgecolor="black", ci=None)
     plt.title("MaxFlow Runtime Performance")
     fig.legend(loc=(1.02, 0.6), title="Algorithm")
     plt.tight_layout()
@@ -102,20 +103,20 @@ def performance_plots():
     plt.savefig("MaxFlow Runtime Performance.png", format='png', dpi=600)
 
 def stall_cycle_plots():
-    pl_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Push Relabel")]
-    ek_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Edmonds Karp")]
-    
     average_rows = []
-    average_rows.append(["Push Relabel","25x25",pl_25x25_avg["Stall Cycles"].mean()])
-    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Stall Cycles"])
-    average_rows.append(["Edmonds Karp","25x25",ek_25x25_avg["Stall Cycles"].mean()])
-    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Stall Cycles"])
+
+    for imgsize in image_sizes:
+        for ac in acclerators_names:
+            avg = df[(df["Image Size"] == imgsize) & (df["Algorithm"] == ac)]
+            average_rows.append([ac,imgsize,avg["Stall Cycles"].mean()])
+            
+    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Average Stall Cycles"])
     
     print("Average Stall Cycles")
     print(df_average_rows)
 
     plt.figure()
-    fig = sea.barplot(x='Image Size', y='Stall Cycles', data=df_average_rows, hue="Algorithm", edgecolor="black", ci=None)
+    fig = sea.barplot(x='Image Size', y='Average Stall Cycles', data=df_average_rows, hue="Algorithm", edgecolor="black", ci=None)
     plt.title("MaxFlow Stall Cycles")
     fig.legend(loc=(1.02, 0.6), title="Algorithm")
     plt.tight_layout()
@@ -123,13 +124,13 @@ def stall_cycle_plots():
     plt.savefig("MaxFlow Stall Cycles.png", format='png', dpi=600)
    
 def energy_plots():
-    pl_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Push Relabel")]
-    ek_25x25_avg = df[(df["Image Size"] == "25x25") & (df["Algorithm"] == "Edmonds Karp")]
-    
     average_rows = []
-    average_rows.append(["Push Relabel","25x25",pl_25x25_avg["Total Energy"].mean()])
-    df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Average Total Energy"])
-    average_rows.append(["Edmonds Karp","25x25",ek_25x25_avg["Total Energy"].mean()])
+
+    for imgsize in image_sizes:
+        for ac in acclerators_names:
+            avg = df[(df["Image Size"] == imgsize) & (df["Algorithm"] == ac)]
+            average_rows.append([ac,imgsize,avg["Total Energy"].mean()])
+            
     df_average_rows = pd.DataFrame(average_rows, columns=["Algorithm", "Image Size", "Average Total Energy"])
     
     print("Average Total Energy")

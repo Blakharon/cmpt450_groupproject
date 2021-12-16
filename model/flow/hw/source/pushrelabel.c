@@ -14,7 +14,7 @@ void pushrelabel(
     int32_t* sink_excess_flow,
     int32_t* res_source_curr_capacities)
 {
-
+/*
     //========== Push-relabel algorithm ====================
 
     //===================== Preflow() ====================
@@ -349,5 +349,5 @@ void pushrelabel(
         
         //==================== End of overFlowNode() =======================
     }
-    
+    */
 }

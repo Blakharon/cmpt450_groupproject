@@ -12,7 +12,7 @@ sea.set()
 datadir = os.getcwd()+'/outputs/'
 
 all_accelerators = ["pl", "ek"]
-accelerators = ["pl"]
+accelerators = ["pl", "ek"]
 
 all_image_sizes = ["25x25", "15x15", "5x5"]
 image_sizes = ["25x25"]

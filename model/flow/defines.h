@@ -8,9 +8,9 @@
 
 #define NUM_NEIGHBOURS 4
 
-#define NUM_NODES 625
-#define NUM_ROWS 25
-#define NUM_COLS 25
+#define NUM_NODES 225
+#define NUM_ROWS 15
+#define NUM_COLS 15
 
 #define NORTH 0
 #define EAST 1

@@ -16,7 +16,7 @@ accelerators = ["pl", "ek"]
 acclerators_names = ["Push Relabel", "Edmonds Karp"]
 
 all_image_sizes = ["25x25", "15x15", "5x5"]
-image_sizes = ["25x25"]
+image_sizes = ["25x25", "15x15", "5x5"]
 
 all_images = ["circle0", "circle1", "circle2", "circle3", "circle4", "circle5"]
 images = ["circle0", "circle1", "circle2", "circle3", "circle4", "circle5"];
